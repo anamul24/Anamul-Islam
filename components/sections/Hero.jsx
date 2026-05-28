@@ -56,7 +56,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-6xl md:text-8xl lg:text-15xl font-black uppercase text-transparent [-webkit-text-stroke:1px_#fbbf24] tracking-[0.1em]">
+              className="text-4xl sm:text-6xl md:text-8xl lg:text-[150px] font-black uppercase text-transparent [-webkit-text-stroke:1px_#fbbf24] tracking-[0.1em]">
               ANAMUL ISLAM
             </motion.h1>
 

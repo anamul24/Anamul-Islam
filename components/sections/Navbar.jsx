@@ -95,6 +95,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-center font-bold uppercase tracking-widest text-xs"
               >
+                Contact
               </a>
             </div>
           </motion.div>

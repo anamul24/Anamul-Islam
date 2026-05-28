@@ -305,11 +305,11 @@ export default function BentoGrid() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 font-mono text-[10px] text-amber-500/60">
-                   NODE_PREVIEW: {selectedProject.meta.status}
+                   NODE_PREVIEW: ACTIVE
                 </div>
               </div>
 
-              <div className="md:w-3/5 p-8 md:p-10 overflow-y-auto">
+              <div className="md:w-3/5 p-6 md:p-10 overflow-y-auto flex-1">
                 <div className="flex items-center gap-3 text-amber-500/80 font-mono text-[9px] uppercase tracking-widest mb-6">
                   <span>ROOT/PROJECTS/{selectedProject.title.replace(/\s+/g, '_').toUpperCase()}</span>
                 </div>
