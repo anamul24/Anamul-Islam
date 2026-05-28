@@ -23,6 +23,41 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      setIsOpen(false);
+    };
+
+    if (isOpen) {
+      window.history.pushState({ menuOpen: true }, '');
+      window.addEventListener('popstate', handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [isOpen]);
+
+  const toggleMenu = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      if (window.history.state?.menuOpen) {
+        window.history.back();
+      }
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const closeMenu = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      if (window.history.state?.menuOpen) {
+        window.history.back();
+      }
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -64,7 +99,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4 lg:hidden">
           <button
             className="text-slate-900 dark:text-slate-200"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleMenu}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -83,7 +118,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeMenu}
                   className="text-2xl font-bold text-slate-700 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-tighter"
                 >
                   {link.name}
@@ -92,7 +127,7 @@ export default function Navbar() {
               
               <a
                 href="#contact"
-                onClick={() => setIsOpen(false)}
+                onClick={closeMenu}
                 className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-center font-bold uppercase tracking-widest text-xs"
               >
                 Contact

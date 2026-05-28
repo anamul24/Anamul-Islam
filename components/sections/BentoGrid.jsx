@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { Github, Layers, X, ArrowRight, Code2, ExternalLink } from 'lucide-react';
@@ -82,6 +82,28 @@ export default function BentoGrid() {
     const x = (clientX - left) / width - 0.5;
     const y = (clientY - top) / height - 0.5;
     setMousePos({ x, y });
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedProject(null);
+    };
+
+    if (selectedProject) {
+      window.history.pushState({ modalOpen: true }, '');
+      window.addEventListener('popstate', handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [selectedProject]);
+
+  const closeProjectModal = () => {
+    setSelectedProject(null);
+    if (window.history.state?.modalOpen) {
+      window.history.back();
+    }
   };
 
   return (
@@ -279,7 +301,7 @@ export default function BentoGrid() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-            onClick={() => setSelectedProject(null)}
+            onClick={closeProjectModal}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -289,7 +311,7 @@ export default function BentoGrid() {
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setSelectedProject(null)}
+                onClick={closeProjectModal}
                 className="absolute top-4 right-4 z-20 w-8 h-8 rounded-sm bg-black border border-white/10 flex items-center justify-center text-white hover:bg-amber-400 hover:text-black transition-all"
               >
                 <X size={16} />
