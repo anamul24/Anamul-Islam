@@ -99,7 +99,7 @@ export default function Hero() {
             Signature
           </div>
 
-          <div className="text-5xl md:text-6xl text-amber-700 font-[Great_Vibes] rotate-[-8deg] opacity-90">
+          <div className="text-5xl md:text-6xl text-amber-700 font-[Pinyon_Script] rotate-[-8deg] opacity-90">
             Anamul Islam
           </div>
 
