@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, Search, X } from 'lucide-react';
@@ -28,6 +28,37 @@ const certificates = [
 
 export default function Certificates() {
   const [selectedCert, setSelectedCert] = useState(null);
+
+  // Open modal — push a history entry so back button closes it
+  const openCert = useCallback((cert) => {
+    setSelectedCert(cert);
+    window.history.pushState({ certModal: true }, '');
+  }, []);
+
+  // Close modal — go back in history only if we pushed the entry
+  const closeCert = useCallback(() => {
+    setSelectedCert(null);
+    if (window.history.state?.certModal) {
+      window.history.back();
+    }
+  }, []);
+
+  // Listen for hardware/browser back button
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedCert(null);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    if (!selectedCert) return;
+    const handleKey = (e) => { if (e.key === 'Escape') closeCert(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedCert, closeCert]);
 
   return (
     <section id="certificates" className="py-24 bg-black relative overflow-hidden transition-colors">
@@ -111,7 +142,7 @@ export default function Certificates() {
 
                 <div
                   className="absolute inset-0 bg-amber-400/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => setSelectedCert(cert)}
+                  onClick={() => openCert(cert)}
                 >
                   <div className="w-12 h-12 rounded-full bg-slate-900 dark:bg-amber-400 flex items-center justify-center text-white dark:text-slate-950 shadow-xl shadow-amber-400/40">
                     <Search size={22} />
@@ -134,7 +165,7 @@ export default function Certificates() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-100/90 dark:bg-slate-950/90 backdrop-blur-md"
-            onClick={() => setSelectedCert(null)}
+            onClick={closeCert}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -145,7 +176,7 @@ export default function Certificates() {
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setSelectedCert(null)}
+                onClick={closeCert}
                 className="absolute top-6 right-6 z-20 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-950/50 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-900 dark:text-white hover:bg-amber-400 hover:text-slate-950 transition-all font-sans"
               >
                 <X size={20} />
