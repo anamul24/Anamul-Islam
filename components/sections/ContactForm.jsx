@@ -112,16 +112,16 @@ export default function ContactForm() {
                 }}
                 className="flex items-center gap-6 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
                   <Mail size={24} />
                 </div>
 
-                <div>
+                <div className="min-w-0">
                   <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
                     Email Me
                   </div>
 
-                  <div className="text-slate-900 dark:text-white font-medium text-lg">
+                  <div className="text-slate-900 dark:text-white font-medium text-base md:text-lg break-all">
                     anamulislamsumon01@gmail.com
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function ContactForm() {
                 }}
                 className="flex items-center gap-6 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
                   <MapPin size={24} />
                 </div>
 
@@ -142,8 +142,8 @@ export default function ContactForm() {
                     Location
                   </div>
 
-                  <div className="text-slate-900 dark:text-white font-medium text-lg">
-                    Dhaka, Bangladesh
+                  <div className="text-slate-900 dark:text-white font-medium text-base md:text-lg leading-snug">
+                    161/12 Baganbari, Matikata,<br />Dhaka Cantonment
                   </div>
                 </div>
               </motion.div>

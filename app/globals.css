@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
@@ -7,6 +9,8 @@
   --font-display: var(--font-display), "Space Grotesk", sans-serif;
   --font-serif: var(--font-serif), "Playfair Display", serif;
   --font-arabic: var(--font-arabic), "IBM Plex Sans Arabic", sans-serif;
+  --font-corinthia: var(--font-signature), "Corinthia", cursive;
+  --font-cinzel: "Cinzel", serif;
 }
 
 @layer base {
@@ -27,7 +31,10 @@
     color: black;
   }
 
-  h1, h2, h3, p {
+  h1,
+  h2,
+  h3,
+  p {
     text-shadow: none;
     filter: none;
   }
@@ -37,24 +44,43 @@
   .font-display {
     font-family: var(--font-display);
   }
+
   .font-serif {
     font-family: var(--font-serif);
   }
+
+  .font-signature {
+    font-family: var(--font-signature), "Corinthia", cursive;
+  }
+
+  .font-corinthia {
+    font-family: var(--font-signature), "Corinthia", cursive;
+  }
+
   .tech-grid {
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
+
   .tech-dot-grid {
     background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
+
   .scanlines {
-    background: linear-gradient(
-      to bottom,
-      transparent 50%,
-      rgba(0, 0, 0, 0.1) 51%
-    );
+    background: linear-gradient(to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 51%);
     background-size: 100% 4px;
+  }
+
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
   }
 }

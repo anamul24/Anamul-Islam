@@ -23,40 +23,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when menu is open on mobile
   useEffect(() => {
-    const handlePopState = () => {
-      setIsOpen(false);
-    };
-
     if (isOpen) {
-      window.history.pushState({ menuOpen: true }, '');
-      window.addEventListener('popstate', handlePopState);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
-
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
-  const toggleMenu = () => {
-    if (isOpen) {
-      setIsOpen(false);
-      if (window.history.state?.menuOpen) {
-        window.history.back();
-      }
-    } else {
-      setIsOpen(true);
-    }
-  };
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const closeMenu = () => {
-    if (isOpen) {
-      setIsOpen(false);
-      if (window.history.state?.menuOpen) {
-        window.history.back();
-      }
-    }
-  };
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav
@@ -98,8 +79,9 @@ export default function Navbar() {
         </motion.div>
         <div className="flex items-center gap-4 lg:hidden">
           <button
-            className="text-slate-900 dark:text-slate-200"
+            className="text-slate-900 dark:text-slate-200 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             onClick={toggleMenu}
+            aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

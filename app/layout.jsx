@@ -4,6 +4,7 @@ import {
   Playfair_Display,
   IBM_Plex_Sans_Arabic,
   Great_Vibes,
+  Corinthia,
 } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -25,7 +26,7 @@ const playfairDisplay = Playfair_Display({
   weight: ['400', '500', '600', '700', '900'],
 });
 
-const greatVibes = Great_Vibes({
+const corinthia = Corinthia({
   subsets: ['latin'],
   weight: ['400'],
   variable: '--font-signature',
@@ -47,7 +48,7 @@ export default function RootLayout({ children }) {
       lang="en"
       dir="ltr"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${greatVibes.variable} ${ibmPlexSansArabic.variable} scroll-smooth`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${corinthia.variable} ${ibmPlexSansArabic.variable} scroll-smooth`}
     >
       <body
         suppressHydrationWarning
