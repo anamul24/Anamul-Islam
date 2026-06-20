@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 bg-black overflow-hidden transition-colors">
+    <section id="about" className="relative py-16 md:py-32 bg-black overflow-hidden transition-colors">
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-white via-slate-100/50 to-white dark:from-black dark:via-slate-900/10 dark:to-black pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-5 relative mb-12 lg:mb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="lg:col-span-5 relative mb-6 lg:mb-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, x: -50 }}
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -37,7 +37,7 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex items-center gap-4 text-amber-600 dark:text-amber-500 font-bold uppercase tracking-[0.4em] text-[10px] mb-8"
+              className="flex items-center gap-4 text-amber-600 dark:text-amber-500 font-bold uppercase tracking-[0.4em] text-[10px] mb-4 md:mb-8"
             >
               <div className="w-12 h-[1px] bg-amber-600 dark:bg-amber-500" />
               The Journey
@@ -48,7 +48,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white leading-none tracking-tighter mb-10 overflow-visible"
+              className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white leading-none tracking-tighter mb-6 md:mb-10 overflow-visible"
             >
               About My <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-200 to-white/10">Self </span>
             </motion.h2>
@@ -58,7 +58,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="space-y-6 text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed"
+              className="space-y-4 text-slate-600 dark:text-slate-400 text-base md:text-xl leading-relaxed"
             >
               <p>
                 Hi, I’m Anamul Islam — a passionate web developer and networking enthusiast who enjoys building modern, responsive, and user-friendly applications. I love working with technologies like React, Next.js, and Tailwind CSS to create clean and interactive digital experiences.
@@ -81,7 +81,7 @@ export default function About() {
                   }
                 }
               }}
-              className="grid grid-cols-2 md:grid-cols-3 gap-8 mt-16 w-full"
+              className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mt-8 md:mt-16 w-full"
             >
               {[
               ].map((stat) => (

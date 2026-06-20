@@ -52,7 +52,7 @@ export default function ContactForm() {
   return (
     <section
       id="contact"
-      className="py-24 relative overflow-hidden bg-black text-white transition-colors"
+      className="py-12 md:py-24 relative overflow-hidden bg-black text-white transition-colors"
     >
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-400/10 dark:bg-amber-400/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 tech-grid opacity-[0.05] pointer-events-none z-0" />
@@ -60,7 +60,7 @@ export default function ContactForm() {
       <div className="absolute inset-0 scanlines opacity-[0.03] pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-20">
+        <div className="flex flex-col lg:flex-row gap-10 md:gap-20">
           <div className="lg:w-1/2">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -75,7 +75,7 @@ export default function ContactForm() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-6xl font-black tracking-tight mb-8"
+              className="text-3xl md:text-6xl font-black tracking-tight mb-6 md:mb-8"
             >
               Contact <br />
               <span className="text-slate-400 dark:text-slate-500">
@@ -103,7 +103,7 @@ export default function ContactForm() {
                   },
                 },
               }}
-              className="space-y-8"
+              className="space-y-4 md:space-y-8"
             >
               <motion.div
                 variants={{
@@ -152,7 +152,7 @@ export default function ContactForm() {
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="flex flex-col sm:flex-row gap-4 pt-4"
+                className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4"
               >
                 <a
                   href="/resume.pdf"
@@ -164,7 +164,7 @@ export default function ContactForm() {
                 </a>
               </motion.div>
             </motion.div>
-            <div className="flex gap-6 mt-16">
+            <div className="flex gap-4 md:gap-6 mt-8 md:mt-16 flex-wrap">
               {[
                 {
                   icon: Github,
@@ -209,7 +209,7 @@ export default function ContactForm() {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <div className="p-8 md:p-12 rounded-[40px] bg-slate-50/50 dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 backdrop-blur-xl shadow-2xl transition-colors">
+            <div className="p-6 md:p-12 rounded-[24px] md:rounded-[40px] bg-slate-50/50 dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 backdrop-blur-xl shadow-2xl transition-colors">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">

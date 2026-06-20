@@ -61,12 +61,12 @@ export default function Certificates() {
   }, [selectedCert, closeCert]);
 
   return (
-    <section id="certificates" className="py-24 bg-black relative overflow-hidden transition-colors">
+    <section id="certificates" className="py-12 md:py-24 bg-black relative overflow-hidden transition-colors">
       <div className="absolute inset-0 tech-grid opacity-[0.05] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.08] pointer-events-none z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-6">
           <div>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -184,7 +184,7 @@ export default function Certificates() {
 
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-3/5 flex items-center justify-center bg-white p-4">
-                  <div className="relative w-full h-[500px]">
+                  <div className="relative w-full h-[280px] sm:h-[400px] md:h-[500px]">
                     <Image
                       src={selectedCert.image}
                       alt={selectedCert.title}

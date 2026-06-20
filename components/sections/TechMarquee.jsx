@@ -21,11 +21,11 @@ const techStack = [
 
 export default function TechMarquee() {
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-black transition-colors">
+    <section id="skills" className="py-12 md:py-24 relative overflow-hidden bg-black transition-colors">
       <div className="absolute inset-0 tech-grid opacity-[0.05] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.08] pointer-events-none z-0" />
       
-      <div className="container mx-auto px-6 mb-20 text-center relative z-10">
+      <div className="container mx-auto px-6 mb-10 md:mb-20 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export default function TechMarquee() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.2 }}
-          className="flex overflow-hidden group select-none py-6 mb-16"
+          className="flex overflow-hidden group select-none py-6 mb-8 md:mb-16"
         >
           <div className="flex space-x-8 animate-marquee-reverse whitespace-nowrap group-hover:pause-marquee">
             {[...techStack].reverse().concat(techStack).map((tech, i) => (

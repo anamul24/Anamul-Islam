@@ -37,22 +37,47 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const closeMenu = () => setIsOpen(false);
+  // Smooth scroll handler — closes menu first, restores overflow, then scrolls
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setIsOpen(false);
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+      if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }, 50);
+  };
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'py-4 bg-white/80 dark:bg-black/60 backdrop-blur-lg border-b border-slate-200 dark:border-white/5 shadow-sm' : 'py-6 bg-transparent'
+        scrolled
+          ? 'py-4 bg-white/80 dark:bg-black/60 backdrop-blur-lg border-b border-slate-200 dark:border-white/5 shadow-sm'
+          : 'py-6 bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
+
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="text-xl font-bold tracking-tighter"
         >
-          <span className="text-slate-900 dark:text-white">ANAM</span><span className="text-amber-500 transition-colors">.</span>
+          <a href="#" onClick={(e) => handleNavClick(e, '#')}>
+            <span className="text-slate-900 dark:text-white">ANAM</span>
+            <span className="text-amber-500 transition-colors">.</span>
+          </a>
         </motion.div>
+
+        {/* Desktop nav links */}
         <div className="hidden lg:flex items-center gap-8 bg-slate-100/80 dark:bg-slate-900/40 backdrop-blur-md px-8 py-2.5 rounded-full border border-slate-200 dark:border-white/5 shadow-xl">
           {navLinks.map((link) => (
             <a
@@ -65,6 +90,7 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Desktop contact button */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -77,6 +103,8 @@ export default function Navbar() {
             Contact
           </a>
         </motion.div>
+
+        {/* Hamburger button — visible below lg */}
         <div className="flex items-center gap-4 lg:hidden">
           <button
             className="text-slate-900 dark:text-slate-200 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -87,6 +115,8 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+
+      {/* Mobile dropdown menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -100,16 +130,16 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="text-2xl font-bold text-slate-700 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-tighter"
                 >
                   {link.name}
                 </a>
               ))}
-              
+
               <a
                 href="#contact"
-                onClick={closeMenu}
+                onClick={(e) => handleNavClick(e, '#contact')}
                 className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-center font-bold uppercase tracking-widest text-xs"
               >
                 Contact

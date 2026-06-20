@@ -107,7 +107,7 @@ export default function BentoGrid() {
   };
 
   return (
-    <section id="projects" className="py-24 bg-black relative overflow-hidden transition-colors selection:bg-amber-500 selection:text-black">
+    <section id="projects" className="py-12 md:py-24 bg-black relative overflow-hidden transition-colors selection:bg-amber-500 selection:text-black">
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.05] pointer-events-none z-0" />
       <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none z-0">
@@ -119,13 +119,13 @@ export default function BentoGrid() {
       </svg>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+        <div className="mb-10 md:mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-12">
           <div className="max-w-2xl">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="flex items-center gap-3 text-amber-500/80 font-mono tracking-[0.4em] uppercase text-[9px] mb-8"
+              className="flex items-center gap-3 text-amber-500/80 font-mono tracking-[0.4em] uppercase text-[9px] mb-4 md:mb-8"
             >
               <div className="w-12 h-[1px] bg-amber-500/30" />
               <span>&lt;node_manager_v4.0.1 /&gt;</span>
@@ -135,7 +135,7 @@ export default function BentoGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-[0.8] mb-8"
+              className="text-4xl md:text-8xl font-black tracking-tighter text-white leading-[0.85] md:leading-[0.8] mb-4 md:mb-8"
             >
               My <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-200 to-white/10 italic">Projects.</span>
