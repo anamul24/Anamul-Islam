@@ -2,8 +2,14 @@
   "roles": [
     "NETWORK ENGINEER",
     "CISCO CCNA TRAINEE",
-    "FULL STACK DEVELOPER"
+    "MIKROTIK TRAINEE",
+    "MERN STACK DEVELOPER"
   ],
   "name": "Anamul Islam",
-  "scrollHint": "Scroll to explore work"
+  "subtitle": "Network Engineer | Infrastructure & Network Security Enthusiast",
+  "description": "Building reliable networks, solving infrastructure problems, and exploring secure IT systems through hands-on labs and real-world projects.",
+  "scrollHint": "Scroll to explore work",
+  "github": "https://github.com/anamul24",
+  "linkedin": "",
+  "cvUrl": ""
 }

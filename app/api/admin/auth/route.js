@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { timingSafeEqual } from 'crypto';
+import { createSessionToken, setSessionCookie } from '@/lib/adminAuth';
 
 export async function POST(request) {
   try {
@@ -9,20 +11,32 @@ export async function POST(request) {
     }
 
     const adminPassword = (process.env.ADMIN_PASSWORD || '').trim();
-    const inputPassword = password.trim();
-
     if (!adminPassword) {
-      return NextResponse.json(
-        { error: 'ADMIN_PASSWORD is not configured on the server.' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
-    if (inputPassword === adminPassword) {
-      return NextResponse.json({ success: true, token: adminPassword });
+    // Timing-safe comparison to prevent timing attacks
+    let match = false;
+    try {
+      const a = Buffer.from(password.trim());
+      const b = Buffer.from(adminPassword);
+      if (a.length === b.length) {
+        match = timingSafeEqual(a, b);
+      }
+    } catch {
+      match = false;
     }
 
-    return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
+    if (!match) {
+      return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
+    }
+
+    // Create signed session token and set HTTP-only cookie
+    const token = createSessionToken();
+    const response = NextResponse.json({ success: true });
+    setSessionCookie(response, token);
+    return response;
+
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

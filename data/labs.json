@@ -1,0 +1,15 @@
+[
+  {
+    "id": "lab-enterprise-network",
+    "title": "Enterprise Three-Tier Network",
+    "description": "Multi-layer enterprise network with core, distribution, and access layers. Includes inter-VLAN routing, EtherChannel, OSPF dynamic routing, and centralized DHCP.",
+    "technologies": ["Cisco IOS", "Cisco Packet Tracer"],
+    "concepts": ["VLAN", "Inter-VLAN Routing", "EtherChannel", "OSPF", "DHCP", "Trunking", "Routing & Switching"],
+    "category": "routing",
+    "image": "/image/networking.jpg",
+    "github": "https://github.com/anamul24",
+    "pktFile": "",
+    "docLink": "",
+    "featured": true
+  }
+]

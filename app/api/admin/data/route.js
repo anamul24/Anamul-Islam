@@ -1,24 +1,18 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getAdminSession } from '@/lib/adminAuth';
 
-const ALLOWED_SECTIONS = ['hero', 'about', 'projects', 'experience', 'education', 'skills', 'certificates'];
-
-// On Vercel: data files are in the deployed bundle (read-only).
-// Edits are saved to /tmp which persists within the same serverless instance.
-// On local dev: data/ folder is read-write as normal.
+const ALLOWED_SECTIONS = ['hero', 'about', 'projects', 'experience', 'education', 'skills', 'certificates', 'labs'];
 
 function getFilePath(section) {
-  // Check if there's a /tmp override (Vercel edits)
   const tmpPath = path.join('/tmp', 'data', `${section}.json`);
   const srcPath = path.join(process.cwd(), 'data', `${section}.json`);
-
   if (fs.existsSync(tmpPath)) return tmpPath;
   return srcPath;
 }
 
 function saveFilePath(section) {
-  // On Vercel, write to /tmp. Locally, write directly to data/
   const isVercel = process.env.VERCEL === '1';
   if (isVercel) {
     const tmpDir = path.join('/tmp', 'data');
@@ -46,8 +40,9 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const token = request.headers.get('x-admin-token');
-  if (!token || token !== process.env.ADMIN_PASSWORD) {
+  // Verify admin session via HTTP-only cookie
+  const { isAuthenticated } = await getAdminSession();
+  if (!isAuthenticated) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

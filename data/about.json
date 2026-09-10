@@ -1,24 +1,12 @@
 {
-  "tagline": "",
-  "heading": "About My",
-  "headingHighlight": "Self",
-  "bio": "As a Computer Science and Engineering student, I am deeply passionate about Network Engineering and the architecture of resilient IT Infrastructure. My core focus lies in the end-to-end lifecycle of network systems—from initial design and configuration to proactive maintenance and complex troubleshooting.\n\nI am currently advancing my technical proficiency through CCNA and MikroTik training, actively translating theoretical concepts into robust, hands-on architectures using Cisco Packet Tracer. My technical foundation encompasses Routing & Switching, VLANs, Trunking, Inter-VLAN Routing, TCP/IP, Subnetting, VLSM, DHCP, DNS, NAT, Routing Protocols, and EtherChannel.\n\nIn addition to my networking focus, my background in Full-Stack Web Development (MERN stack, React, Next.js, Node.js, MongoDB) provides me with a holistic view of the technology stack. This dual perspective enables me to understand exactly how applications, servers, and end-users interact with and depend on the underlying network infrastructure.\n\nI am actively seeking entry-level opportunities in Network Engineering where I can leverage my problem-solving skills, collaborate with seasoned IT professionals, and contribute to the optimization and security of real-world enterprise environments.",
+  "tagline": "The Story So Far",
+  "heading": "About",
+  "headingHighlight": "Me",
+  "bio": "I'm a Computer Science and Engineering student focused on Network Engineering, infrastructure, and secure IT systems. I enjoy building and troubleshooting networks through hands-on labs with Cisco Packet Tracer and MikroTik, while also using my web development background to build practical tools and infrastructure-focused applications.",
   "stats": [
-    {
-      "value": "CCNA",
-      "label": "In Progress"
-    },
-    {
-      "value": "MikroTik",
-      "label": "Training"
-    },
-    {
-      "value": "50+",
-      "label": "Lab Hours"
-    },
-    {
-      "value": "MERN",
-      "label": "Web Dev"
-    }
+    { "value": "CCNA", "label": "In Progress" },
+    { "value": "MikroTik", "label": "Training" },
+    { "value": "50+", "label": "Network Lab Hours" },
+    { "value": "MERN", "label": "Secondary Skill" }
   ]
 }
