@@ -1,0 +1,17 @@
+[
+  { "id": "cisco", "name": "Cisco", "category": "networking" },
+  { "id": "mikrotik", "name": "MikroTik", "category": "networking" },
+  { "id": "packet-tracer", "name": "Packet Tracer", "category": "networking" },
+  { "id": "ccna", "name": "CCNA", "category": "networking" },
+  { "id": "ospf", "name": "OSPF", "category": "networking" },
+  { "id": "vlan", "name": "VLAN", "category": "networking" },
+  { "id": "react", "name": "React", "category": "web" },
+  { "id": "nextjs", "name": "Next.js", "category": "web" },
+  { "id": "nodejs", "name": "Node.js", "category": "web" },
+  { "id": "javascript", "name": "Javascript", "category": "web" },
+  { "id": "tailwind", "name": "Tailwind CSS", "category": "web" },
+  { "id": "mongodb", "name": "MongoDB", "category": "web" },
+  { "id": "c", "name": "C", "category": "language" },
+  { "id": "cpp", "name": "C++", "category": "language" },
+  { "id": "java", "name": "JAVA", "category": "language" }
+]

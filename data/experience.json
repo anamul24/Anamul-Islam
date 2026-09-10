@@ -1,0 +1,18 @@
+[
+  {
+    "id": "networking",
+    "title": "Networking & Infrastructure",
+    "company": "Udemy / David Bombal",
+    "period": "2025 - Present",
+    "description": "Developing deep understanding of networking protocols, subnetting, and system security through intensive lab-based learning. Actively practicing CCNA concepts using Cisco Packet Tracer with real-world enterprise network topologies.",
+    "milestones": ["CCNA Prep Labs", "Network Security Foundations", "MikroTik Training"]
+  },
+  {
+    "id": "fullstack",
+    "title": "Full Stack Web Development",
+    "company": "Self-Directed / Programming Hero",
+    "period": "JAN 2026 - Jun 2026",
+    "description": "Mastered modern web technologies including React, Node.js, and Express. Built full-stack projects focusing on scalable architectures and user experience. Web development serves as a complementary skill to understand application-network interaction.",
+    "milestones": ["Completed 15+ real-world projects", "Mastered MERN Stack"]
+  }
+]

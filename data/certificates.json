@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cert-networking",
+    "title": "Professional Networking Course",
+    "issuer": "Udemy / David Bombal",
+    "date": "2024",
+    "image": "/image/networking.jpg",
+    "verifyUrl": ""
+  },
+  {
+    "id": "cert-fullstack",
+    "title": "Full Stack Web Development",
+    "issuer": "Udemy / Dr. Angela Yu",
+    "date": "2024",
+    "image": "/image/fullstack.jpg",
+    "verifyUrl": ""
+  },
+  {
+    "id": "cert-webdev",
+    "title": "Complete Web Development",
+    "issuer": "Programming Hero",
+    "date": "2024",
+    "image": "",
+    "verifyUrl": ""
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tiles-gallery",
+    "title": "TILES GALLERY",
+    "description": "Tiles Gallery is a responsive, modern image gallery built with a tile-based layout system, focusing on clean UI, smooth responsiveness, and visual presentation.",
+    "longDescription": "Tiles Gallery is a modern and responsive image gallery web application designed with a focus on visually appealing layouts and smooth user experience. The project showcases images in a dynamic tile-based grid system, allowing content to be displayed in an organized yet creative structure. Built using modern frontend technologies, the application emphasizes responsive design, ensuring optimal viewing across all devices including mobile, tablet, and desktop.",
+    "tags": ["React", "Next.js"],
+    "link": "https://tiles-gallery-brown-psi.vercel.app/",
+    "github": "https://github.com/anamul24/Tiles-Gallery",
+    "size": "large",
+    "image": "/image/tilesgallery.png",
+    "category": "web"
+  },
+  {
+    "id": "keenkeeper",
+    "title": "KeenKeeper",
+    "description": "A modern, responsive web application focused on clean UI/UX and smooth user experience.",
+    "longDescription": "Keen Keeper is a modern, responsive web application designed with a focus on clean UI/UX and smooth user experience. The project showcases a minimal yet functional interface that works seamlessly across different devices, including mobile, tablet, and desktop. Built as a frontend-focused project, it highlights practical web development skills such as layout structuring, responsive design, and performance optimization.",
+    "tags": ["React", "Tailwind"],
+    "link": "https://keenkeeperp.netlify.app/",
+    "github": "https://github.com/anamul24/KeenKeeper",
+    "size": "small",
+    "image": "/image/keenkeeper.png",
+    "category": "web"
+  },
+  {
+    "id": "digitools",
+    "title": "DigiTools",
+    "description": "DigiTools Platform is a responsive utility web app offering multiple digital tools in a clean, fast, and user-friendly interface.",
+    "longDescription": "DigiTools Platform is a modern, responsive web application that provides a collection of useful digital tools in a clean and user-friendly interface. The project is designed to simplify everyday tasks by offering multiple utility features in one centralized platform. Built with a focus on performance and usability, the platform ensures a smooth experience across all devices.",
+    "tags": ["TailwindCSS", "React"],
+    "link": "https://digitoolsplatforma06.netlify.app",
+    "github": "https://github.com/anamul24/Digitools",
+    "size": "small",
+    "image": "/image/digitool.png",
+    "category": "web"
+  }
+]

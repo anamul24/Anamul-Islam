@@ -1,0 +1,16 @@
+[
+  {
+    "id": "education-bsc",
+    "degree": "B.Sc. in Computer Science",
+    "school": "Northern University Bangladesh",
+    "period": "2023 - 2026",
+    "description": "Specializing in computer science and engineering with a focus on core software development principles, networking, and modern technologies."
+  },
+  {
+    "id": "education-hsc",
+    "degree": "Higher Secondary Certificate (HSC)",
+    "school": "Gazipur Science College",
+    "period": "2020 - 2021",
+    "description": "Science background with strong foundations in mathematics and logical reasoning."
+  }
+]

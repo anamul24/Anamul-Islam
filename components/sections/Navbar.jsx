@@ -1,0 +1,190 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Menu, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+const navLinks = [
+  { name: 'Home', href: '#' },
+  { name: 'About', href: '#about' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Experience', href: '#experience' },
+];
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
+  const tapTimerRef = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Secret keyboard shortcut: Ctrl + Shift + A → Admin panel
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        router.push('/nx-panel');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [router]);
+
+  // Secret logo tap: 5 quick taps → Admin panel (works on mobile too)
+  const handleLogoTap = (e) => {
+    const newCount = tapCount + 1;
+    setTapCount(newCount);
+
+    if (tapTimerRef[0]) clearTimeout(tapTimerRef[0]);
+
+    if (newCount >= 5) {
+      setTapCount(0);
+      router.push('/nx-panel');
+    } else {
+      tapTimerRef[0] = setTimeout(() => setTapCount(0), 3000);
+    }
+  };
+
+  // Lock body scroll when menu is open on mobile
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  // Smooth scroll handler — closes menu first, restores overflow, then scrolls
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setIsOpen(false);
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+      if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }, 50);
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'py-4 bg-white/80 dark:bg-black/60 backdrop-blur-lg border-b border-slate-200 dark:border-white/5 shadow-sm'
+          : 'py-6 bg-transparent'
+      }`}
+    >
+      <div className="container mx-auto px-6 flex items-center justify-between">
+
+        {/* Logo — secret: tap 5 times to open admin */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-xl font-bold tracking-tighter"
+        >
+          <a
+            href="#"
+            onClick={(e) => {
+              handleLogoTap(e);
+              handleNavClick(e, '#');
+            }}
+          >
+            <span className="text-slate-900 dark:text-white">ANAM</span>
+            <span className="text-amber-500 transition-colors">.</span>
+          </a>
+        </motion.div>
+
+        {/* Desktop nav links */}
+        <div className="hidden lg:flex items-center gap-8 bg-slate-100/80 dark:bg-slate-900/40 backdrop-blur-md px-8 py-2.5 rounded-full border border-slate-200 dark:border-white/5 shadow-xl">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-[10px] font-bold uppercase tracking-widest text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-white transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+
+        {/* Desktop contact button */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="hidden md:flex items-center gap-4"
+        >
+          <a
+            href="#contact"
+            className="px-6 py-2.5 rounded-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-[10px] font-bold uppercase tracking-widest hover:bg-amber-500 dark:hover:bg-amber-500 transition-all shadow-xl border border-amber-500/20"
+          >
+            Contact
+          </a>
+        </motion.div>
+
+        {/* Hamburger button — visible below lg */}
+        <div className="flex items-center gap-4 lg:hidden">
+          <button
+            className="text-slate-900 dark:text-slate-200 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile dropdown menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-white/10 overflow-hidden"
+          >
+            <div className="flex flex-col p-6 space-y-6">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-2xl font-bold text-slate-700 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors uppercase tracking-tighter"
+                >
+                  {link.name}
+                </a>
+              ))}
+
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="w-full py-4 rounded-xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-center font-bold uppercase tracking-widest text-xs"
+              >
+                Contact
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}
