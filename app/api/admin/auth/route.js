@@ -8,12 +8,14 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Password required' }, { status: 400 });
     }
 
-    // Trim both sides to prevent whitespace issues from Vercel env var copy-paste
     const adminPassword = (process.env.ADMIN_PASSWORD || '').trim();
     const inputPassword = password.trim();
 
     if (!adminPassword) {
-      return NextResponse.json({ error: 'Server config error: ADMIN_PASSWORD not set' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'ADMIN_PASSWORD is not configured on the server.' },
+        { status: 500 }
+      );
     }
 
     if (inputPassword === adminPassword) {
