@@ -2,7 +2,7 @@ import Navbar from '@/components/sections/Navbar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import BentoGrid from '@/components/sections/BentoGrid';
-import TechMarquee from '@/components/sections/TechMarquee';
+import Skills from '@/components/sections/Skills';
 import ExperienceTimeline from '@/components/sections/ExperienceTimeline';
 import Certificates from '@/components/sections/Certificates';
 import ContactForm from '@/components/sections/ContactForm';
@@ -14,7 +14,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
-      <TechMarquee />
+      <Skills />
       <BentoGrid />
       <ExperienceTimeline />
       <Certificates />

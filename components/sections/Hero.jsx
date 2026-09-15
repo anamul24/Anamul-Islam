@@ -209,19 +209,19 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 2.6 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-8">
+            className="flex flex-wrap items-center justify-center gap-4 mb-8">
             <button onClick={() => scrollTo('#labs')}
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-amber-500 text-black text-sm font-bold uppercase tracking-widest hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20">
-              <FlaskConical size={14} /> Network Labs
+              className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-black text-sm font-bold uppercase tracking-widest hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-all duration-300">
+              <FlaskConical size={16} /> Network Labs
             </button>
             <button onClick={() => scrollTo('#projects')}
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/15 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/10 hover:border-amber-500/40 transition-all">
-              <FolderOpen size={14} /> Projects
+              className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/10 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/[0.08] hover:border-amber-500/50 hover:scale-[1.02] transition-all duration-300">
+              <FolderOpen size={16} /> Projects
             </button>
             {data.cvUrl && (
               <a href={data.cvUrl} download
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-amber-500/30 text-amber-400 text-sm font-bold uppercase tracking-widest hover:bg-amber-500/10 transition-all">
-                <ArrowDown size={14} /> Download CV
+                className="flex items-center gap-2 px-7 py-3.5 rounded-full border border-amber-500/30 text-amber-400 text-sm font-bold uppercase tracking-widest hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(251,191,36,0.2)] hover:scale-[1.02] transition-all duration-300">
+                <ArrowDown size={16} /> Download CV
               </a>
             )}
           </motion.div>
