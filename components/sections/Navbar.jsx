@@ -74,9 +74,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       scrolled
-        ? 'py-3 bg-black/80 backdrop-blur-lg border-b border-white/5 shadow-sm'
+        ? 'py-3 bg-black/50 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
         : 'py-5 bg-transparent'
     }`}>
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -94,13 +94,13 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop nav links */}
-        <div className="hidden lg:flex items-center gap-6 bg-white/5 backdrop-blur-md px-6 py-2 rounded-full border border-white/10">
+        <div className="hidden lg:flex items-center gap-6 bg-white/[0.03] backdrop-blur-xl px-7 py-2.5 rounded-full border border-white/10 shadow-inner">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-amber-400 transition-colors"
+              className="text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-amber-400 hover:-translate-y-0.5 transition-all duration-300"
             >
               {link.name}
             </a>
@@ -116,16 +116,16 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-amber-500/20 hover:border-amber-500/40 hover:text-amber-400 transition-all"
+            className="px-6 py-2.5 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-white/[0.08] hover:border-amber-500/50 hover:text-amber-400 hover:scale-[1.05] transition-all duration-300"
           >
             Contact
           </a>
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
-            className="px-5 py-2 rounded-full bg-amber-500 text-black text-[10px] font-bold uppercase tracking-widest hover:bg-amber-400 transition-all flex items-center gap-2"
+            className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-black text-[10px] font-bold uppercase tracking-widest hover:scale-[1.05] hover:shadow-[0_0_15px_rgba(251,191,36,0.4)] transition-all duration-300 flex items-center gap-2"
           >
-            <Download size={11} /> CV
+            <Download size={12} /> CV
           </a>
         </motion.div>
 

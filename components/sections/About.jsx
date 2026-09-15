@@ -28,7 +28,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className="relative py-16 md:py-32 bg-black overflow-hidden transition-colors">
+    <section id="about" className="relative py-16 md:py-32 bg-transparent overflow-hidden transition-colors">
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-white via-slate-100/50 to-white dark:from-black dark:via-slate-900/10 dark:to-black pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
@@ -111,10 +111,11 @@ export default function About() {
                     hidden: { opacity: 0, y: 20 },
                     visible: { opacity: 1, y: 0 }
                   }}
-                  className="flex flex-col gap-1 border-l border-slate-200 dark:border-white/10 pl-6"
+                  className="flex flex-col gap-2 p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:bg-white/[0.05] hover:border-amber-500/30 transition-all duration-500 group hover:-translate-y-1 relative overflow-hidden"
                 >
-                  <span className="text-slate-900 dark:text-white text-3xl font-black">{stat.value}</span>
-                  <span className="text-slate-400 dark:text-slate-500 text-[9px] uppercase tracking-widest font-bold">{stat.label}</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span className="text-white text-3xl font-black group-hover:text-amber-400 transition-colors duration-300 relative z-10">{stat.value}</span>
+                  <span className="text-slate-500 text-[10px] uppercase tracking-widest font-bold group-hover:text-slate-300 transition-colors duration-300 relative z-10">{stat.label}</span>
                 </motion.div>
               ))}
             </motion.div>

@@ -51,7 +51,7 @@ export default function ExperienceTimeline() {
       .catch(() => {});
   }, []);
   return (
-    <section id="experience" className="py-14 md:py-32 bg-black px-4 md:px-8 relative overflow-hidden transition-colors">
+    <section id="experience" className="py-14 md:py-32 bg-transparent px-4 md:px-8 relative overflow-hidden transition-colors">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.05] dark:opacity-[0.02]">
         <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] border border-slate-900 dark:border-white/5 rounded-[200px] rotate-45 transition-colors" />
         <div className="absolute -bottom-20 -right-20 w-[400px] h-[400px] border border-slate-900 dark:border-white/5 rounded-full transition-colors" />
@@ -122,7 +122,7 @@ export default function ExperienceTimeline() {
                     hidden: { opacity: 0, x: -30 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  className="group relative p-6 md:p-10 rounded-[24px] md:rounded-[40px] bg-slate-100/50 dark:bg-slate-500/[0.03] border border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-slate-500/[0.06] hover:border-amber-500/30 transition-all duration-500"
+                  className="group relative p-6 md:p-10 rounded-3xl md:rounded-[40px] bg-white/[0.02] backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)] hover:bg-white/[0.04] hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-500 overflow-hidden"
                 >
                   <div className="absolute top-8 right-8 text-slate-900/5 dark:text-white/5 font-black text-6xl group-hover:text-amber-500/10 transition-colors">
                     0{index + 1}
@@ -176,7 +176,7 @@ export default function ExperienceTimeline() {
                     hidden: { opacity: 0, x: 30 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  className="group relative p-6 md:p-10 rounded-[24px] md:rounded-[40px] bg-slate-100/50 dark:bg-slate-500/[0.03] border border-slate-200 dark:border-white/5 hover:bg-slate-100 dark:hover:bg-slate-500/[0.06] hover:border-blue-500/30 transition-all duration-500"
+                  className="group relative p-6 md:p-10 rounded-3xl md:rounded-[40px] bg-white/[0.02] backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)] hover:bg-white/[0.04] hover:border-blue-500/40 hover:-translate-y-1 transition-all duration-500 overflow-hidden"
                 >
                   <div className="text-blue-600 dark:text-blue-500 font-bold text-[10px] uppercase tracking-widest mb-4 flex items-center gap-3">
                     <Calendar size={12} />

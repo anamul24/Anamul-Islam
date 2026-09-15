@@ -8,10 +8,12 @@ import { getAdminSession } from '@/lib/adminAuth';
 const ALLOWED_SECTIONS = ['hero', 'about', 'projects', 'experience', 'education', 'skills', 'certificates', 'labs'];
 
 function getFilePath(section) {
-  const tmpPath = path.join('/tmp', 'data', `${section}.json`);
-  const srcPath = path.join(process.cwd(), 'data', `${section}.json`);
-  if (fs.existsSync(tmpPath)) return tmpPath;
-  return srcPath;
+  const isVercel = process.env.VERCEL === '1';
+  if (isVercel) {
+    const tmpPath = path.join('/tmp', 'data', `${section}.json`);
+    if (fs.existsSync(tmpPath)) return tmpPath;
+  }
+  return path.join(process.cwd(), 'data', `${section}.json`);
 }
 
 function saveFilePath(section) {

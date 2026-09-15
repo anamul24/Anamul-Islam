@@ -115,7 +115,7 @@ export default function BentoGrid() {
   };
 
   return (
-    <section id="projects" className="py-12 md:py-24 bg-black relative overflow-hidden transition-colors selection:bg-amber-500 selection:text-black">
+    <section id="projects" className="py-12 md:py-24 bg-transparent relative overflow-hidden transition-colors selection:bg-amber-500 selection:text-black">
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.05] pointer-events-none z-0" />
       <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none z-0">
@@ -211,7 +211,7 @@ export default function BentoGrid() {
                 style={{
                   perspective: 1000,
                 }}
-                className={`group relative rounded-xl overflow-hidden border border-white/5 bg-slate-950 flex flex-col shadow-2xl transition-all duration-500 hover:border-amber-500/50 cursor-pointer ${
+                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer ${
                   project.size === 'large' ? 'md:col-span-2 md:row-span-2' : 
                   project.size === 'medium' ? 'md:row-span-2' : ''
                 }`}
@@ -226,7 +226,7 @@ export default function BentoGrid() {
                   transition={{ type: "spring", damping: 20, stiffness: 100 }}
                 >
 
-                  <div className="h-10 bg-black border-b border-white/5 flex items-center justify-between px-5">
+                  <div className="h-10 bg-black/40 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-5">
                     <div className="flex gap-2">
                       <div className="w-3 h-3 rounded-full bg-slate-900 border border-white/5 shadow-inner" />
                       <div className="w-3 h-3 rounded-full bg-slate-900 border border-white/5 shadow-inner" />
@@ -315,7 +315,7 @@ export default function BentoGrid() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative max-w-4xl w-full max-h-[85vh] bg-slate-950 border border-amber-500/20 rounded-lg overflow-hidden shadow-2xl flex flex-col md:flex-row"
+              className="relative max-w-4xl w-full max-h-[85vh] bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.8)] flex flex-col md:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
               <button
