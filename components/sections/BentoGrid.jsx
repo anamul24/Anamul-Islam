@@ -133,7 +133,7 @@ export default function BentoGrid() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="flex items-center gap-3 text-amber-500/80 font-mono tracking-[0.4em] uppercase text-[9px] mb-4 md:mb-8"
+              className="flex items-center gap-3 text-amber-500/80 font-mono tracking-[0.4em] uppercase text-xs mb-4 md:mb-8"
             >
               <div className="w-12 h-[1px] bg-amber-500/30" />
               <span>&lt;node_manager_v4.0.1 /&gt;</span>
@@ -151,7 +151,7 @@ export default function BentoGrid() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <div className="font-mono text-[10px] text-amber-500/40 uppercase tracking-widest pl-4 border-l border-amber-500/20">
+            <div className="font-mono text-xs text-amber-500/40 uppercase tracking-widest pl-4 border-l border-amber-500/20">
               $ grep_projects --tag:
             </div>
             <motion.div 
@@ -162,7 +162,7 @@ export default function BentoGrid() {
             >
               <button
                 onClick={() => setActiveTag(null)}
-                className={`relative px-4 py-2 rounded-sm font-mono text-[10px] uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
+                className={`relative px-4 py-3 min-h-[44px] rounded-sm font-mono text-xs uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
                   activeTag === null 
                     ? 'text-slate-950 bg-amber-400' 
                     : 'text-white/40 border border-white/5 hover:border-amber-400/50 hover:text-white'
@@ -175,7 +175,7 @@ export default function BentoGrid() {
                 <button
                   key={tag}
                   onClick={() => setActiveTag(tag)}
-                  className={`relative px-4 py-2 rounded-sm font-mono text-[10px] uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
+                  className={`relative px-4 py-3 min-h-[44px] rounded-sm font-mono text-xs uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
                     activeTag === tag 
                       ? 'text-slate-950 bg-amber-400' 
                       : 'text-white/40 border border-white/5 hover:border-amber-400/50 hover:text-white'
@@ -248,7 +248,7 @@ export default function BentoGrid() {
                       />
                     </div>
 
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity flex flex-wrap font-mono text-[8px] text-amber-500 overflow-hidden select-none pointer-events-none p-4 gap-2">
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity flex flex-wrap font-mono text-[10px] text-amber-500 overflow-hidden select-none pointer-events-none p-4 gap-2">
                       {Array.from({ length: 60 }).map((_, i) => (
                         <div key={i} className="animate-pulse" style={{ animationDelay: `${(i % 10) * 0.1}s` }}>
                           {((index + i) * 6421 % 0xFFFF).toString(16).padStart(4, '0')}
@@ -259,7 +259,7 @@ export default function BentoGrid() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
                     <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-                      <div className="flex items-center gap-6 mb-8 font-mono text-[9px] text-amber-500/40 uppercase tracking-widest transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
+                      <div className="flex items-center gap-6 mb-8 font-mono text-xs text-amber-500/40 uppercase tracking-widest transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
                         <div className="flex items-center gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-amber-500/20 group-hover:bg-amber-500 animate-pulse" />
                           
@@ -272,7 +272,7 @@ export default function BentoGrid() {
 
                       <div className="flex flex-wrap gap-2 mb-6">
                         {project.tags.slice(0, 3).map(tag => (
-                          <span key={tag} className="px-3 py-1 rounded-sm bg-amber-500/5 text-amber-400 text-[10px] font-mono border border-amber-500/10 backdrop-blur-sm">
+                          <span key={tag} className="px-3 py-1 rounded-sm bg-amber-500/5 text-amber-400 text-xs font-mono border border-amber-500/10 backdrop-blur-sm">
                             #{tag.toLowerCase()}
                           </span>
                         ))}
@@ -351,7 +351,7 @@ export default function BentoGrid() {
                 
                 <div className="flex flex-wrap gap-2 mb-8">
                   {selectedProject.tags.map(tag => (
-                    <span key={tag} className="px-2 py-1 rounded-sm bg-white/5 border border-white/10 text-slate-400 text-[9px] font-mono">
+                    <span key={tag} className="px-2 py-1 rounded-sm bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
                       {tag}
                     </span>
                   ))}
