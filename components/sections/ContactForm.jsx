@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'motion/react';
+import { useState, useId } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import emailjs from '@emailjs/browser';
-
 import {
   Send,
   Mail,
@@ -14,21 +13,57 @@ import {
   Linkedin,
   Facebook,
   MessageCircle,
+  CheckCircle,
+  AlertCircle,
 } from 'lucide-react';
+
+const SOCIAL_LINKS = [
+  {
+    icon: Github,
+    label: 'GitHub',
+    link: 'https://github.com/anamul24',
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    link: 'https://www.linkedin.com/in/anamul-islam-ab907a242',
+  },
+  {
+    icon: Facebook,
+    label: 'Facebook',
+    link: 'https://www.facebook.com/share/17bRnrxef5/',
+  },
+  {
+    icon: Twitter,
+    label: 'X (Twitter)',
+    link: 'https://x.com/anamul_islam1',
+  },
+  {
+    icon: MessageCircle,
+    label: 'WhatsApp',
+    link: 'https://wa.me/8801764162669',
+  },
+];
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null); // 'success' | 'error' | null
+  const baseId = useId();
+  const nameId = `${baseId}-name`;
+  const emailId = `${baseId}-email`;
+  const messageId = `${baseId}-message`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus(null);
 
     const form = e.target;
 
     const templateParams = {
-      from_name: form.name.value,
-      from_email: form.email.value,
-      message: form.message.value,
+      from_name: form.name.value.trim(),
+      from_email: form.email.value.trim(),
+      message: form.message.value.trim(),
     };
 
     try {
@@ -38,37 +73,57 @@ export default function ContactForm() {
         templateParams,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
-
-      alert('Message sent successfully!');
+      setStatus('success');
       form.reset();
     } catch (error) {
-      console.error(error);
-      alert('Failed to send message');
+      console.error('EmailJS error:', error);
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
+  };
 
-    setIsSubmitting(false);
+  const handleResumeClick = () => {
+    const RESUME_URL = '/resume.pdf';
+    const LINKEDIN_URL = 'https://www.linkedin.com/in/anamul-islam-ab907a242';
+    fetch(RESUME_URL, { method: 'HEAD' })
+      .then((res) => {
+        if (res.ok) {
+          const a = document.createElement('a');
+          a.href = RESUME_URL;
+          a.download = 'Anamul_Islam_Resume.pdf';
+          a.click();
+        } else {
+          window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
+        }
+      })
+      .catch(() => {
+        window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
+      });
   };
 
   return (
     <section
       id="contact"
-      className="py-12 md:py-24 relative overflow-hidden bg-black text-white transition-colors"
+      className="py-12 md:py-24 relative overflow-hidden bg-black text-white"
+      aria-label="Contact section"
     >
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-400/10 dark:bg-amber-400/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute inset-0 tech-grid opacity-[0.05] pointer-events-none z-0" />
-      <div className="absolute inset-0 tech-dot-grid opacity-[0.08] pointer-events-none z-0" />
-      <div className="absolute inset-0 scanlines opacity-[0.03] pointer-events-none z-0" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-400/5 rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 tech-grid opacity-[0.04] pointer-events-none z-0" aria-hidden="true" />
+      <div className="absolute inset-0 tech-dot-grid opacity-[0.06] pointer-events-none z-0" aria-hidden="true" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-10 md:gap-20">
+
+          {/* Left column — contact info */}
           <div className="lg:w-1/2">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-amber-600 dark:text-amber-400 font-bold tracking-widest uppercase text-xs mb-4"
+              className="text-emerald-400 font-bold tracking-widest uppercase text-xs mb-4"
             >
-              Let's Connect
+              Let&apos;s Connect
             </motion.div>
 
             <motion.h2
@@ -78,15 +133,12 @@ export default function ContactForm() {
               className="text-3xl md:text-6xl font-black tracking-tight mb-6 md:mb-8"
             >
               Contact <br />
-              <span className="text-slate-400 dark:text-slate-500">
-              With Me
-              </span>
+              <span className="text-slate-500">With Me</span>
             </motion.h2>
 
-            <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-12 max-w-lg">
-              I&apos;m currently open to new projects and collaborations.
-              Whether you have a question or just want to say hi, I&apos;ll do
-              my best to get back to you!
+            <p className="text-slate-400 text-base leading-relaxed mb-10 max-w-lg">
+              I&apos;m open to networking discussions, collaboration, and web development projects.
+              Feel free to reach out — I&apos;ll get back to you as soon as I can.
             </p>
 
             <motion.div
@@ -97,179 +149,204 @@ export default function ContactForm() {
                 hidden: { opacity: 0 },
                 visible: {
                   opacity: 1,
-                  transition: {
-                    staggerChildren: 0.1,
-                    delayChildren: 0.2,
-                  },
+                  transition: { staggerChildren: 0.1, delayChildren: 0.2 },
                 },
               }}
-              className="space-y-4 md:space-y-8"
+              className="space-y-5 md:space-y-8"
             >
+              {/* Email */}
               <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="flex items-center gap-6 group"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="flex items-center gap-5 group"
               >
-                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                  <Mail size={24} />
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400" aria-hidden="true">
+                  <Mail size={22} aria-hidden="true" />
                 </div>
-
                 <div className="min-w-0">
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                    Email Me
-                  </div>
-
-                  <div className="text-slate-900 dark:text-white font-medium text-base md:text-lg break-all">
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Email</div>
+                  <a
+                    href="mailto:anamulislamsumon01@gmail.com"
+                    className="text-white font-medium text-base break-all hover:text-emerald-400 transition-colors"
+                  >
                     anamulislamsumon01@gmail.com
-                  </div>
+                  </a>
                 </div>
               </motion.div>
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="flex items-center gap-6 group"
-              >
-                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                  <MapPin size={24} />
-                </div>
 
+              {/* Location */}
+              <motion.div
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="flex items-center gap-5 group"
+              >
+                <div className="w-14 h-14 min-w-[56px] rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400" aria-hidden="true">
+                  <MapPin size={22} aria-hidden="true" />
+                </div>
                 <div>
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                    Location
-                  </div>
-
-                  <div className="text-slate-900 dark:text-white font-medium text-base md:text-lg leading-snug">
-                    161/12 Baganbari, Matikata,<br />Dhaka Cantonment
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Location</div>
+                  <div className="text-white font-medium text-base leading-snug">
+                    Dhaka Cantonment, Dhaka<br />
+                    <span className="text-slate-500 text-sm">Bangladesh</span>
                   </div>
                 </div>
               </motion.div>
+
+              {/* Resume */}
               <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="flex flex-col sm:flex-row gap-4 pt-2 md:pt-4"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                className="flex flex-col sm:flex-row gap-4 pt-2"
               >
-                <a
-                  href="/resume.pdf"
-                  download="Anamul_Islam_CV.pdf"
-                  className="flex items-center justify-center gap-3 px-8 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-amber-600 dark:text-amber-400 hover:bg-slate-950 dark:hover:bg-amber-400 hover:text-white dark:hover:text-slate-950 transition-all font-bold uppercase tracking-widest text-[10px]"
+                <button
+                  onClick={handleResumeClick}
+                  aria-label="Download my resume PDF"
+                  className="flex items-center justify-center gap-3 px-8 py-3.5 min-h-[44px] rounded-2xl bg-slate-900 border border-slate-800 text-amber-400 hover:bg-amber-400 hover:text-slate-950 transition-all font-bold uppercase tracking-widest text-xs"
                 >
-                  <Download size={16} />
-                  Download CV
-                </a>
+                  <Download size={16} aria-hidden="true" />
+                  Download Resume
+                </button>
               </motion.div>
             </motion.div>
-            <div className="flex gap-4 md:gap-6 mt-8 md:mt-16 flex-wrap">
-              {[
-                {
-                  icon: Github,
-                  link: 'https://github.com/anamul24',
-                },
-                {
-                  icon: Linkedin,
-                  link: 'https://www.linkedin.com/in/anamul-islam-ab907a242',
-                },
-                {
-                  icon: Facebook,
-                  link: 'https://www.facebook.com/share/17bRnrxef5/',
-                },
-                {
-                  icon: Twitter,
-                  link: 'https://x.com/anamul_islam1',
-                },
-                {
-                  icon: MessageCircle,
-                  link: 'https://wa.me/8801764162669',
-                },
-              ].map((item, i) => {
-                const Icon = item.icon;
 
+            {/* Social links */}
+            <div className="flex gap-4 mt-10 flex-wrap" role="list" aria-label="Social media links">
+              {SOCIAL_LINKS.map((item) => {
+                const Icon = item.icon;
                 return (
                   <a
-                    key={i}
+                    key={item.label}
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 hover:text-amber-600 dark:hover:text-amber-400 hover:border-amber-600 dark:hover:border-amber-400 transition-all"
+                    aria-label={`Visit my ${item.label} profile`}
+                    role="listitem"
+                    className="w-12 h-12 min-w-[44px] min-h-[44px] rounded-full border border-slate-800 flex items-center justify-center text-slate-500 hover:text-emerald-400 hover:border-emerald-400 transition-all"
                   >
-                    <Icon size={20} />
+                    <Icon size={20} aria-hidden="true" />
                   </a>
                 );
               })}
             </div>
           </div>
+
+          {/* Right column — contact form */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <div className="p-6 md:p-12 rounded-[24px] md:rounded-[40px] bg-slate-50/50 dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 backdrop-blur-xl shadow-2xl transition-colors">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
-                      Full Name
-                    </label>
+            <div className="p-6 md:p-12 rounded-[24px] bg-slate-900/40 border border-white/5 backdrop-blur-xl shadow-2xl">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
 
-                    <motion.input
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <div className="space-y-2">
+                    <label htmlFor={nameId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
+                      Full Name <span aria-hidden="true" className="text-emerald-500">*</span>
+                    </label>
+                    <input
+                      id={nameId}
                       name="name"
                       type="text"
                       required
-                      className="w-full bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
-                      placeholder="Name"
+                      autoComplete="name"
+                      aria-required="true"
+                      className="w-full bg-slate-950/50 border border-slate-700 rounded-2xl px-6 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+                      placeholder="Your name"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
-                      Email Address
-                    </label>
 
-                    <motion.input
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <label htmlFor={emailId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
+                      Email Address <span aria-hidden="true" className="text-emerald-500">*</span>
+                    </label>
+                    <input
+                      id={emailId}
                       name="email"
                       type="email"
                       required
-                      className="w-full bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
-                      placeholder="email@example.com"
+                      autoComplete="email"
+                      aria-required="true"
+                      className="w-full bg-slate-950/50 border border-slate-700 rounded-2xl px-6 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+                      placeholder="you@example.com"
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">
-                    Your Message
-                  </label>
 
-                  <motion.textarea
+                {/* Message */}
+                <div className="space-y-2">
+                  <label htmlFor={messageId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    Message <span aria-hidden="true" className="text-emerald-500">*</span>
+                  </label>
+                  <textarea
+                    id={messageId}
                     name="message"
                     required
+                    aria-required="true"
                     rows={5}
-                    className="w-full bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4 text-slate-900 dark:text-white focus:outline-none focus:border-amber-400 resize-none"
-                    placeholder="Tell me about your self..."
+                    className="w-full bg-slate-950/50 border border-slate-700 rounded-2xl px-6 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none transition-colors"
+                    placeholder="What would you like to discuss?"
                   />
                 </div>
 
+                {/* Status messages */}
+                <AnimatePresence mode="wait">
+                  {status === 'success' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-3 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
+                      role="status"
+                      aria-live="polite"
+                    >
+                      <CheckCircle size={18} aria-hidden="true" />
+                      <span className="text-sm font-medium">Message sent! I&apos;ll get back to you soon.</span>
+                    </motion.div>
+                  )}
+                  {status === 'error' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"
+                      role="alert"
+                      aria-live="assertive"
+                    >
+                      <AlertCircle size={18} aria-hidden="true" />
+                      <span className="text-sm font-medium">
+                        Couldn&apos;t send your message. Please try emailing me directly.
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Submit button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-5 rounded-2xl bg-slate-900 dark:bg-amber-400 text-white dark:text-slate-950 font-bold text-lg hover:bg-slate-800 dark:hover:bg-amber-300 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full py-4 min-h-[52px] rounded-2xl bg-emerald-600 text-white font-bold text-base hover:bg-emerald-500 transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label={isSubmitting ? 'Sending message, please wait' : 'Send message'}
                 >
                   {isSubmitting ? (
-                    <div className="w-6 h-6 border-4 border-slate-900/30 dark:border-slate-950/30 border-t-slate-900 dark:border-t-slate-950 rounded-full animate-spin" />
+                    <>
+                      <div
+                        className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"
+                        aria-hidden="true"
+                      />
+                      <span>Sending...</span>
+                    </>
                   ) : (
                     <>
                       <span>Send Message</span>
-                      <Send size={20} />
+                      <Send size={18} aria-hidden="true" />
                     </>
                   )}
                 </button>
               </form>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

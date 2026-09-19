@@ -1,6 +1,7 @@
 import Navbar from '@/components/sections/Navbar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
+import NetworkLabs from '@/components/sections/NetworkLabs';
 import BentoGrid from '@/components/sections/BentoGrid';
 import Skills from '@/components/sections/Skills';
 import ExperienceTimeline from '@/components/sections/ExperienceTimeline';
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
+      <NetworkLabs />
       <BentoGrid />
       <ExperienceTimeline />
       <Certificates />

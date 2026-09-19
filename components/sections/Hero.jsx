@@ -2,17 +2,21 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Github, Linkedin, ArrowDown, FlaskConical, FolderOpen } from 'lucide-react';
+import { Github, Linkedin, ArrowDown, Network, FolderOpen } from 'lucide-react';
+
+const LINKEDIN_URL = 'https://www.linkedin.com/in/anamul-islam-ab907a242';
+const RESUME_URL = '/resume.pdf';
 
 const DEFAULT = {
   roles: ['NETWORK ENGINEER', 'CISCO CCNA TRAINEE', 'MIKROTIK TRAINEE', 'MERN STACK DEVELOPER'],
   name: 'Anamul Islam',
-  subtitle: 'Network Engineer | Infrastructure & Network Security Enthusiast',
-  description: 'Building reliable networks, solving infrastructure problems, and exploring secure IT systems through hands-on labs and real-world projects.',
-  scrollHint: 'Scroll to explore work',
+  subtitle: 'Network Engineer | CCNA Trainee | MERN Stack Developer',
+  description:
+    'Building reliable networks through hands-on Cisco and MikroTik labs. Also developing modern web applications with the MERN stack.',
+  scrollHint: 'Scroll to explore',
   github: 'https://github.com/anamul24',
-  linkedin: '',
-  cvUrl: '',
+  linkedin: LINKEDIN_URL,
+  cvUrl: RESUME_URL,
 };
 
 function useTypingAnimation(words, { typeSpeed = 80, deleteSpeed = 40, pauseMs = 1800 } = {}) {
@@ -22,7 +26,7 @@ function useTypingAnimation(words, { typeSpeed = 80, deleteSpeed = 40, pauseMs =
   const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setStarted(true), 1800);
+    const t = setTimeout(() => setStarted(true), 1200);
     return () => clearTimeout(t);
   }, []);
 
@@ -49,6 +53,7 @@ function useTypingAnimation(words, { typeSpeed = 80, deleteSpeed = 40, pauseMs =
   return displayText;
 }
 
+// Network topology particle animation — emerald green color scheme
 function ParticleNetwork() {
   const canvasRef = useRef(null);
   useEffect(() => {
@@ -57,16 +62,18 @@ function ParticleNetwork() {
     const ctx = canvas.getContext('2d');
     let animId;
     const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    const NUM = 80; const MAX_DIST = 120;
+    const NUM = 70; const MAX_DIST = 130;
     class Particle {
       constructor() { this.init(); }
       init() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.r = Math.random() * 1.5 + 0.6;
-        this.alpha = Math.random() * 0.5 + 0.1;
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = (Math.random() - 0.5) * 0.35;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random() * 0.4 + 0.1;
+        // Mostly emerald with occasional amber node
+        this.isAmber = Math.random() < 0.15;
       }
       update() {
         this.x += this.vx; this.y += this.vy;
@@ -75,7 +82,8 @@ function ParticleNetwork() {
       }
       draw() {
         ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(251,191,36,${this.alpha})`; ctx.fill();
+        const color = this.isAmber ? `rgba(251,191,36,${this.alpha})` : `rgba(16,185,129,${this.alpha})`;
+        ctx.fillStyle = color; ctx.fill();
       }
     }
     resize();
@@ -92,7 +100,7 @@ function ParticleNetwork() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(251,191,36,${(1 - d / MAX_DIST) * 0.2})`;
+            ctx.strokeStyle = `rgba(16,185,129,${(1 - d / MAX_DIST) * 0.15})`;
             ctx.lineWidth = 0.5; ctx.stroke();
           }
         }
@@ -104,16 +112,15 @@ function ParticleNetwork() {
     window.addEventListener('resize', onResize);
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize); };
   }, []);
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block" aria-hidden="true" />;
 }
 
 const CODE_LINES = [
   'router ospf 1 / network 0.0.0.0', 'ping 192.168.1.1 -t',
   'vlan 10 / name MANAGEMENT', 'ssh admin@192.168.0.1',
-  'nmap -sV 192.168.1.0/24', 'ip route 0.0.0.0 0.0.0.0 10.0.0.1',
-  'traceroute 8.8.8.8', 'show ip route / show vlan brief',
-  'sudo iptables -A INPUT -p tcp', 'npm run build && deploy',
-  'interface GigabitEthernet0/0', 'git push origin main',
+  'ip route 0.0.0.0 0.0.0.0 10.0.0.1', 'traceroute 8.8.8.8',
+  'show ip route / show vlan brief', 'interface GigabitEthernet0/0',
+  'ip dhcp pool LAN', 'no shutdown', 'git push origin main', 'npm run dev',
 ];
 
 const SNIPPET_POSITIONS = CODE_LINES.map((_, i) => ({
@@ -129,7 +136,17 @@ export default function Hero() {
   useEffect(() => {
     fetch('/api/admin/data?section=hero')
       .then(r => r.json())
-      .then(d => { if (d.roles?.length) setData({ ...DEFAULT, ...d }); })
+      .then(d => {
+        if (d.roles?.length) {
+          setData({
+            ...DEFAULT,
+            ...d,
+            // Ensure we always have real social links
+            linkedin: d.linkedin || LINKEDIN_URL,
+            cvUrl: d.cvUrl || RESUME_URL,
+          });
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -140,20 +157,41 @@ export default function Hero() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const handleResumeClick = () => {
+    fetch(RESUME_URL, { method: 'HEAD' })
+      .then((res) => {
+        if (res.ok) {
+          const a = document.createElement('a');
+          a.href = RESUME_URL;
+          a.download = 'Anamul_Islam_Resume.pdf';
+          a.click();
+        } else {
+          window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
+        }
+      })
+      .catch(() => {
+        window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
+      });
+  };
+
   return (
-    <section id="home" className="relative min-h-[100svh] flex flex-col justify-center bg-[#020202] overflow-hidden selection:bg-amber-400 selection:text-black">
+    <section
+      id="home"
+      aria-label="Introduction"
+      className="relative min-h-[100svh] flex flex-col justify-center bg-[#020202] overflow-hidden selection:bg-emerald-400 selection:text-black"
+    >
 
-      {/* Particle network */}
-      <div className="absolute inset-0 z-0"><ParticleNetwork /></div>
+      {/* Particle network background */}
+      <div className="absolute inset-0 z-0" aria-hidden="true"><ParticleNetwork /></div>
 
-      {/* Floating code snippets */}
-      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+      {/* Floating network command snippets */}
+      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
         {CODE_LINES.map((line, i) => (
           <motion.div
             key={i}
-            className="absolute font-mono text-[9px] sm:text-[10px] text-amber-400/15 whitespace-nowrap select-none"
+            className="absolute font-mono text-[10px] sm:text-[11px] text-emerald-400/12 whitespace-nowrap select-none"
             style={{ left: SNIPPET_POSITIONS[i].left, top: SNIPPET_POSITIONS[i].top }}
-            animate={{ y: [0, -16, 0], opacity: [0.06, 0.22, 0.06] }}
+            animate={{ y: [0, -14, 0], opacity: [0.04, 0.18, 0.04] }}
             transition={{ duration: SNIPPET_POSITIONS[i].duration, repeat: Infinity, delay: SNIPPET_POSITIONS[i].delay, ease: 'easeInOut' }}
           >
             {line}
@@ -162,84 +200,147 @@ export default function Hero() {
       </div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-[2] pointer-events-none bg-gradient-to-b from-black/60 via-black/5 to-black/75" />
+      <div className="absolute inset-0 z-[2] pointer-events-none bg-gradient-to-b from-black/55 via-black/5 to-black/70" aria-hidden="true" />
 
-      {/* Grid */}
+      {/* Grid overlay */}
       <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 0.1 }} transition={{ duration: 2, delay: 1 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 0.07 }} transition={{ duration: 2, delay: 0.8 }}
         className="absolute inset-0 tech-grid pointer-events-none z-[3]"
+        aria-hidden="true"
       />
 
       {/* Main content */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center justify-center min-h-[100svh] pt-20 pb-12">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center justify-center min-h-[100svh] pt-20 pb-16">
         <div className="w-full max-w-5xl flex flex-col items-center text-center">
 
           {/* Name strip */}
           <div className="flex items-center gap-6 w-full mb-5">
-            <motion.div initial={{ x: '-101%' }} animate={{ x: 0 }} transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-500/20 to-amber-500/50" />
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}
-              className="text-[9px] font-bold uppercase tracking-[0.45em] text-amber-500/60 whitespace-nowrap">
+            <motion.div
+              initial={{ x: '-101%' }} animate={{ x: 0 }}
+              transition={{ duration: 1.4, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-emerald-500/50"
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-500/60 whitespace-nowrap"
+            >
               {data.name}
             </motion.div>
-            <motion.div initial={{ x: '101%' }} animate={{ x: 0 }} transition={{ duration: 1.5, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-px bg-gradient-to-l from-transparent via-amber-500/20 to-amber-500/50" />
+            <motion.div
+              initial={{ x: '101%' }} animate={{ x: 0 }}
+              transition={{ duration: 1.4, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1 h-px bg-gradient-to-l from-transparent via-emerald-500/20 to-emerald-500/50"
+              aria-hidden="true"
+            />
           </div>
 
-          {/* Typing h1 */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.4 }}
-            className="w-full flex items-center justify-center mb-4">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[90px] font-black uppercase text-transparent [-webkit-text-stroke:1px_#fbbf24] tracking-[0.06em] text-center min-h-[1.2em] flex items-center justify-center">
+          {/* Static role headline — immediately readable before animation */}
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-xs font-bold uppercase tracking-[0.35em] text-emerald-500/70 mb-3"
+          >
+            Network Engineer · CCNA Trainee · MERN Stack Developer
+          </motion.p>
+
+          {/* Typing H1 */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.0 }}
+            className="w-full flex items-center justify-center mb-5"
+          >
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[88px] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] tracking-[0.06em] text-center min-h-[1.2em] flex items-center justify-center">
               <span>{typedText}</span>
-              <span className="inline-block w-[3px] sm:w-[4px] h-[0.85em] bg-amber-400 ml-2 align-middle animate-blink" />
+              <span
+                className="inline-block w-[3px] sm:w-[4px] h-[0.85em] bg-emerald-400 ml-2 align-middle animate-blink"
+                aria-hidden="true"
+              />
             </h1>
           </motion.div>
 
           {/* Subtitle */}
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 2 }}
-            className="text-sm sm:text-base md:text-lg font-medium text-slate-300 tracking-wide mb-4">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
+            className="text-sm sm:text-base md:text-lg font-medium text-slate-300 tracking-wide mb-4"
+          >
             {data.subtitle}
           </motion.p>
 
           {/* Description */}
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 2.3 }}
-            className="max-w-2xl text-sm text-slate-500 leading-relaxed mb-8">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.9 }}
+            className="max-w-2xl text-sm sm:text-base text-slate-500 leading-relaxed mb-10"
+          >
             {data.description}
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 2.6 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-8">
-            <button onClick={() => scrollTo('#labs')}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-black text-sm font-bold uppercase tracking-widest hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-all duration-300">
-              <FlaskConical size={16} /> Network Labs
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
+            className="flex flex-wrap items-center justify-center gap-4 mb-10"
+          >
+            {/* Primary CTA */}
+            <button
+              onClick={() => scrollTo('#labs')}
+              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm font-bold uppercase tracking-widest hover:scale-[1.03] hover:shadow-[0_0_22px_rgba(16,185,129,0.4)] transition-all duration-300"
+              aria-label="View my networking projects"
+            >
+              <Network size={16} aria-hidden="true" /> View My Work
             </button>
-            <button onClick={() => scrollTo('#projects')}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/[0.03] backdrop-blur-md border border-white/10 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/[0.08] hover:border-amber-500/50 hover:scale-[1.02] transition-all duration-300">
-              <FolderOpen size={16} /> Projects
+
+            {/* Secondary CTA */}
+            <button
+              onClick={handleResumeClick}
+              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full bg-white/[0.04] backdrop-blur-md border border-white/12 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/[0.08] hover:border-emerald-500/50 hover:scale-[1.02] transition-all duration-300"
+              aria-label="Download my resume"
+            >
+              <ArrowDown size={16} aria-hidden="true" /> Download Resume
             </button>
-            {data.cvUrl && (
-              <a href={data.cvUrl} download
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full border border-amber-500/30 text-amber-400 text-sm font-bold uppercase tracking-widest hover:bg-amber-500/10 hover:shadow-[0_0_15px_rgba(251,191,36,0.2)] hover:scale-[1.02] transition-all duration-300">
-                <ArrowDown size={16} /> Download CV
-              </a>
-            )}
+
+            {/* Tertiary — Let's Connect */}
+            <button
+              onClick={() => scrollTo('#contact')}
+              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full border border-emerald-500/30 text-emerald-400 text-sm font-bold uppercase tracking-widest hover:bg-emerald-500/10 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-[1.02] transition-all duration-300"
+              aria-label="Go to contact section"
+            >
+              <FolderOpen size={16} aria-hidden="true" /> Let's Connect
+            </button>
           </motion.div>
 
           {/* Social links */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 3 }}
-            className="flex items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 2.6 }}
+            className="flex items-center gap-5"
+          >
             {data.github && (
-              <a href={data.github} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold">
-                <Github size={16} /> GitHub
+              <a
+                href={data.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit my GitHub profile"
+                className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold"
+              >
+                <Github size={16} aria-hidden="true" /> GitHub
               </a>
             )}
-            {data.github && data.linkedin && <span className="w-px h-4 bg-white/15" />}
+            {data.github && data.linkedin && (
+              <span className="w-px h-4 bg-white/15" aria-hidden="true" />
+            )}
             {data.linkedin && (
-              <a href={data.linkedin} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors text-xs uppercase tracking-widest font-bold">
-                <Linkedin size={16} /> LinkedIn
+              <a
+                href={data.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Connect with me on LinkedIn"
+                className="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors text-xs uppercase tracking-widest font-bold"
+              >
+                <Linkedin size={16} aria-hidden="true" /> LinkedIn
               </a>
             )}
           </motion.div>
@@ -248,19 +349,29 @@ export default function Hero() {
       </div>
 
       {/* Scroll hint */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} transition={{ delay: 3.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <span className="text-[9px] font-bold uppercase tracking-[0.35em] text-white/35">{data.scrollHint}</span>
-        <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-px h-6 bg-gradient-to-b from-amber-500/50 to-transparent" />
+      <motion.div
+        initial={{ opacity: 0 }} animate={{ opacity: 0.4 }}
+        transition={{ delay: 3.0, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        aria-hidden="true"
+      >
+        <span className="text-xs font-bold uppercase tracking-[0.3em] text-white/35">{data.scrollHint}</span>
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="w-px h-6 bg-gradient-to-b from-emerald-500/50 to-transparent"
+        />
       </motion.div>
 
       {/* Signature */}
-      <div className="absolute bottom-10 right-6 md:right-10 z-10">
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, delay: 0.8 }}
-          className="flex flex-col items-end">
-          <div className="text-[9px] md:text-[11px] font-mono uppercase tracking-[0.4em] text-amber-500/40 mb-1">Signature</div>
-          <div className="text-5xl sm:text-6xl md:text-7xl text-amber-500 font-signature rotate-[-7deg] opacity-90 drop-shadow-[0_2px_12px_rgba(251,191,36,0.3)]">
+      <div className="absolute bottom-10 right-6 md:right-10 z-10" aria-hidden="true">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5, delay: 0.8 }}
+          className="flex flex-col items-end"
+        >
+          <div className="text-xs font-mono uppercase tracking-[0.35em] text-emerald-500/35 mb-1">Signature</div>
+          <div className="text-5xl sm:text-6xl md:text-7xl text-emerald-500 font-signature rotate-[-7deg] opacity-80 drop-shadow-[0_2px_12px_rgba(16,185,129,0.25)]">
             {data.name}
           </div>
         </motion.div>

@@ -11,6 +11,9 @@
   --font-arabic: var(--font-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-corinthia: var(--font-signature), "Corinthia", cursive;
   --font-cinzel: "Cinzel", serif;
+  --color-emerald-primary: #10b981;
+  --color-emerald-dim: #059669;
+  --color-emerald-glow: rgba(16, 185, 129, 0.15);
 }
 
 @layer base {
@@ -37,6 +40,13 @@
   p {
     text-shadow: none;
     filter: none;
+  }
+
+  /* Keyboard focus ring — visible only for keyboard/tab navigation */
+  :focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -82,5 +92,17 @@
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50%       { opacity: 0; }
+  }
+
+  /* Respect user's reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

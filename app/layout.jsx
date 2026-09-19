@@ -40,14 +40,53 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata = {
-  title: 'Anamul Islam — Network Engineer',
-  description: 'Network Engineer | CCNA Trainee | Full Stack Developer',
+  title: 'Anamul Islam — Network Engineer & MERN Stack Developer',
+  description:
+    'Network Engineer with CCNA training, MikroTik expertise, and hands-on Cisco Packet Tracer labs. Also a MERN Stack Developer building modern web applications.',
+  metadataBase: new URL('https://anamul-islam.vercel.app'),
+  alternates: {
+    canonical: 'https://anamul-islam.vercel.app',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://anamul-islam.vercel.app',
+    title: 'Anamul Islam — Network Engineer & MERN Stack Developer',
+    description:
+      'Network Engineer with CCNA training, MikroTik expertise, and hands-on Cisco Packet Tracer labs. Also builds modern full-stack web applications.',
+    siteName: 'Anamul Islam Portfolio',
+    images: [
+      {
+        url: '/image/anamul islam.png',
+        width: 1200,
+        height: 630,
+        alt: 'Anamul Islam — Network Engineer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Anamul Islam — Network Engineer & MERN Stack Developer',
+    description:
+      'Network Engineer with CCNA training, MikroTik expertise, and hands-on Cisco labs. Also a MERN Stack Developer.',
+    images: ['/image/anamul islam.png'],
+    creator: '@anamul_islam1',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
   },
-  themeColor: '#f59e0b',
 };
 
 export default function RootLayout({ children }) {
