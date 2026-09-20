@@ -84,7 +84,7 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/anam.png', type: 'image/png' },
+      { url: '/image/anam.png', type: 'image/png' },
     ],
   },
 };

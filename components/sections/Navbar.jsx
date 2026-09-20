@@ -138,7 +138,7 @@ export default function Navbar() {
             className="flex items-center gap-2 md:gap-3 group"
           >
             <img 
-              src="/anam.png" 
+              src="/image/anam.png" 
               alt="Anamul Islam Logo" 
               className="w-10 h-10 object-cover rounded-full border-2 border-white/10 group-hover:border-emerald-500/50 transition-colors"
             />
