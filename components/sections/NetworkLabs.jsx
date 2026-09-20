@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
-import { Github, Download, ExternalLink, Network } from 'lucide-react';
+import { Github, Download, ExternalLink, Network, ChevronRight } from 'lucide-react';
 
 const DEFAULT_LABS = [
   {
@@ -41,44 +41,80 @@ const CONCEPT_COLORS = {
   'default': 'bg-amber-500/10 text-amber-400 border-amber-500/20',
 };
 
+const CATEGORY_CONFIG = {
+  routing: { color: '#10b981', label: 'Routing' },
+  switching: { color: '#6366f1', label: 'Switching' },
+  vlan: { color: '#3b82f6', label: 'VLAN' },
+  security: { color: '#ef4444', label: 'Security' },
+  mikrotik: { color: '#f59e0b', label: 'MikroTik' },
+  cisco: { color: '#0ea5e9', label: 'Cisco' },
+  default: { color: '#10b981', label: 'Lab' },
+};
+
 function LabCard({ lab, index }) {
+  const cat = CATEGORY_CONFIG[lab.category] || CATEGORY_CONFIG.default;
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative bg-white/[0.02] border border-white/8 rounded-2xl overflow-hidden hover:border-emerald-500/30 transition-all duration-300 hover:bg-white/[0.04]"
+      transition={{ duration: 0.55, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02] hover:border-emerald-500/30 hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
     >
-      {/* Featured badge */}
-      {lab.featured && (
-        <div className="absolute top-4 right-4 z-10 px-2.5 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-widest">
-          Featured
-        </div>
-      )}
+      {/* Top accent bar */}
+      <div
+        className="h-[2px] w-full"
+        style={{ background: `linear-gradient(90deg, transparent, ${cat.color}60, transparent)` }}
+      />
 
-      {/* Lab image / topology */}
-      <div className="relative h-44 bg-gradient-to-br from-slate-900 to-black overflow-hidden">
+      {/* Image area */}
+      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-900 to-black">
         {lab.image ? (
-          <Image
-            src={lab.image}
-            alt={`${lab.title} — network topology diagram`}
-            fill
-            className="object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-300"
-          />
+          <>
+            <Image
+              src={lab.image}
+              alt={`${lab.title} — network topology`}
+              fill
+              className="object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700"
+            />
+            {/* Scanline overlay for tech feel */}
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+              }}
+            />
+          </>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <Network size={48} className="text-emerald-500/20" aria-hidden="true" />
+            <Network size={56} className="opacity-10" style={{ color: cat.color }} aria-hidden="true" />
           </div>
         )}
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" aria-hidden="true" />
-        {/* Technology tags */}
-        <div className="absolute bottom-3 left-4 flex flex-wrap gap-1.5">
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+        {/* Category + Featured badges */}
+        <div className="absolute top-3 left-3 flex gap-2">
+          <span
+            className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"
+            style={{ background: `${cat.color}20`, color: cat.color, border: `1px solid ${cat.color}30` }}
+          >
+            {cat.label}
+          </span>
+          {lab.featured && (
+            <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-bold uppercase tracking-widest">
+              Featured
+            </span>
+          )}
+        </div>
+
+        {/* Tech tags bottom */}
+        <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
           {lab.technologies?.map(t => (
             <span
               key={t}
-              className="px-2 py-1 bg-black/60 border border-white/10 rounded text-xs font-bold uppercase tracking-wide text-slate-300"
+              className="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-[10px] font-bold uppercase tracking-wide text-slate-400 backdrop-blur-sm"
             >
               {t}
             </span>
@@ -87,41 +123,43 @@ function LabCard({ lab, index }) {
       </div>
 
       {/* Content */}
-      <div className="p-5">
-        <h3 className="text-white font-bold text-base mb-2 group-hover:text-emerald-400 transition-colors">
-          {lab.title}
-        </h3>
-        <p className="text-slate-500 text-sm leading-relaxed mb-4 line-clamp-2">
-          {lab.description}
-        </p>
+      <div className="flex flex-col flex-1 p-5 gap-4">
+        <div>
+          <h3 className="text-white font-bold text-base mb-2 group-hover:text-emerald-400 transition-colors duration-300 leading-snug">
+            {lab.title}
+          </h3>
+          <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">
+            {lab.description}
+          </p>
+        </div>
 
         {/* Concept tags */}
-        <div className="flex flex-wrap gap-1.5 mb-5" role="list" aria-label="Networking concepts covered">
+        <div className="flex flex-wrap gap-1.5" role="list" aria-label="Networking concepts">
           {lab.concepts?.slice(0, 5).map(c => (
             <span
               key={c}
               role="listitem"
-              className={`px-2 py-1 rounded border text-xs font-bold uppercase tracking-wide ${CONCEPT_COLORS[c] || CONCEPT_COLORS.default}`}
+              className={`px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${CONCEPT_COLORS[c] || CONCEPT_COLORS.default}`}
             >
               {c}
             </span>
           ))}
           {lab.concepts?.length > 5 && (
-            <span className="px-2 py-1 rounded border border-white/10 text-xs text-slate-500">
-              +{lab.concepts.length - 5} more
+            <span className="px-2 py-0.5 rounded border border-white/10 text-[10px] text-slate-500">
+              +{lab.concepts.length - 5}
             </span>
           )}
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-auto pt-2 border-t border-white/[0.05]">
           {lab.github && (
             <a
               href={lab.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${lab.title} on GitHub`}
-              className="flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 hover:text-white transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
             >
               <Github size={13} aria-hidden="true" /> GitHub
             </a>
@@ -131,7 +169,7 @@ function LabCard({ lab, index }) {
               href={lab.pktFile}
               download
               aria-label={`Download ${lab.title} Packet Tracer file`}
-              className="flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold hover:bg-emerald-500/20 transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold hover:bg-emerald-500/20 transition-all"
             >
               <Download size={13} aria-hidden="true" /> .pkt File
             </a>
@@ -142,7 +180,7 @@ function LabCard({ lab, index }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View documentation for ${lab.title}`}
-              className="flex items-center gap-1.5 px-3 py-2 min-h-[36px] rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 transition-all"
             >
               <ExternalLink size={13} aria-hidden="true" /> Docs
             </a>
@@ -178,6 +216,12 @@ export default function NetworkLabs() {
     <section id="labs" className="py-24 bg-[#020202] relative overflow-hidden" aria-label="Network labs and projects">
       {/* Background */}
       <div className="absolute inset-0 tech-grid opacity-[0.04] pointer-events-none" aria-hidden="true" />
+      {/* Subtle emerald glow top-left */}
+      <div
+        className="absolute top-0 left-0 w-[40vw] h-[40vw] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.05) 0%, transparent 70%)', filter: 'blur(40px)' }}
+        aria-hidden="true"
+      />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 
@@ -187,16 +231,16 @@ export default function NetworkLabs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-14"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <Network size={16} className="text-emerald-500" aria-hidden="true" />
-            <span className="text-xs font-bold uppercase tracking-[0.35em] text-emerald-500/70">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-[1px] bg-emerald-500/50" aria-hidden="true" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-emerald-500/70">
               Hands-On Practice
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
-            Network <span className="text-emerald-500">Labs</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+            Network <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">Labs</span>
           </h2>
           <p className="text-slate-500 max-w-xl text-sm leading-relaxed">
             Practical networking labs built with Cisco Packet Tracer and MikroTik. Each lab demonstrates
@@ -219,10 +263,10 @@ export default function NetworkLabs() {
               key={f.key}
               onClick={() => setActiveFilter(f.key)}
               aria-pressed={activeFilter === f.key}
-              className={`px-4 py-2 min-h-[38px] rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+              className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 ${
                 activeFilter === f.key
                   ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                  : 'bg-white/5 border border-white/10 text-slate-400 hover:border-emerald-500/30 hover:text-emerald-400'
+                  : 'bg-white/[0.03] border border-white/10 text-slate-400 hover:border-emerald-500/30 hover:text-emerald-400'
               }`}
             >
               {f.label}
@@ -237,14 +281,14 @@ export default function NetworkLabs() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {filtered.length > 0 ? (
               filtered.map((lab, i) => <LabCard key={lab.id} lab={lab} index={i} />)
             ) : (
-              <div className="col-span-3 text-center py-16 text-slate-600">
-                <Network size={40} className="mx-auto mb-4 opacity-30" aria-hidden="true" />
+              <div className="col-span-3 text-center py-20 text-slate-600">
+                <Network size={40} className="mx-auto mb-4 opacity-20" aria-hidden="true" />
                 <p className="text-sm">No labs in this category yet.</p>
               </div>
             )}
@@ -264,9 +308,11 @@ export default function NetworkLabs() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="View all networking projects on GitHub"
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-400 text-xs uppercase tracking-widest font-bold transition-colors"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-400 text-xs uppercase tracking-widest font-bold transition-colors group"
           >
-            <Github size={14} aria-hidden="true" /> View all on GitHub
+            <Github size={14} aria-hidden="true" />
+            View all on GitHub
+            <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </a>
         </motion.div>
       </div>

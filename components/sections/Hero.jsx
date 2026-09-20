@@ -252,32 +252,22 @@ export default function Hero() {
       <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center justify-center min-h-[100svh] pt-20 pb-16">
         <div className="w-full max-w-5xl flex flex-col items-center text-center">
 
-          {/* Badge */}
+          {/* Name */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/5 backdrop-blur-sm"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-3 relative"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-emerald-400/80">Available for opportunities</span>
+            <span className="text-xs font-bold uppercase tracking-[0.5em] text-slate-500">{data.name}</span>
           </motion.div>
-
-          {/* Static role headline — immediately readable before animation */}
-          <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-xs font-bold uppercase tracking-[0.35em] text-emerald-500/70 mb-3"
-          >
-            Network Engineer · CCNA Trainee · MERN Stack Developer
-          </motion.p>
 
           {/* Stagger Animation H1 */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.0 }}
-            className="w-full flex items-center justify-center mb-5 overflow-hidden"
+            transition={{ duration: 1, delay: 0.6 }}
+            className="w-full flex items-center justify-center mb-6 overflow-hidden"
           >
-            <h1 className="text-[clamp(1.5rem,4.5vw,5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.05em] text-center min-h-[1.2em] flex items-center justify-center whitespace-nowrap">
+            <h1 className="text-[clamp(1.6rem,5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.05em] text-center min-h-[1.2em] flex items-center justify-center whitespace-nowrap">
               <LetterStagger roles={data.roles} />
               <span
                 className="inline-block w-[3px] sm:w-[4px] h-[0.85em] bg-emerald-400 ml-2 align-middle animate-blink"

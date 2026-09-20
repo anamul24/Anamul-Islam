@@ -8,12 +8,12 @@ const DEFAULT = {
   tagline: 'The Story So Far',
   heading: 'About',
   headingHighlight: 'Me',
-  bio: "I'm a Computer Science and Engineering student focused on Network Engineering, infrastructure, and secure IT systems. I enjoy building and troubleshooting networks through hands-on labs with Cisco Packet Tracer and MikroTik, while also using my web development background to build practical tools and infrastructure-focused applications.",
+  bio: "I'm Anamul, a final-year CSE student in Dhaka, graduating this December. My focus is networking — routing, switching, troubleshooting — and I like working with real hardware, not just diagrams on a screen.\n\nI got into networking through David Bombal's Udemy course, then went further with hands-on CCNA and MikroTik training at CSL Training, working directly with physical devices: VLANs, OSPF routing, DHCP/NAT, EtherChannel. I'm currently preparing for the official CCNA exam.\n\nI also build full-stack web apps with the MERN stack — React, Next.js, Node.js, MongoDB. Learned through Programming Hero and Dr. Angela Yu's bootcamp. It's not the usual pairing with networking, but it means I understand both sides: the application and the infrastructure it runs on.\n\nI'm looking for an entry-level Network Engineer or NOC role in Dhaka. Take a look at what I've built below, or get in touch.",
   stats: [
-    { value: 'CCNA', label: 'In Progress' },
+    { value: 'CCNA', label: 'Training' },
     { value: 'MikroTik', label: 'Training' },
     { value: '50+', label: 'Network Lab Hours' },
-    { value: 'MERN', label: 'Secondary Skill' },
+    { value: 'MERN', label: 'Stack Development' },
   ],
 };
 
@@ -92,8 +92,8 @@ export default function About() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="space-y-4 text-slate-400 text-base md:text-lg leading-relaxed"
             >
-              {data.bio.split('\n\n').map((para, i) => (
-                <p key={i}>{para}</p>
+              {(data.bio || '').split(/\n\n+/).map((para, i) => (
+                <p key={i}>{para.trim()}</p>
               ))}
             </motion.div>
 
