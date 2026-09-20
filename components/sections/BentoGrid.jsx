@@ -118,32 +118,18 @@ export default function BentoGrid() {
     <section id="projects" className="py-12 md:py-24 bg-transparent relative overflow-hidden transition-colors selection:bg-amber-500 selection:text-black">
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.05] pointer-events-none z-0" />
-      <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none z-0">
-        <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-          <path d="M 0 50 L 100 50 M 50 0 L 50 100" stroke="currentColor" className="text-amber-500" strokeWidth="0.5" fill="none" />
-          <circle cx="50" cy="50" r="1.5" fill="currentColor" className="text-amber-500" />
-        </pattern>
-        <rect width="100%" height="100%" fill="url(#circuit)" />
-      </svg>
+
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-10 md:mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-12">
           <div className="max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 text-amber-500/80 font-mono tracking-[0.4em] uppercase text-xs mb-4 md:mb-8"
-            >
-              <div className="w-12 h-[1px] bg-amber-500/30" />
-              <span>&lt;node_manager_v4.0.1 /&gt;</span>
-            </motion.div>
+
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-8xl font-black tracking-tighter text-white leading-[0.85] md:leading-[0.8] mb-4 md:mb-8"
+              className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.85] md:leading-[0.8] mb-4 md:mb-8"
             >
               My <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-200 to-white/10 italic">Projects.</span>
@@ -151,9 +137,7 @@ export default function BentoGrid() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <div className="font-mono text-xs text-amber-500/40 uppercase tracking-widest pl-4 border-l border-amber-500/20">
-              $ grep_projects --tag:
-            </div>
+
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +152,7 @@ export default function BentoGrid() {
                     : 'text-white/40 border border-white/5 hover:border-amber-400/50 hover:text-white'
                 }`}
               >
-                <span className="relative z-10">all_nodes</span>
+                <span className="relative z-10">All</span>
                 <motion.div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
               </button>
               {['React', 'Next.js', 'TailwindCSS','Node.js'].map(tag => (
@@ -189,32 +173,18 @@ export default function BentoGrid() {
           </div>
         </div>
 
-        <motion.div 
-          key={activeTag || 'all'}
-          className="grid grid-cols-1 md:grid-cols-3 gap-10 auto-rows-[320px]"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+        <div className="relative w-full overflow-hidden mt-10">
+          <div className="flex w-fit gap-6 animate-marquee hover:[animation-play-state:paused] pb-10">
+            {[...filteredProjects, ...filteredProjects].map((project, index) => (
               <motion.div
                 layout
-                key={project.title}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, scale: 0.95 }}
+                key={`${project.title}-${index}`}
                 onMouseMove={handleMouseMove}
                 onClick={() => setSelectedProject(project)}
                 style={{
                   perspective: 1000,
                 }}
-                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer ${
-                  project.size === 'large' ? 'md:col-span-2 md:row-span-2' : 
-                  project.size === 'medium' ? 'md:row-span-2' : ''
-                }`}
+                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer w-[300px] md:w-[400px] h-[350px] shrink-0`}
               >
                 <motion.div
                   className="w-full h-full flex flex-col"
@@ -233,7 +203,7 @@ export default function BentoGrid() {
                       <div className="w-3 h-3 rounded-full bg-slate-900 border border-white/5 shadow-inner group-hover:bg-amber-500 group-hover:shadow-amber-500/50 transition-all duration-500" />
                     </div>
                     <div className="font-mono text-xs text-white/30 tracking-[0.15em] uppercase">
-                      PROJECT_{(index + 1).toString().padStart(2, '0')}
+                      PROJECT_{(index % filteredProjects.length + 1).toString().padStart(2, '0')}
                     </div>
                   </div>
 
@@ -285,21 +255,23 @@ export default function BentoGrid() {
                       <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed font-mono opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-6 group-hover:translate-y-0 max-w-sm">
                         ENTRY_LOG: &quot;{project.description}&quot;
                       </p>
-
-                      <div className="flex items-center justify-between pt-8 border-t border-white/5 mt-8 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                        
-                        <div className="text-emerald-400 group/btn flex items-center gap-2 text-xs font-black uppercase tracking-widest bg-emerald-400/5 px-4 py-2 rounded-sm border border-emerald-400/10 hover:bg-emerald-400 hover:text-black transition-all">
-                          View Project <ArrowRight size={14} aria-hidden="true" className="group-hover/btn:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </motion.div>
                 <div className="absolute inset-0 scanlines opacity-[0.05] pointer-events-none group-hover:opacity-0 transition-opacity" />
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(calc(-50% - 12px)); }
+            }
+            .animate-marquee {
+              animation: marquee 30s linear infinite;
+            }
+          `}</style>
+        </div>
       </div>
 
       <AnimatePresence>

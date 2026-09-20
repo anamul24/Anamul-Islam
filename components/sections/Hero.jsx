@@ -158,7 +158,7 @@ export default function Hero() {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // typedText removed in favor of LetterStagger component
@@ -265,14 +265,10 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="w-full flex items-center justify-center mb-6 overflow-hidden"
+            className="w-full flex items-center justify-center mb-6 overflow-visible"
           >
             <h1 className="text-[clamp(1.6rem,5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.05em] text-center min-h-[1.2em] flex items-center justify-center whitespace-nowrap">
               <LetterStagger roles={data.roles} />
-              <span
-                className="inline-block w-[3px] sm:w-[4px] h-[0.85em] bg-emerald-400 ml-2 align-middle animate-blink"
-                aria-hidden="true"
-              />
             </h1>
           </motion.div>
 
@@ -294,72 +290,6 @@ export default function Hero() {
             {data.description}
           </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.2 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-10"
-          >
-            {/* Primary CTA */}
-            <button
-              onClick={() => scrollTo('#labs')}
-              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm font-bold uppercase tracking-widest hover:scale-[1.03] hover:shadow-[0_0_22px_rgba(16,185,129,0.4)] transition-all duration-300"
-              aria-label="View my networking projects"
-            >
-              <Network size={16} aria-hidden="true" /> View My Work
-            </button>
-
-            {/* Secondary CTA */}
-            <button
-              onClick={handleResumeClick}
-              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full bg-white/[0.04] backdrop-blur-md border border-white/12 text-white text-sm font-bold uppercase tracking-widest hover:bg-white/[0.08] hover:border-emerald-500/50 hover:scale-[1.02] transition-all duration-300"
-              aria-label="Download my resume"
-            >
-              <ArrowDown size={16} aria-hidden="true" /> Download Resume
-            </button>
-
-            {/* Tertiary — Let's Connect */}
-            <button
-              onClick={() => scrollTo('#contact')}
-              className="flex items-center gap-2 px-7 py-3.5 min-h-[44px] rounded-full border border-emerald-500/30 text-emerald-400 text-sm font-bold uppercase tracking-widest hover:bg-emerald-500/10 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-[1.02] transition-all duration-300"
-              aria-label="Go to contact section"
-            >
-              <FolderOpen size={16} aria-hidden="true" /> Let's Connect
-            </button>
-          </motion.div>
-
-          {/* Social links */}
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 2.6 }}
-            className="flex items-center gap-5"
-          >
-            {data.github && (
-              <a
-                href={data.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit my GitHub profile"
-                className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-xs uppercase tracking-widest font-bold"
-              >
-                <Github size={16} aria-hidden="true" /> GitHub
-              </a>
-            )}
-            {data.github && data.linkedin && (
-              <span className="w-px h-4 bg-white/15" aria-hidden="true" />
-            )}
-            {data.linkedin && (
-              <a
-                href={data.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Connect with me on LinkedIn"
-                className="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors text-xs uppercase tracking-widest font-bold"
-              >
-                <Linkedin size={16} aria-hidden="true" /> LinkedIn
-              </a>
-            )}
-          </motion.div>
 
         </div>
       </div>

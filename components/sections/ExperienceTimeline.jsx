@@ -66,68 +66,9 @@ export default function ExperienceTimeline() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 relative">
-
-          {/* Experience column */}
-          <div className="flex flex-col gap-6 md:gap-12">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                <Briefcase size={20} aria-hidden="true" />
-              </div>
-              <h3 className="text-2xl font-bold text-white uppercase tracking-wider">Experience</h3>
-            </div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-              }}
-              className="space-y-6 md:space-y-10"
-            >
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={exp.title}
-                  variants={{
-                    hidden: { opacity: 0, x: -30 },
-                    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-                  }}
-                  className="group relative p-6 md:p-10 rounded-3xl bg-white/[0.02] backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)] hover:bg-white/[0.04] hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-500 overflow-hidden"
-                >
-                  <div className="absolute top-8 right-8 text-white/5 font-black text-6xl group-hover:text-emerald-500/10 transition-colors" aria-hidden="true">
-                    0{index + 1}
-                  </div>
-
-                  <div className="text-emerald-500 font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-3">
-                    <Calendar size={12} aria-hidden="true" />
-                    {exp.period}
-                  </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
-                    {exp.title}
-                  </h4>
-                  <div className="text-slate-400 text-sm font-medium mb-5 italic">{exp.company}</div>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-5 md:mb-8 max-w-md">
-                    {exp.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.milestones.map(m => (
-                      <span
-                        key={m}
-                        className="px-4 py-1.5 rounded-full bg-emerald-500/5 border border-white/5 text-xs text-white/40 font-bold uppercase tracking-widest group-hover:border-emerald-500/20 group-hover:text-emerald-500/60 transition-all"
-                      >
-                        {m}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Education column */}
-          <div className="flex flex-col gap-6 md:gap-12">
+        <div className="flex justify-center relative">
+          {/* Education section */}
+          <div className="flex flex-col gap-6 md:gap-12 w-full max-w-3xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
                 <GraduationCap size={20} aria-hidden="true" />

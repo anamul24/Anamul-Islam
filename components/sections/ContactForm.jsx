@@ -190,20 +190,6 @@ export default function ContactForm() {
                 </div>
               </motion.div>
 
-              {/* Resume */}
-              <motion.div
-                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-                className="flex flex-col sm:flex-row gap-4 pt-2"
-              >
-                <button
-                  onClick={handleResumeClick}
-                  aria-label="Download my resume PDF"
-                  className="flex items-center justify-center gap-3 px-8 py-3.5 min-h-[44px] rounded-2xl bg-slate-900 border border-slate-800 text-amber-400 hover:bg-amber-400 hover:text-slate-950 transition-all font-bold uppercase tracking-widest text-xs"
-                >
-                  <Download size={16} aria-hidden="true" />
-                  Download Resume
-                </button>
-              </motion.div>
             </motion.div>
 
             {/* Social links */}
