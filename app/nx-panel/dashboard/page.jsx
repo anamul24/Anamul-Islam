@@ -1093,15 +1093,25 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    const t = sessionStorage.getItem('admin_token');
-    if (!t) { router.push('/nx-panel'); return; }
-    setToken(t);
+    // Verify session via cookie (HTTP-only cookie set at login)
+    fetch('/api/admin/session')
+      .then(r => r.json())
+      .then(d => {
+        if (!d.authenticated) {
+          router.push('/nx-panel');
+        } else {
+          setToken('cookie-session'); // signal that auth passed
+        }
+      })
+      .catch(() => router.push('/nx-panel'));
   }, [router]);
 
   const showToast = useCallback((msg, type) => setToast({ msg, type }), []);
 
-  const logout = () => {
-    sessionStorage.removeItem('admin_token');
+  const logout = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch {}
     router.push('/nx-panel');
   };
 

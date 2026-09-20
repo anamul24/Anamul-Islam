@@ -192,11 +192,39 @@ export default function Hero() {
       className="relative min-h-[100svh] flex flex-col justify-center bg-[#020202] overflow-hidden selection:bg-emerald-400 selection:text-black"
     >
 
+      {/* Glowing orb blobs */}
+      <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <div style={{
+          position: 'absolute', top: '-10%', left: '-10%',
+          width: '55vw', height: '55vw',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%)',
+          animation: 'orbFloat1 12s ease-in-out infinite',
+          filter: 'blur(40px)',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-15%', right: '-10%',
+          width: '50vw', height: '50vw',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(16,185,129,0.09) 0%, rgba(99,102,241,0.06) 50%, transparent 70%)',
+          animation: 'orbFloat2 16s ease-in-out infinite',
+          filter: 'blur(50px)',
+        }} />
+        <div style={{
+          position: 'absolute', top: '40%', left: '40%',
+          width: '30vw', height: '30vw',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(251,191,36,0.05) 0%, transparent 70%)',
+          animation: 'orbFloat3 20s ease-in-out infinite',
+          filter: 'blur(60px)',
+        }} />
+      </div>
+
       {/* Particle network background */}
-      <div className="absolute inset-0 z-0" aria-hidden="true"><ParticleNetwork /></div>
+      <div className="absolute inset-0 z-[1]" aria-hidden="true"><ParticleNetwork /></div>
 
       {/* Floating network command snippets */}
-      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden" aria-hidden="true">
         {CODE_LINES.map((line, i) => (
           <motion.div
             key={i}
@@ -211,12 +239,12 @@ export default function Hero() {
       </div>
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 z-[2] pointer-events-none bg-gradient-to-b from-black/55 via-black/5 to-black/70" aria-hidden="true" />
+      <div className="absolute inset-0 z-[3] pointer-events-none bg-gradient-to-b from-black/55 via-black/5 to-black/70" aria-hidden="true" />
 
       {/* Grid overlay */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 0.07 }} transition={{ duration: 2, delay: 0.8 }}
-        className="absolute inset-0 tech-grid pointer-events-none z-[3]"
+        className="absolute inset-0 tech-grid pointer-events-none z-[4]"
         aria-hidden="true"
       />
 
@@ -224,28 +252,15 @@ export default function Hero() {
       <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center justify-center min-h-[100svh] pt-20 pb-16">
         <div className="w-full max-w-5xl flex flex-col items-center text-center">
 
-          {/* Name strip */}
-          <div className="flex items-center gap-6 w-full mb-5">
-            <motion.div
-              initial={{ x: '-101%' }} animate={{ x: 0 }}
-              transition={{ duration: 1.4, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-emerald-500/50"
-              aria-hidden="true"
-            />
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="text-xs font-bold uppercase tracking-[0.4em] text-emerald-500/60 whitespace-nowrap"
-            >
-              {data.name}
-            </motion.div>
-            <motion.div
-              initial={{ x: '101%' }} animate={{ x: 0 }}
-              transition={{ duration: 1.4, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-px bg-gradient-to-l from-transparent via-emerald-500/20 to-emerald-500/50"
-              aria-hidden="true"
-            />
-          </div>
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/5 backdrop-blur-sm"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-emerald-400/80">Available for opportunities</span>
+          </motion.div>
 
           {/* Static role headline — immediately readable before animation */}
           <motion.p
@@ -374,19 +389,23 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Signature */}
-      <div className="absolute bottom-10 right-6 md:right-10 z-10" aria-hidden="true">
-        <motion.div
-          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.5, delay: 0.8 }}
-          className="flex flex-col items-end"
-        >
-          <div className="text-xs font-mono uppercase tracking-[0.35em] text-emerald-500/35 mb-1">Signature</div>
-          <div className="text-5xl sm:text-6xl md:text-7xl text-emerald-500 font-signature rotate-[-7deg] opacity-80 drop-shadow-[0_2px_12px_rgba(16,185,129,0.25)]">
-            {data.name}
-          </div>
-        </motion.div>
-      </div>
+      {/* Orb animation keyframes */}
+      <style>{`
+        @keyframes orbFloat1 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(5%, 8%) scale(1.05); }
+          66% { transform: translate(-3%, 5%) scale(0.97); }
+        }
+        @keyframes orbFloat2 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(-6%, -8%) scale(1.08); }
+          66% { transform: translate(4%, -4%) scale(0.95); }
+        }
+        @keyframes orbFloat3 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-8%, 6%) scale(1.1); }
+        }
+      `}</style>
     </section>
   );
 }

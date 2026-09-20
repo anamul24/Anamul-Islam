@@ -135,17 +135,13 @@ export default function Navbar() {
             href="#"
             onClick={(e) => { handleLogoTap(e); handleNavClick(e, '#'); }}
             aria-label="Anamul Islam — scroll to top"
-            className="flex items-center gap-2 md:gap-3 group"
+            className="block group"
           >
             <img 
               src="/image/anam.png" 
               alt="Anamul Islam Logo" 
-              className="w-10 h-10 object-cover rounded-full border-2 border-white/10 group-hover:border-emerald-500/50 transition-colors"
+              className="w-10 h-10 object-cover rounded-xl border border-white/10 group-hover:border-emerald-500/50 group-hover:scale-105 transition-all duration-300"
             />
-            <div className="text-xl font-bold tracking-tighter hidden sm:block">
-              <span className="text-white">ANAM</span>
-              <span className="text-amber-500">.</span>
-            </div>
           </a>
         </motion.div>
 

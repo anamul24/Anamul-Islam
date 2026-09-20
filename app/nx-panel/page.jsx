@@ -24,7 +24,6 @@ export default function AdminLogin() {
       const data = await res.json();
 
       if (data.success) {
-        sessionStorage.setItem('admin_token', data.token);
         router.push('/nx-panel/dashboard');
       } else if (res.status === 500) {
         setError('Server error: ADMIN_PASSWORD not set in Vercel env vars!');
