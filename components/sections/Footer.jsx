@@ -45,9 +45,16 @@ export default function Footer() {
 
           {/* Brand column */}
           <div>
-            <div className="text-2xl font-bold tracking-tighter mb-3">
-              <span className="text-white">ANAM</span>
-              <span className="text-emerald-500">.</span>
+            <div className="flex items-center gap-3 mb-3">
+              <img 
+                src="/anam.png" 
+                alt="Anamul Islam Logo" 
+                className="w-10 h-10 object-cover rounded-full border border-white/10"
+              />
+              <div className="text-2xl font-bold tracking-tighter">
+                <span className="text-white">ANAM</span>
+                <span className="text-emerald-500">.</span>
+              </div>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
               Network Engineer &amp; MERN Stack Developer based in Dhaka, Bangladesh.

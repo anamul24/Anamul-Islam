@@ -84,7 +84,7 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/anam.png', type: 'image/png' },
     ],
   },
 };

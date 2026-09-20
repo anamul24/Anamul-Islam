@@ -19,38 +19,49 @@ const DEFAULT = {
   cvUrl: RESUME_URL,
 };
 
-function useTypingAnimation(words, { typeSpeed = 80, deleteSpeed = 40, pauseMs = 1800 } = {}) {
-  const [displayText, setDisplayText] = useState('');
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [started, setStarted] = useState(false);
+import { AnimatePresence } from 'motion/react';
+
+function LetterStagger({ roles, pauseMs = 2500 }) {
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const t = setTimeout(() => setStarted(true), 1200);
-    return () => clearTimeout(t);
-  }, []);
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % roles.length);
+    }, pauseMs + 1200); // pauseMs + transition time
+    return () => clearInterval(interval);
+  }, [roles, pauseMs]);
 
-  useEffect(() => {
-    if (!started) return;
-    const current = words[wordIndex];
-    if (!isDeleting && displayText === current) {
-      const t = setTimeout(() => setIsDeleting(true), pauseMs);
-      return () => clearTimeout(t);
-    }
-    if (isDeleting && displayText === '') {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
-      return;
-    }
-    const t = setTimeout(() => {
-      setDisplayText((prev) =>
-        isDeleting ? prev.slice(0, -1) : current.slice(0, prev.length + 1)
-      );
-    }, isDeleting ? deleteSpeed : typeSpeed);
-    return () => clearTimeout(t);
-  }, [displayText, isDeleting, wordIndex, words, started, typeSpeed, deleteSpeed, pauseMs]);
+  const currentRole = roles[index];
 
-  return displayText;
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={index}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={{
+          visible: { transition: { staggerChildren: 0.04 } },
+          exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
+        }}
+        className="flex whitespace-nowrap items-center"
+      >
+        {currentRole.split('').map((char, i) => (
+          <motion.span
+            key={i}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+              exit: { opacity: 0, y: -20 }
+            }}
+            className={char === ' ' ? 'w-[0.3em]' : 'inline-block'}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </motion.div>
+    </AnimatePresence>
+  );
 }
 
 // Network topology particle animation — emerald green color scheme
@@ -150,7 +161,7 @@ export default function Hero() {
       .catch(() => {});
   }, []);
 
-  const typedText = useTypingAnimation(data.roles);
+  // typedText removed in favor of LetterStagger component
 
   const scrollTo = (id) => {
     const el = document.querySelector(id);
@@ -245,14 +256,14 @@ export default function Hero() {
             Network Engineer · CCNA Trainee · MERN Stack Developer
           </motion.p>
 
-          {/* Typing H1 */}
+          {/* Stagger Animation H1 */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.0 }}
-            className="w-full flex items-center justify-center mb-5"
+            className="w-full flex items-center justify-center mb-5 overflow-hidden"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[88px] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] tracking-[0.06em] text-center min-h-[1.2em] flex items-center justify-center">
-              <span>{typedText}</span>
+            <h1 className="text-[clamp(1.5rem,4.5vw,5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.05em] text-center min-h-[1.2em] flex items-center justify-center whitespace-nowrap">
+              <LetterStagger roles={data.roles} />
               <span
                 className="inline-block w-[3px] sm:w-[4px] h-[0.85em] bg-emerald-400 ml-2 align-middle animate-blink"
                 aria-hidden="true"

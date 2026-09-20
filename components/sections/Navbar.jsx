@@ -129,15 +129,23 @@ export default function Navbar() {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-bold tracking-tighter flex-shrink-0"
+          className="flex-shrink-0"
         >
           <a
             href="#"
             onClick={(e) => { handleLogoTap(e); handleNavClick(e, '#'); }}
             aria-label="Anamul Islam — scroll to top"
+            className="flex items-center gap-2 md:gap-3 group"
           >
-            <span className="text-white">ANAM</span>
-            <span className="text-amber-500">.</span>
+            <img 
+              src="/anam.png" 
+              alt="Anamul Islam Logo" 
+              className="w-10 h-10 object-cover rounded-full border-2 border-white/10 group-hover:border-emerald-500/50 transition-colors"
+            />
+            <div className="text-xl font-bold tracking-tighter hidden sm:block">
+              <span className="text-white">ANAM</span>
+              <span className="text-amber-500">.</span>
+            </div>
           </a>
         </motion.div>
 
