@@ -1,12 +1,12 @@
 {
   "roles": [
-    "NETWORK ENGINEER",
+    "ASPIRING NETWORK ENGINEER",
     "CISCO CCNA TRAINEE",
     "MIKROTIK TRAINEE",
     "MERN STACK DEVELOPER"
   ],
   "name": "Anamul Islam",
-  "subtitle": "Network Engineer | CCNA Trainee | MERN Stack Developer",
+  "subtitle": "ASPIRING Network Engineer | CCNA Trainee | MERN Stack Developer",
   "description": "Building reliable networks, solving infrastructure problems, and exploring secure IT systems through hands-on labs and real-world projects. Also developing modern full-stack web applications.",
   "scrollHint": "Scroll to explore work",
   "github": "https://github.com/anamul24",
