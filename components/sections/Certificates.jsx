@@ -85,6 +85,7 @@ function CertCard({ cert, openCert }) {
 export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
   const [selectedCert, setSelectedCert] = useState(null);
+  const [modalImgError, setModalImgError] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/data?section=certificates')
@@ -96,6 +97,7 @@ export default function Certificates() {
   // Open modal — push a history entry so back button closes it
   const openCert = useCallback((cert) => {
     setSelectedCert(cert);
+    setModalImgError(false);
     window.history.pushState({ certModal: true }, '');
   }, []);
 
@@ -205,14 +207,14 @@ export default function Certificates() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-3/5 flex items-center justify-center bg-slate-950 p-4">
                   <div className="relative w-full h-[280px] sm:h-[380px] md:h-[460px]">
-                    {selectedCert.image && !imgError ? (
+                    {selectedCert.image && !modalImgError ? (
                       <Image
                         src={selectedCert.image}
                         alt={`${selectedCert.title} certificate`}
                         fill
                         className="object-contain"
                         referrerPolicy="no-referrer"
-                        onError={() => setImgError(true)}
+                        onError={() => setModalImgError(true)}
                       />
                     ) : (
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
