@@ -22,5 +22,13 @@
     "date": "2024",
     "image": "",
     "verifyUrl": ""
+  },
+  {
+    "id": "cert-csltraining",
+    "title": "CSL Training",
+    "issuer": "CSL Training",
+    "date": "2024",
+    "image": "/image/CSLtraining.jpg",
+    "verifyUrl": ""
   }
 ]
