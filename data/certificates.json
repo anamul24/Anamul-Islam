@@ -3,7 +3,7 @@
     "id": "cert-networking",
     "title": "Professional Networking Course",
     "issuer": "Udemy / David Bombal",
-    "date": "2024",
+    "date": "2026",
     "image": "/image/networking.jpg",
     "verifyUrl": ""
   },
@@ -11,7 +11,7 @@
     "id": "cert-fullstack",
     "title": "Full Stack Web Development",
     "issuer": "Udemy / Dr. Angela Yu",
-    "date": "2024",
+    "date": "2025",
     "image": "/image/fullstack.jpg",
     "verifyUrl": ""
   },
@@ -19,15 +19,15 @@
     "id": "cert-webdev",
     "title": "Complete Web Development",
     "issuer": "Programming Hero",
-    "date": "2024",
+    "date": "2026",
     "image": "",
     "verifyUrl": ""
   },
   {
-    "id": "cert-csltraining",
-    "title": "CSL Training",
+    "id": "cert-ccna",
+    "title": "Cisco Certified Network Associate (CCNA)",
     "issuer": "CSL Training",
-    "date": "2024",
+    "date": "2026",
     "image": "/image/CSLtraining.jpg",
     "verifyUrl": ""
   }
