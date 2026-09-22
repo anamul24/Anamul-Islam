@@ -8,7 +8,7 @@ const LINKEDIN_URL = 'https://www.linkedin.com/in/anamul-islam-ab907a242';
 const RESUME_URL = '/resume.pdf';
 
 const DEFAULT = {
-  roles: ['NETWORK ENGINEER', 'CISCO CCNA TRAINEE', 'MIKROTIK TRAINEE', 'MERN STACK DEVELOPER'],
+  roles: ['ASPIRING NETWORK ENGINEER', 'CISCO CCNA TRAINEE', 'MIKROTIK TRAINEE', 'MERN STACK DEVELOPER'],
   name: 'Anamul Islam',
   subtitle: 'Network Engineer | CCNA Trainee | MERN Stack Developer',
   description:
