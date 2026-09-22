@@ -83,6 +83,11 @@ function CertCard({ cert, openCert }) {
 }
 
 export default function Certificates() {
+  const [certificates, setCertificates] = useState([]);
+  const [selectedCert, setSelectedCert] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/admin/data?section=certificates')
       .then(r => r.json())
       .then(d => { if (Array.isArray(d)) setCertificates(d); })
       .catch(() => {});
