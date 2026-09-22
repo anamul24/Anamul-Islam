@@ -121,7 +121,7 @@ export default function BentoGrid() {
 
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="mb-10 md:mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-12">
+        <div className="mb-10 md:mb-16 flex flex-col gap-6">
           <div className="max-w-2xl">
 
             <motion.h2
@@ -142,7 +142,7 @@ export default function BentoGrid() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="flex flex-wrap gap-2 md:justify-end"
+              className="flex flex-wrap gap-2 md:justify-start"
             >
               <button
                 onClick={() => setActiveTag(null)}
@@ -173,18 +173,18 @@ export default function BentoGrid() {
           </div>
         </div>
 
-        <div className="relative w-full overflow-hidden mt-10">
-          <div className="flex w-fit gap-6 animate-marquee hover:[animation-play-state:paused] pb-10">
-            {[...filteredProjects, ...filteredProjects].map((project, index) => (
+        <div className="relative w-full mt-10">
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProjects.map((project, index) => (
               <motion.div
                 layout
-                key={`${project.title}-${index}`}
+                key={`${project.title}`}
                 onMouseMove={handleMouseMove}
                 onClick={() => setSelectedProject(project)}
                 style={{
                   perspective: 1000,
                 }}
-                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer w-[300px] md:w-[400px] h-[350px] shrink-0`}
+                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer w-full h-[350px]`}
               >
                 <motion.div
                   className="w-full h-full flex flex-col"
@@ -261,16 +261,7 @@ export default function BentoGrid() {
                 <div className="absolute inset-0 scanlines opacity-[0.05] pointer-events-none group-hover:opacity-0 transition-opacity" />
               </motion.div>
             ))}
-          </div>
-          <style>{`
-            @keyframes marquee {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(-50% - 12px)); }
-            }
-            .animate-marquee {
-              animation: marquee 30s linear infinite;
-            }
-          `}</style>
+          </motion.div>
         </div>
       </div>
 

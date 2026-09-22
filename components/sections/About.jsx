@@ -77,10 +77,10 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-7xl font-black text-white leading-none tracking-tighter mb-6 md:mb-10 overflow-visible"
+              className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6 md:mb-10"
             >
               {data.heading}{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-white/10">
+              <span className="text-slate-500">
                 {data.headingHighlight}
               </span>
             </motion.h2>

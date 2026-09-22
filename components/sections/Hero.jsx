@@ -301,7 +301,7 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <span className="text-xs font-bold uppercase tracking-[0.3em] text-white/35">{data.scrollHint}</span>
+        <span className="text-xs font-bold tracking-wide text-white/35">{data.scrollHint}</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}

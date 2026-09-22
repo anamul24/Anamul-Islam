@@ -6,7 +6,7 @@
     "technologies": ["Cisco IOS", "Cisco Packet Tracer"],
     "concepts": ["VLAN", "Inter-VLAN Routing", "EtherChannel", "OSPF", "DHCP", "Trunking", "Routing & Switching"],
     "category": "routing",
-    "image": "/image/networking.jpg",
+    "image": "",
     "github": "https://github.com/anamul24",
     "pktFile": "",
     "docLink": "",

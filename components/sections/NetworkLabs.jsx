@@ -33,12 +33,7 @@ const FILTERS = [
 ];
 
 const CONCEPT_COLORS = {
-  'VLAN': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'OSPF': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  'DHCP': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'NAT': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  'ACL': 'bg-red-500/10 text-red-400 border-red-500/20',
-  'default': 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  'default': 'bg-slate-500/10 text-slate-400 border-slate-500/20',
 };
 
 const CATEGORY_CONFIG = {
@@ -94,32 +89,9 @@ function LabCard({ lab, index }) {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-        {/* Category + Featured badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          <span
-            className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest"
-            style={{ background: `${cat.color}20`, color: cat.color, border: `1px solid ${cat.color}30` }}
-          >
-            {cat.label}
-          </span>
-          {lab.featured && (
-            <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-bold uppercase tracking-widest">
-              Featured
-            </span>
-          )}
-        </div>
 
-        {/* Tech tags bottom */}
-        <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
-          {lab.technologies?.map(t => (
-            <span
-              key={t}
-              className="px-2 py-0.5 rounded bg-black/70 border border-white/10 text-[10px] font-bold uppercase tracking-wide text-slate-400 backdrop-blur-sm"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
+
+
       </div>
 
       {/* Content */}
@@ -308,7 +280,7 @@ export default function NetworkLabs() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="View all networking projects on GitHub"
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-400 text-xs uppercase tracking-widest font-bold transition-colors group"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-emerald-400 text-xs tracking-widest font-bold transition-colors group"
           >
             <Github size={14} aria-hidden="true" />
             View all on GitHub

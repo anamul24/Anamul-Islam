@@ -50,26 +50,26 @@ export default function ExperienceTimeline() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-7xl font-black text-white tracking-tighter"
+              className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4"
             >
-              Education and <br />
+              Education and <br className="hidden md:block" />
               <span className="text-slate-500">Experience.</span>
             </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-slate-500 max-w-md text-sm font-medium leading-relaxed"
+            >
+              Continuous learning and growth in networking, infrastructure, and web development.
+            </motion.p>
           </div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-slate-500 max-w-xs text-sm font-medium leading-relaxed"
-          >
-            Continuous learning and growth in networking, infrastructure, and web development.
-          </motion.p>
         </div>
 
-        <div className="flex justify-center relative">
+        <div className="flex justify-start relative">
           {/* Education section */}
           <div className="flex flex-col gap-6 md:gap-12 w-full max-w-3xl">
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-4 px-6 md:px-10">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
                 <GraduationCap size={20} aria-hidden="true" />
               </div>
@@ -99,7 +99,7 @@ export default function ExperienceTimeline() {
                     <Calendar size={12} aria-hidden="true" />
                     {edu.period}
                   </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors uppercase tracking-tight">
+                  <h4 className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors tracking-tight">
                     {edu.degree}
                   </h4>
                   <div className="text-slate-400 text-sm font-medium mb-5 italic">{edu.school}</div>

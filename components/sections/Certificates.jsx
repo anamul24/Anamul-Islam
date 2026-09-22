@@ -5,12 +5,84 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, Search, X, ExternalLink } from 'lucide-react';
 
-export default function Certificates() {
-  const [certificates, setCertificates] = useState([]);
-  const [selectedCert, setSelectedCert] = useState(null);
+function CertCard({ cert, openCert }) {
+  const [imgError, setImgError] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/admin/data?section=certificates')
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } },
+      }}
+      className="group relative"
+    >
+      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl flex items-center justify-center p-4">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="w-full h-full relative"
+        >
+          {cert.image && !imgError ? (
+            <Image
+              src={cert.image}
+              alt={`${cert.title} certificate`}
+              fill
+              onError={() => setImgError(true)}
+              className="object-contain group-hover:opacity-80 transition-opacity"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-6 rounded-xl">
+              <Award size={48} className="text-amber-400/40 mb-4" aria-hidden="true" />
+              <div className="text-center">
+                <div className="text-xs font-bold text-amber-400/60 uppercase tracking-widest mb-2">{cert.issuer}</div>
+                <div className="text-white font-bold text-sm leading-tight">{cert.title}</div>
+              </div>
+            </div>
+          )}
+        </motion.div>
+
+        {/* Hover overlay — view button */}
+        <button
+          className="absolute inset-0 bg-amber-400/15 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+          onClick={() => openCert(cert)}
+          aria-label={`View ${cert.title} certificate details`}
+        >
+          <div className="w-12 h-12 rounded-full bg-amber-400 flex items-center justify-center text-slate-950 shadow-xl shadow-amber-400/30">
+            <Search size={22} aria-hidden="true" />
+          </div>
+        </button>
+      </div>
+
+      {/* Card footer */}
+      <div className="mt-4 flex items-center justify-between px-1">
+        <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">{cert.date}</span>
+        {cert.verifyUrl ? (
+          <a
+            href={cert.verifyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Verify ${cert.title} certificate`}
+            className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-xs text-slate-300 font-bold uppercase tracking-widest hover:bg-white/10 hover:text-amber-400 hover:border-amber-400/30 transition-all flex items-center gap-1.5"
+          >
+            Verify <ExternalLink size={12} aria-hidden="true" />
+          </a>
+        ) : (
+          <button
+            onClick={() => openCert(cert)}
+            aria-label={`View ${cert.title} certificate`}
+            className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-xs text-slate-300 font-bold uppercase tracking-widest hover:bg-white/10 hover:text-amber-400 hover:border-amber-400/30 transition-all flex items-center gap-1.5"
+          >
+            View <Search size={12} aria-hidden="true" />
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+export default function Certificates() {
       .then(r => r.json())
       .then(d => { if (Array.isArray(d)) setCertificates(d); })
       .catch(() => {});
@@ -90,93 +162,8 @@ export default function Certificates() {
           }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {certificates.map((cert, index) => (
-            <motion.div
-              key={cert.title}
-              variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.95 },
-                visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } },
-              }}
-              className="group relative"
-            >
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.6, ease: 'easeOut' }}
-                  className="w-full h-full relative"
-                >
-                  {cert.image ? (
-                    <Image
-                      src={cert.image}
-                      alt={`${cert.title} certificate from ${cert.issuer}`}
-                      fill
-                      className="object-cover group-hover:opacity-80 transition-opacity"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    /* Fallback when no image is provided */
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-6">
-                      <Award size={48} className="text-amber-400/40 mb-4" aria-hidden="true" />
-                      <div className="text-center">
-                        <div className="text-xs font-bold text-amber-400/60 uppercase tracking-widest mb-2">{cert.issuer}</div>
-                        <div className="text-white font-bold text-sm leading-tight">{cert.title}</div>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-
-                {/* Default overlay — shows cert info */}
-                {cert.image && (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-100 group-hover:opacity-0 transition-opacity" aria-hidden="true" />
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 pointer-events-none group-hover:opacity-0 transition-opacity">
-                      <div className="text-xs text-amber-400 font-bold uppercase tracking-widest mb-1">
-                        {cert.issuer}
-                      </div>
-                      <h3 className="text-white font-bold text-sm leading-tight">
-                        {cert.title}
-                      </h3>
-                    </div>
-                  </>
-                )}
-
-                {/* Hover overlay — view button */}
-                <button
-                  className="absolute inset-0 bg-amber-400/15 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => openCert(cert)}
-                  aria-label={`View ${cert.title} certificate details`}
-                >
-                  <div className="w-12 h-12 rounded-full bg-amber-400 flex items-center justify-center text-slate-950 shadow-xl shadow-amber-400/30">
-                    <Search size={22} aria-hidden="true" />
-                  </div>
-                </button>
-              </div>
-
-              {/* Card footer */}
-              <div className="mt-3 flex items-center justify-between px-1">
-                <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">{cert.date}</span>
-                {cert.verifyUrl ? (
-                  <a
-                    href={cert.verifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Verify ${cert.title} certificate`}
-                    className="text-xs text-slate-500 font-bold uppercase tracking-widest hover:text-amber-400 transition-colors flex items-center gap-1"
-                  >
-                    Verify <ExternalLink size={10} aria-hidden="true" />
-                  </a>
-                ) : (
-                  <button
-                    onClick={() => openCert(cert)}
-                    aria-label={`View ${cert.title} certificate`}
-                    className="text-xs text-slate-500 font-bold uppercase tracking-widest hover:text-amber-400 transition-colors"
-                  >
-                    View
-                  </button>
-                )}
-              </div>
-            </motion.div>
+          {certificates.map((cert) => (
+            <CertCard key={cert.id || cert.title} cert={cert} openCert={openCert} />
           ))}
         </motion.div>
       </div>
@@ -213,13 +200,14 @@ export default function Certificates() {
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-3/5 flex items-center justify-center bg-slate-950 p-4">
                   <div className="relative w-full h-[280px] sm:h-[380px] md:h-[460px]">
-                    {selectedCert.image ? (
+                    {selectedCert.image && !imgError ? (
                       <Image
                         src={selectedCert.image}
                         alt={`${selectedCert.title} certificate`}
                         fill
                         className="object-contain"
                         referrerPolicy="no-referrer"
+                        onError={() => setImgError(true)}
                       />
                     ) : (
                       <div className="absolute inset-0 flex flex-col items-center justify-center">

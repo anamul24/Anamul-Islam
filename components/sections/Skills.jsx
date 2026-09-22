@@ -89,10 +89,10 @@ export default function Skills() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-2"
+            className="text-4xl md:text-5xl font-black tracking-tight text-white mb-2"
           >
             Skills &amp;{' '}
-            <span className="italic text-slate-400 font-serif">Expertise</span>
+            <span className="text-slate-500">Expertise</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -137,7 +137,7 @@ export default function Skills() {
                       {config.icon}
                     </div>
                     <div>
-                      <h3 className="text-base font-bold tracking-wide text-white/90 uppercase mb-1">
+                      <h3 className="text-base font-bold tracking-wide text-white/90 mb-1">
                         {config.title}
                       </h3>
                       <p className="text-slate-500 text-xs leading-snug">{config.description}</p>
