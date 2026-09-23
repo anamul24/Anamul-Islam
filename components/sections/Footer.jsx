@@ -51,10 +51,6 @@ export default function Footer() {
                 alt="Anamul Islam Logo"
                 className="w-10 h-10 object-cover border border-white/10"
               />
-              <div className="text-2xl font-bold tracking-tighter">
-                <span className="text-white">ANAM</span>
-                <span className="text-emerald-500">.</span>
-              </div>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
               Network Engineer &amp; MERN Stack Developer based in Dhaka, Bangladesh.

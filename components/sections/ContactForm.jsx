@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/anamul-islam-ab907a242',
+    link: 'https://www.linkedin.com/in/anamul-islam-sumon',
   },
   {
     icon: Facebook,
