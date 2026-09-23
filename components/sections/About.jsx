@@ -43,7 +43,7 @@ export default function About() {
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-t-[140px] rounded-b-[40px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900"
+              className="relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900"
             >
               <div className="absolute inset-0 tech-grid opacity-10" aria-hidden="true" />
               <Image
@@ -55,7 +55,7 @@ export default function About() {
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" aria-hidden="true" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-emerald-500/20 rounded-t-[140px] rounded-b-[40px]" aria-hidden="true" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-emerald-500/20 rounded-[32px]" aria-hidden="true" />
             </motion.div>
           </div>
 

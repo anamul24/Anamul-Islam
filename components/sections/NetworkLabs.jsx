@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -87,14 +87,7 @@ function LabModal({ lab, onClose }) {
                 src={lab.image}
                 alt={`${lab.title} -- network topology`}
                 fill
-                className="object-cover opacity-50"
-              />
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage:
-                    'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
-                }}
+                className="object-cover"
               />
             </>
           ) : (
@@ -148,12 +141,6 @@ function LabModal({ lab, onClose }) {
             </div>
           )}
           <div className="flex flex-wrap gap-3 pt-2 border-t border-white/[0.05]">
-            {lab.github && (
-              <a href={lab.github} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-xs font-bold hover:bg-white/10 hover:text-white transition-all">
-                <Github size={14} /> GitHub
-              </a>
-            )}
             {lab.pktFile && (
               <a href={lab.pktFile} download
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold hover:bg-emerald-500/20 transition-all">
