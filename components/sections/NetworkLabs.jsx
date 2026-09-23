@@ -82,21 +82,18 @@ function LabModal({ lab, onClose }) {
         />
         <div className="relative h-52 sm:h-64 bg-gradient-to-br from-slate-900 to-black overflow-hidden">
           {lab.image ? (
-            <>
-              <Image
-                src={lab.image}
-                alt={`${lab.title} -- network topology`}
-                fill
-                className="object-cover"
-              />
-            </>
+            <Image
+              src={lab.image}
+              alt={`${lab.title} -- network topology`}
+              fill
+              className="object-cover"
+            />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
               <Network size={64} className="opacity-10" style={{ color: cat.color }} />
               <span className="text-xs text-slate-600 tracking-widest uppercase font-bold">Network Topology</span>
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/30 to-transparent" />
           <div
             className="absolute top-4 left-4 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border"
             style={{ color: cat.color, borderColor: `${cat.color}40`, background: `${cat.color}15` }}
@@ -108,7 +105,7 @@ function LabModal({ lab, onClose }) {
             aria-label="Close lab detail"
             className="absolute top-4 right-4 p-2 rounded-full bg-black/50 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all"
           >
-            X
+            ✕
           </button>
         </div>
         <div className="p-6 sm:p-8 space-y-6">
