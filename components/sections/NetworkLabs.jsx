@@ -14,7 +14,7 @@ const DEFAULT_LABS = [
     technologies: ['Cisco IOS', 'Cisco Packet Tracer'],
     concepts: ['VLAN', 'Inter-VLAN Routing', 'EtherChannel', 'OSPF', 'DHCP', 'Trunking'],
     category: 'routing',
-    image: '/image/networking.jpg',
+    image: '/image/threeTireNet.png',
     github: 'https://github.com/anamul24',
     pktFile: '',
     docLink: '',
@@ -171,18 +171,18 @@ export default function NetworkLabs() {
     fetch('/api/admin/data?section=labs')
       .then(r => r.json())
       .then(d => { if (Array.isArray(d) && d.length) setLabs(d); })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const filtered =
     activeFilter === 'all'
       ? labs
       : labs.filter(
-          lab =>
-            lab.category === activeFilter ||
-            lab.concepts?.some(c => c.toLowerCase().includes(activeFilter)) ||
-            lab.technologies?.some(t => t.toLowerCase().includes(activeFilter))
-        );
+        lab =>
+          lab.category === activeFilter ||
+          lab.concepts?.some(c => c.toLowerCase().includes(activeFilter)) ||
+          lab.technologies?.some(t => t.toLowerCase().includes(activeFilter))
+      );
 
   return (
     <section id="labs" className="py-24 bg-[#020202] relative overflow-hidden" aria-label="Network labs and projects">
@@ -235,11 +235,10 @@ export default function NetworkLabs() {
               key={f.key}
               onClick={() => setActiveFilter(f.key)}
               aria-pressed={activeFilter === f.key}
-              className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 ${
-                activeFilter === f.key
-                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                  : 'bg-white/[0.03] border border-white/10 text-slate-400 hover:border-emerald-500/30 hover:text-emerald-400'
-              }`}
+              className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300 ${activeFilter === f.key
+                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                : 'bg-white/[0.03] border border-white/10 text-slate-400 hover:border-emerald-500/30 hover:text-emerald-400'
+                }`}
             >
               {f.label}
             </button>
