@@ -44,7 +44,7 @@ function LetterStagger({ roles, pauseMs = 2500 }) {
           visible: { transition: { staggerChildren: 0.04 } },
           exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
         }}
-        className="flex whitespace-nowrap items-center"
+        className="flex flex-wrap items-center justify-center"
       >
         {currentRole.split('').map((char, i) => (
           <motion.span
@@ -54,7 +54,7 @@ function LetterStagger({ roles, pauseMs = 2500 }) {
               visible: { opacity: 1, y: 0 },
               exit: { opacity: 0, y: -20 }
             }}
-            className={char === ' ' ? 'w-[0.3em]' : 'inline-block'}
+            className={char === ' ' ? 'w-[0.25em]' : 'inline-block'}
           >
             {char}
           </motion.span>
@@ -265,9 +265,9 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="w-full flex items-center justify-center mb-6 overflow-visible"
+            className="w-full flex items-center justify-center mb-6 px-2"
           >
-            <h1 className="text-[clamp(1.6rem,5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.05em] text-center min-h-[1.2em] flex items-center justify-center whitespace-nowrap">
+            <h1 className="text-[clamp(1.1rem,4.5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.04em] text-center min-h-[1.2em] flex items-center justify-center flex-wrap gap-x-[0.2em] leading-tight">
               <LetterStagger roles={data.roles} />
             </h1>
           </motion.div>
