@@ -121,6 +121,7 @@ export default function Navbar() {
             className="block group"
           >
             <img 
+              id="navbar-logo"
               src="/image/anam.png" 
               alt="Anamul Islam Logo" 
               className="w-10 h-10 object-cover rounded-xl border border-white/10 group-hover:border-emerald-500/50 group-hover:scale-105 transition-all duration-300"

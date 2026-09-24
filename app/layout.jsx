@@ -3,8 +3,10 @@ import {
   Space_Grotesk,
   Playfair_Display,
   IBM_Plex_Sans_Arabic,
-  Great_Vibes,
   Corinthia,
+  Cinzel,
+  Syne,
+  MedievalSharp
 } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -37,6 +39,24 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic'],
   weight: ['100', '200', '300', '400', '500', '600', '700'],
   variable: '--font-arabic',
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  weight: ['400', '500', '600', '700', '800', '900'],
+});
+
+const syne = Syne({
+  subsets: ['latin'],
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const medievalSharp = MedievalSharp({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-medieval',
 });
 
 export const metadata = {
@@ -95,7 +115,7 @@ export default function RootLayout({ children }) {
       lang="en"
       dir="ltr"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${corinthia.variable} ${ibmPlexSansArabic.variable} scroll-smooth`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${corinthia.variable} ${ibmPlexSansArabic.variable} ${cinzel.variable} ${syne.variable} ${medievalSharp.variable} scroll-smooth`}
     >
       <body
         suppressHydrationWarning

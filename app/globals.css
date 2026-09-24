@@ -10,7 +10,9 @@
   --font-serif: var(--font-serif), "Playfair Display", serif;
   --font-arabic: var(--font-arabic), "IBM Plex Sans Arabic", sans-serif;
   --font-corinthia: var(--font-signature), "Corinthia", cursive;
-  --font-cinzel: "Cinzel", serif;
+  --font-cinzel: var(--font-cinzel), "Cinzel", serif;
+  --font-syne: var(--font-syne), "Syne", sans-serif;
+  --font-medieval: var(--font-medieval), "MedievalSharp", cursive;
   --color-emerald-primary: #10b981;
   --color-emerald-dim: #059669;
   --color-emerald-glow: rgba(16, 185, 129, 0.15);
@@ -61,6 +63,18 @@
 
   .font-signature {
     font-family: var(--font-signature), "Corinthia", cursive;
+  }
+
+  .font-cinzel {
+    font-family: var(--font-cinzel);
+  }
+
+  .font-syne {
+    font-family: var(--font-syne);
+  }
+
+  .font-medieval {
+    font-family: var(--font-medieval);
   }
 
   .font-corinthia {
