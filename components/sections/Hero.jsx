@@ -44,7 +44,7 @@ function LetterStagger({ roles, pauseMs = 2500 }) {
           visible: { transition: { staggerChildren: 0.04 } },
           exit: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
         }}
-        className="flex flex-wrap items-center justify-center"
+        className="flex items-center justify-center whitespace-nowrap"
       >
         {currentRole.split('').map((char, i) => (
           <motion.span
@@ -168,21 +168,15 @@ export default function Hero() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const handleResumeClick = () => {
-    fetch(RESUME_URL, { method: 'HEAD' })
-      .then((res) => {
-        if (res.ok) {
-          const a = document.createElement('a');
-          a.href = RESUME_URL;
-          a.download = 'Anamul_Islam_Resume.pdf';
-          a.click();
-        } else {
-          window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
-        }
-      })
-      .catch(() => {
-        window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
-      });
+  const handleResumeClick = (e) => {
+    if (e) e.preventDefault();
+    const a = document.createElement('a');
+    a.href = RESUME_URL;
+    a.download = 'Anamul_Islam_Resume.pdf';
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
@@ -261,13 +255,12 @@ export default function Hero() {
             <span className="text-xs font-bold uppercase tracking-[0.5em] text-slate-500">{data.name}</span>
           </motion.div>
 
-          {/* Stagger Animation H1 */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
-            className="w-full flex items-center justify-center mb-6 px-2"
+            className="w-full flex items-center justify-center mb-6 px-2 overflow-hidden"
           >
-            <h1 className="text-[clamp(1.1rem,4.5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.04em] text-center min-h-[1.2em] flex items-center justify-center flex-wrap gap-x-[0.2em] leading-tight">
+            <h1 className="text-[clamp(0.9rem,3.5vw,5.5rem)] font-black uppercase text-transparent [-webkit-text-stroke:1px_#10b981] sm:[-webkit-text-stroke:2px_#10b981] tracking-[0.04em] text-center min-h-[1.2em] flex items-center justify-center flex-nowrap gap-x-[0.2em] leading-tight w-full max-w-full">
               <LetterStagger roles={data.roles} />
             </h1>
           </motion.div>

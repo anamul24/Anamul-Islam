@@ -94,23 +94,15 @@ export default function Navbar() {
     }, 50);
   };
 
-  // Check if resume exists, else link to LinkedIn
   const handleResumeClick = (e) => {
-    // We try to download; if the file doesn't exist, open LinkedIn
-    fetch(RESUME_URL, { method: 'HEAD' })
-      .then((res) => {
-        if (res.ok) {
-          const a = document.createElement('a');
-          a.href = RESUME_URL;
-          a.download = 'Anamul_Islam_Resume.pdf';
-          a.click();
-        } else {
-          window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
-        }
-      })
-      .catch(() => {
-        window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer');
-      });
+    e.preventDefault();
+    const a = document.createElement('a');
+    a.href = RESUME_URL;
+    a.download = 'Anamul_Islam_Resume.pdf';
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
