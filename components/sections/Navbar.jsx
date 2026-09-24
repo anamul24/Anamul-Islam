@@ -94,16 +94,7 @@ export default function Navbar() {
     }, 50);
   };
 
-  const handleResumeClick = (e) => {
-    e.preventDefault();
-    const a = document.createElement('a');
-    a.href = RESUME_URL;
-    a.download = 'Anamul_Islam_Resume.pdf';
-    a.target = '_blank';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
+
 
   return (
     <nav
@@ -157,13 +148,16 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           className="hidden md:flex items-center gap-3"
         >
-          <button
-            onClick={handleResumeClick}
+          <a
+            href={RESUME_URL}
+            download="Anamul_Islam_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label="Download my resume"
             className="px-6 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-xs font-bold uppercase tracking-widest hover:scale-[1.05] hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all duration-300 flex items-center gap-2"
           >
             <Download size={13} aria-hidden="true" /> Resume
-          </button>
+          </a>
         </motion.div>
 
         {/* Hamburger */}
@@ -202,13 +196,16 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-4">
-                <button
-                  onClick={handleResumeClick}
+                <a
+                  href={RESUME_URL}
+                  download="Anamul_Islam_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Download my resume"
                   className="w-full py-3.5 min-h-[44px] rounded-xl bg-emerald-600 text-white text-center font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-2 hover:bg-emerald-500 transition-colors"
                 >
                   <Download size={14} aria-hidden="true" /> Download Resume
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>
