@@ -1,7 +1,12 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { useRef } from 'react';
 import Image from 'next/image';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const DEFAULT = {
   tagline: 'The Story So Far',
@@ -18,9 +23,121 @@ const DEFAULT = {
 
 export default function About() {
   const data = DEFAULT;
+  const sectionRef = useRef(null);
+  const photoWrapRef = useRef(null);
+  const taglineRef = useRef(null);
+  const headingRef = useRef(null);
+  const bioRef = useRef(null);
+  const statsRef = useRef(null);
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    // Note: Photo container is now an empty target slot for the shared Hero image.
+    // The scale/reveal animation is removed because the hero image flies dynamically into this slot.
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 768px)', () => {
+      // Tagline slides in from right
+      gsap.fromTo(
+        taglineRef.current,
+        { opacity: 0, x: 28 },
+        {
+          opacity: 1, x: 0,
+          scrollTrigger: {
+            trigger: taglineRef.current,
+            start: 'top 88%',
+            end: 'top 55%',
+            scrub: 1,
+          },
+        }
+      );
+
+      // Heading rises up
+      gsap.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1, y: 0,
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: 'top 88%',
+            end: 'top 52%',
+            scrub: 1.1,
+          },
+        }
+      );
+
+      // Bio paragraphs staggered
+      const paras = bioRef.current?.querySelectorAll('p');
+      paras?.forEach((para, i) => {
+        gsap.fromTo(
+          para,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1, y: 0,
+            scrollTrigger: {
+              trigger: para,
+              start: 'top 92%',
+              end: 'top 62%',
+              scrub: 1 + i * 0.08,
+            },
+          }
+        );
+      });
+
+      // Stat cards staggered
+      const statCards = statsRef.current?.querySelectorAll('[data-stat]');
+      statCards?.forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 28, scale: 0.9 },
+          {
+            opacity: 1, y: 0, scale: 1,
+            scrollTrigger: {
+              trigger: statsRef.current,
+              start: `top ${88 - i * 3}%`,
+              end: `top ${55 - i * 2}%`,
+              scrub: 1,
+            },
+          }
+        );
+      });
+    });
+
+    mm.add('(max-width: 767px)', () => {
+      // Mobile — simpler
+      [taglineRef.current, headingRef.current, bioRef.current, statsRef.current]
+        .filter(Boolean)
+        .forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1, y: 0,
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 90%',
+                end: 'top 62%',
+                scrub: 1,
+              },
+            }
+          );
+        });
+    });
+
+    return () => {
+      mm.revert();
+    };
+  }, { scope: sectionRef });
 
   return (
-    <section id="about" className="relative py-16 md:py-32 bg-[#020202] overflow-hidden">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="relative py-16 md:py-32 bg-[#020202] overflow-hidden"
+    >
       {/* Subtle dark background gradient */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020202] via-[#050a08] to-[#020202] pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" aria-hidden="true" />
@@ -30,86 +147,60 @@ export default function About() {
 
           {/* Photo column */}
           <div className="lg:col-span-5 relative mb-6 lg:mb-0">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 30 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-              className="about-photo-target relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900"
+            {/*
+              id="about-photo-target" — NetworkHero reads this element's
+              getBoundingClientRect() to fly the hero image here precisely,
+              then we crossfade-reveal the real photo beneath it.
+            */}
+            <div
+              id="about-photo-target"
+              ref={photoWrapRef}
+              className="about-photo-target relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900/50"
             >
+              {/* Empty placeholder slot for the shared Hero character image to morph into */}
               <div className="absolute inset-0 tech-grid opacity-10" aria-hidden="true" />
-              <Image
-                src="/image/anamul islam.png"
-                alt="Anamul Islam — Network Engineer and MERN Stack Developer"
-                fill
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 opacity-60 group-hover:opacity-100"
-                referrerPolicy="no-referrer"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" aria-hidden="true" />
               <div className="absolute inset-0 ring-1 ring-inset ring-emerald-500/20 rounded-[32px]" aria-hidden="true" />
-            </motion.div>
+            </div>
           </div>
 
           {/* Content column */}
           <div className="lg:col-span-7 flex flex-col items-start">
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+            <div
+              ref={taglineRef}
               className="flex items-center gap-4 text-emerald-500 font-bold uppercase tracking-[0.4em] text-xs mb-4 md:mb-8"
             >
               <div className="w-12 h-[1px] bg-emerald-500" aria-hidden="true" />
               {data.tagline}
-            </motion.div>
+            </div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+            <h2
+              ref={headingRef}
               className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6 md:mb-10"
             >
               {data.heading}{' '}
               <span className="text-slate-500">
                 {data.headingHighlight}
               </span>
-            </motion.h2>
+            </h2>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.8, delay: 0.35 }}
+            <div
+              ref={bioRef}
               className="space-y-4 text-slate-400 text-base md:text-lg leading-relaxed"
             >
               {(data.bio || '').split(/\n\n+/).map((para, i) => (
                 <p key={i}>{para.trim()}</p>
               ))}
-            </motion.div>
+            </div>
 
             {/* Stats grid */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-60px' }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.12, delayChildren: 0.55 },
-                },
-              }}
+            <div
+              ref={statsRef}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-14 w-full"
             >
               {data.stats.map((stat) => (
-                <motion.div
+                <div
                   key={stat.label}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
+                  data-stat
                   className="flex flex-col gap-2 p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:bg-white/[0.05] hover:border-emerald-500/30 transition-all duration-500 group hover:-translate-y-1 relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true" />
@@ -119,9 +210,9 @@ export default function About() {
                   <span className="text-slate-500 text-xs uppercase tracking-widest font-bold group-hover:text-slate-300 transition-colors duration-300 relative z-10">
                     {stat.label}
                   </span>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
         </div>

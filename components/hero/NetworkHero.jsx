@@ -110,10 +110,10 @@ export default function NetworkHero() {
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'name-exit+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'name-exit');
 
-      // Image blooms
+      // Image blooms — opacity + blur only, NO scale
       tl.fromTo('.hero-character',
-        { opacity: 0, scale: 0.5, filter: 'blur(20px)' },
-        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' },
+        { opacity: 0, filter: 'blur(20px)' },
+        { opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' },
         'name-exit+=1.2'
       );
       tl.fromTo('.char-ring-1', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'back.out(2)' }, 'name-exit+=1.2');
@@ -131,59 +131,14 @@ export default function NetworkHero() {
         lastLabel = lbl;
         tl.to(el, { opacity: 1, x: card.finalX, y: card.finalY, scale: 1, duration: 1.1, ease: 'back.out(1.6)' }, lbl);
       });
-
-      tl.to('.hero-character', { filter: 'drop-shadow(0 0 35px rgba(16,185,129,0.9))', duration: 1 }, `${lastLabel}+=0.5`);
+      // No filter/drop-shadow tween on hero-character (avoids transform state conflicts)
 
       // EXIT stage
       tl.addLabel('exit', `${lastLabel}+=2`);
-      tl.to('.hero-character', { opacity: 0, duration: 0.15 }, 'exit');
-      tl.to('.char-ring-1, .char-ring-2, .char-ring-3', { scale: 3, opacity: 0, duration: 1.2, ease: 'power2.in' }, 'exit');
-      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, scale: 0.15, duration: 0.8, ease: 'power2.in' }, 'exit'));
+      tl.to('.char-ring-1, .char-ring-2, .char-ring-3', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 'exit');
+      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 'exit'));
 
-      // Flying image: circle → morphs to about photo position (left col), stays until about section visible
-      if (flyingImgRef.current) {
-        const imgSize = 192;
-        const cx = window.innerWidth / 2 - imgSize / 2;
-        const cy = window.innerHeight / 2 - imgSize / 2;
-
-        // About photo target: left column, card shape
-        const targetW = Math.min(window.innerWidth * 0.28, 320);
-        const targetH = targetW * 1.25;
-        const targetX = Math.max(window.innerWidth * 0.05, 40);
-        const targetY = (window.innerHeight - targetH) / 2;
-
-        gsap.set(flyingImgRef.current, {
-          display: 'block', position: 'fixed',
-          left: cx, top: cy, width: imgSize, height: imgSize,
-          borderRadius: '50%', opacity: 0, zIndex: 9999,
-        });
-
-        // Appear
-        tl.to(flyingImgRef.current, { opacity: 1, duration: 0.4 }, 'exit');
-
-        // Morph to about photo shape & position
-        tl.to(flyingImgRef.current, {
-          left: targetX, top: targetY,
-          width: targetW, height: targetH,
-          borderRadius: '28px',
-          duration: 2, ease: 'power3.inOut',
-        }, 'exit+=0.3');
-
-        // Fade out when about section scrolls into view (after hero unpins)
-        ScrollTrigger.create({
-          trigger: '#about',
-          start: 'top 85%',
-          once: true,
-          onEnter: () => {
-            gsap.to(flyingImgRef.current, {
-              opacity: 0, duration: 1, ease: 'power2.inOut',
-              onComplete: () => gsap.set(flyingImgRef.current, { display: 'none' }),
-            });
-          },
-        });
-      }
-
-      return () => {};
+      return () => { };
     });
 
     // ── TABLET ──
@@ -201,7 +156,12 @@ export default function NetworkHero() {
       tl.to('.intro-text', { x: logoX, y: logoY, scale: 0.09, opacity: 0, duration: 1.5, ease: 'power2.inOut' }, 'ne');
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'ne+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'ne');
-      tl.fromTo('.hero-character', { opacity: 0, scale: 0.5, filter: 'blur(16px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power3.out' }, 'ne+=1.2');
+      // Image blooms — opacity + blur only, NO scale
+      tl.fromTo('.hero-character',
+        { opacity: 0, filter: 'blur(16px)' },
+        { opacity: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power3.out' },
+        'ne+=1.2'
+      );
       tl.fromTo('.char-ring-1', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: 'back.out(2)' }, 'ne+=1.2');
       tl.fromTo('.char-ring-2', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: 'back.out(2)' }, 'ne+=1.4');
       let lastLabel = 'ne+=2';
@@ -215,42 +175,9 @@ export default function NetworkHero() {
         tl.to(el, { opacity: 1, x: card.finalX * 0.62, y: card.finalY * 0.62, scale: 1, duration: 1, ease: 'back.out(1.5)' }, lbl);
       });
       tl.addLabel('tex', `${lastLabel}+=1.5`);
-      tl.to('.hero-character', { opacity: 0, duration: 0.15 }, 'tex');
-      tl.to('.char-ring-1, .char-ring-2, .char-ring-3', { scale: 2.5, opacity: 0, duration: 1.2, ease: 'power2.in' }, 'tex');
-      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, scale: 0.15, duration: 0.7 }, 'tex'));
-      if (flyingImgRef.current) {
-        const imgSize = 144;
-        const cx = window.innerWidth / 2 - imgSize / 2;
-        const cy = window.innerHeight / 2 - imgSize / 2;
-        const targetW = Math.min(window.innerWidth * 0.42, 280);
-        const targetH = targetW * 1.25;
-        const targetX = Math.max(window.innerWidth * 0.05, 32);
-        const targetY = (window.innerHeight - targetH) / 2;
-
-        gsap.set(flyingImgRef.current, {
-          display: 'block', position: 'fixed',
-          left: cx, top: cy, width: imgSize, height: imgSize,
-          borderRadius: '50%', opacity: 0, zIndex: 9999,
-        });
-        tl.to(flyingImgRef.current, { opacity: 1, duration: 0.35 }, 'tex');
-        tl.to(flyingImgRef.current, {
-          left: targetX, top: targetY,
-          width: targetW, height: targetH,
-          borderRadius: '24px', duration: 1.8, ease: 'power3.inOut',
-        }, 'tex+=0.3');
-        ScrollTrigger.create({
-          trigger: '#about',
-          start: 'top 85%',
-          once: true,
-          onEnter: () => {
-            gsap.to(flyingImgRef.current, {
-              opacity: 0, duration: 1, ease: 'power2.inOut',
-              onComplete: () => gsap.set(flyingImgRef.current, { display: 'none' }),
-            });
-          },
-        });
-      }
-      return () => {};
+      tl.to('.char-ring-1, .char-ring-2, .char-ring-3', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 'tex');
+      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 'tex'));
+      return () => { };
     });
 
     // ── MOBILE ──
@@ -267,7 +194,12 @@ export default function NetworkHero() {
       tl.to('.intro-text', { x: logoX, y: logoY, scale: 0.1, opacity: 0, duration: 1.5, ease: 'power2.inOut' }, 'me');
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'me+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'me');
-      tl.fromTo('.hero-character', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' }, 'me+=1.2');
+      // Image blooms — opacity only, NO scale
+      tl.fromTo('.hero-character',
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: 'power3.out' },
+        'me+=1.2'
+      );
       let lastLabel = 'me+=2';
       CARDS.forEach((card, i) => {
         const el = document.querySelector(`#${card.id}`);
@@ -279,41 +211,38 @@ export default function NetworkHero() {
         tl.to(el, { opacity: 1, x: card.finalX * 0.37, y: card.finalY * 0.45, scale: 0.78, duration: 0.9, ease: 'back.out(1.4)' }, lbl);
       });
       tl.addLabel('mex', `${lastLabel}+=1.2`);
-      tl.to('.hero-character', { opacity: 0, duration: 0.15 }, 'mex');
-      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, scale: 0.1, duration: 0.6 }, 'mex'));
-      if (flyingImgRef.current) {
-        const imgSize = 110;
-        const cx = window.innerWidth / 2 - imgSize / 2;
-        const cy = window.innerHeight / 2 - imgSize / 2;
-        const targetW = window.innerWidth * 0.72;
-        const targetH = targetW * 1.25;
-        const targetX = (window.innerWidth - targetW) / 2;
-        const targetY = window.innerHeight * 0.12;
+      CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 'mex'));
+      return () => { };
+    });
 
-        gsap.set(flyingImgRef.current, {
-          display: 'block', position: 'fixed',
-          left: cx, top: cy, width: imgSize, height: imgSize,
-          borderRadius: '50%', opacity: 0, zIndex: 9999,
-        });
-        tl.to(flyingImgRef.current, { opacity: 1, duration: 0.3 }, 'mex');
-        tl.to(flyingImgRef.current, {
-          left: targetX, top: targetY,
-          width: targetW, height: targetH,
-          borderRadius: '20px', duration: 1.5, ease: 'power3.inOut',
-        }, 'mex+=0.2');
-        ScrollTrigger.create({
-          trigger: '#about',
-          start: 'top 85%',
-          once: true,
-          onEnter: () => {
-            gsap.to(flyingImgRef.current, {
-              opacity: 0, duration: 0.9, ease: 'power2.inOut',
-              onComplete: () => gsap.set(flyingImgRef.current, { display: 'none' }),
-            });
-          },
-        });
-      }
-      return () => {};
+    // ── TRUE SHARED ELEMENT MORPH (Cross-section tracking) ──
+    // This dynamically hooks the .hero-character to the #about section's physical position
+    gsap.to('.hero-character', {
+      scrollTrigger: {
+        trigger: document.querySelector('#about'), // bypass component scoping
+        start: 'top 95%',  // Start moving exactly when the About section appears on-screen
+        end: 'top 30%',    // Finish moving when About target layout area is mostly rendered
+        scrub: 1.2,
+        invalidateOnRefresh: true, // Recalculate on resize
+      },
+      x: () => {
+        const target = document.querySelector('#about-photo-target');
+        const wrapper = document.querySelector('.hero-character-wrapper');
+        if (!target || !wrapper) return 0;
+        // The difference in absolute document coordinates
+        return target.getBoundingClientRect().left - wrapper.getBoundingClientRect().left;
+      },
+      y: () => {
+        const target = document.querySelector('#about-photo-target');
+        const wrapper = document.querySelector('.hero-character-wrapper');
+        if (!target || !wrapper) return 0;
+        return target.getBoundingClientRect().top - wrapper.getBoundingClientRect().top;
+      },
+      width: () => document.querySelector('#about-photo-target')?.offsetWidth || 192,
+      height: () => document.querySelector('#about-photo-target')?.offsetHeight || 240,
+      borderRadius: '32px',
+      borderWidth: '0px',
+      ease: 'power3.inOut'
     });
 
   }, { scope: containerRef });
@@ -321,7 +250,7 @@ export default function NetworkHero() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen bg-[#020202] selection:bg-emerald-400 selection:text-black"
+      className="relative w-full h-screen z-50 bg-[#020202] selection:bg-emerald-400 selection:text-black"
     >
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -403,15 +332,21 @@ export default function NetworkHero() {
         ))}
 
         {/* Image + rings */}
-        <div className="relative flex items-center justify-center">
-          <div className="char-ring-1 absolute w-[190px] h-[190px] md:w-[230px] md:h-[230px] lg:w-[270px] lg:h-[270px] rounded-full border border-dashed border-emerald-500/30 animate-[spin_18s_linear_infinite] opacity-0" />
-          <div className="char-ring-2 absolute w-[230px] h-[230px] md:w-[280px] md:h-[280px] lg:w-[330px] lg:h-[330px] rounded-full border border-emerald-400/15 animate-[spin_30s_linear_infinite_reverse] opacity-0" />
-          <div className="char-ring-3 absolute w-[270px] h-[270px] md:w-[330px] md:h-[330px] lg:w-[390px] lg:h-[390px] rounded-full border border-dashed border-white/6 animate-[spin_50s_linear_infinite] opacity-0" />
+        <div className="hero-character-wrapper relative flex items-center justify-center w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 z-20">
+          <div className="char-ring-1 absolute w-[190px] h-[190px] md:w-[230px] md:h-[230px] lg:w-[270px] lg:h-[270px] rounded-full border border-dashed border-emerald-500/30 animate-[spin_18s_linear_infinite] opacity-0 pointer-events-none" />
+          <div className="char-ring-2 absolute w-[230px] h-[230px] md:w-[280px] md:h-[280px] lg:w-[330px] lg:h-[330px] rounded-full border border-emerald-400/15 animate-[spin_30s_linear_infinite_reverse] opacity-0 pointer-events-none" />
+          <div className="char-ring-3 absolute w-[270px] h-[270px] md:w-[330px] md:h-[330px] lg:w-[390px] lg:h-[390px] rounded-full border border-dashed border-white/6 animate-[spin_50s_linear_infinite] opacity-0 pointer-events-none" />
           <img
             src="/image/anamul islam.png"
             alt="Anamul Islam"
-            className="hero-character relative z-10 w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-full border-2 border-emerald-500/50 object-cover object-top opacity-0"
-            style={{ backgroundColor: '#0a0a0a', boxShadow: '0 0 0 5px rgba(16,185,129,0.07), 0 0 70px rgba(16,185,129,0.12)' }}
+            className="hero-character absolute top-0 left-0 w-full h-full object-cover object-top"
+            style={{
+              borderRadius: '999px',
+              borderWidth: '2px',
+              borderColor: 'rgba(16,185,129,0.5)',
+              backgroundColor: '#0a0a0a',
+              boxShadow: '0 0 0 5px rgba(16,185,129,0.07), 0 0 70px rgba(16,185,129,0.12)'
+            }}
           />
         </div>
       </div>
@@ -421,25 +356,6 @@ export default function NetworkHero() {
         <span className="text-[9px] font-bold tracking-[0.25em] text-white/30 uppercase font-syne">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-emerald-500/40 to-transparent animate-pulse" />
       </div>
-
-      {/* Flying morph image — GSAP controlled */}
-      <img
-        ref={flyingImgRef}
-        src="/image/anamul islam.png"
-        alt=""
-        aria-hidden="true"
-        style={{
-          display: 'none',
-          position: 'fixed',
-          objectFit: 'cover',
-          objectPosition: 'top',
-          border: '2px solid rgba(16,185,129,0.6)',
-          boxShadow: '0 0 60px rgba(16,185,129,0.3), 0 20px 60px rgba(0,0,0,0.5)',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          transition: 'none',
-        }}
-      />
     </section>
   );
 }
