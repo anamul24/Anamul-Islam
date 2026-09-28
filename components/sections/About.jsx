@@ -34,12 +34,9 @@ export default function About() {
     const section = sectionRef.current;
     if (!section) return;
 
-    // Note: Photo container is now an empty target slot for the shared Hero image.
-    // The scale/reveal animation is removed because the hero image flies dynamically into this slot.
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 768px)', () => {
-      // Tagline slides in from right
       gsap.fromTo(
         taglineRef.current,
         { opacity: 0, x: 28 },
@@ -54,7 +51,6 @@ export default function About() {
         }
       );
 
-      // Heading rises up
       gsap.fromTo(
         headingRef.current,
         { opacity: 0, y: 40 },
@@ -69,7 +65,6 @@ export default function About() {
         }
       );
 
-      // Bio paragraphs staggered
       const paras = bioRef.current?.querySelectorAll('p');
       paras?.forEach((para, i) => {
         gsap.fromTo(
@@ -87,7 +82,6 @@ export default function About() {
         );
       });
 
-      // Stat cards staggered
       const statCards = statsRef.current?.querySelectorAll('[data-stat]');
       statCards?.forEach((card, i) => {
         gsap.fromTo(
@@ -107,7 +101,6 @@ export default function About() {
     });
 
     mm.add('(max-width: 767px)', () => {
-      // Mobile — simpler
       [taglineRef.current, headingRef.current, bioRef.current, statsRef.current]
         .filter(Boolean)
         .forEach((el) => {
@@ -138,32 +131,23 @@ export default function About() {
       ref={sectionRef}
       className="relative py-16 md:py-32 bg-[#020202] overflow-hidden"
     >
-      {/* Subtle dark background gradient */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#020202] via-[#050a08] to-[#020202] pointer-events-none" aria-hidden="true" />
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" aria-hidden="true" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
 
-          {/* Photo column */}
           <div className="lg:col-span-5 relative mb-6 lg:mb-0">
-            {/*
-              id="about-photo-target" — NetworkHero reads this element's
-              getBoundingClientRect() to fly the hero image here precisely,
-              then we crossfade-reveal the real photo beneath it.
-            */}
             <div
               id="about-photo-target"
               ref={photoWrapRef}
               className="about-photo-target relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900/50"
             >
-              {/* Empty placeholder slot for the shared Hero character image to morph into */}
               <div className="absolute inset-0 tech-grid opacity-10" aria-hidden="true" />
               <div className="absolute inset-0 ring-1 ring-inset ring-emerald-500/20 rounded-[32px]" aria-hidden="true" />
             </div>
           </div>
 
-          {/* Content column */}
           <div className="lg:col-span-7 flex flex-col items-start">
             <div
               ref={taglineRef}
@@ -192,7 +176,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* Stats grid */}
             <div
               ref={statsRef}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-14 w-full"
@@ -207,7 +190,7 @@ export default function About() {
                   <span className="text-white text-2xl font-black group-hover:text-emerald-400 transition-colors duration-300 relative z-10">
                     {stat.value}
                   </span>
-                  <span className="text-slate-500 text-xs uppercase tracking-widest font-bold group-hover:text-slate-300 transition-colors duration-300 relative z-10">
+                  <span className="text-slate-500 text-xs tracking-widest font-bold group-hover:text-slate-300 transition-colors duration-300 relative z-10">
                     {stat.label}
                   </span>
                 </div>

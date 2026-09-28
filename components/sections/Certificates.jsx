@@ -43,7 +43,6 @@ function CertCard({ cert, openCert }) {
           )}
         </motion.div>
 
-        {/* Hover overlay — view button */}
         <button
           className="absolute inset-0 bg-amber-400/15 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
           onClick={() => openCert(cert)}
@@ -55,10 +54,9 @@ function CertCard({ cert, openCert }) {
         </button>
       </div>
 
-      {/* Card footer */}
       <div className="mt-4 flex items-center justify-between px-1">
         <span className="text-xs text-slate-500 font-bold uppercase tracking-widest">{cert.date}</span>
-        {cert.verifyUrl ? (
+        {cert.verifyUrl && (
           <a
             href={cert.verifyUrl}
             target="_blank"
@@ -68,14 +66,6 @@ function CertCard({ cert, openCert }) {
           >
             Verify <ExternalLink size={12} aria-hidden="true" />
           </a>
-        ) : (
-          <button
-            onClick={() => openCert(cert)}
-            aria-label={`View ${cert.title} certificate`}
-            className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-xs text-slate-300 font-bold uppercase tracking-widest hover:bg-white/10 hover:text-amber-400 hover:border-amber-400/30 transition-all flex items-center gap-1.5"
-          >
-            View <Search size={12} aria-hidden="true" />
-          </button>
         )}
       </div>
     </motion.div>
@@ -94,14 +84,12 @@ export default function Certificates() {
       .catch(() => {});
   }, []);
 
-  // Open modal — push a history entry so back button closes it
   const openCert = useCallback((cert) => {
     setSelectedCert(cert);
     setModalImgError(false);
     window.history.pushState({ certModal: true }, '');
   }, []);
 
-  // Close modal — go back in history only if we pushed the entry
   const closeCert = useCallback(() => {
     setSelectedCert(null);
     if (window.history.state?.certModal) {
@@ -109,14 +97,12 @@ export default function Certificates() {
     }
   }, []);
 
-  // Listen for hardware/browser back button
   useEffect(() => {
     const handlePopState = () => { setSelectedCert(null); };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Close modal on Escape key
   useEffect(() => {
     if (!selectedCert) return;
     const handleKey = (e) => { if (e.key === 'Escape') closeCert(); };
@@ -175,7 +161,6 @@ export default function Certificates() {
         </motion.div>
       </div>
 
-      {/* Certificate detail modal */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div

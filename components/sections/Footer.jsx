@@ -12,21 +12,9 @@ const QUICK_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  {
-    icon: Github,
-    label: 'GitHub',
-    href: 'https://github.com/anamul24',
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/anamul-islam-ab907a242',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    href: 'mailto:anamulislamsumon01@gmail.com',
-  },
+  { icon: Github, label: 'GitHub', href: 'https://github.com/anamul24' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/anamul-islam-ab907a242' },
+  { icon: Mail, label: 'Email', href: 'mailto:anamulislamsumon01@gmail.com' },
 ];
 
 export default function Footer() {
@@ -43,7 +31,6 @@ export default function Footer() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
 
-          {/* Brand column */}
           <div>
             <div className="flex items-center gap-3 mb-3">
               <img
@@ -58,7 +45,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Quick links */}
           <nav aria-label="Footer navigation">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -76,7 +62,6 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Social / contact */}
           <div>
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Connect</h3>
             <div className="flex flex-col gap-3">
@@ -102,7 +87,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-slate-600 text-sm">
             <span>Built with</span>

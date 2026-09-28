@@ -65,11 +65,9 @@ export default function BentoGrid() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
 
-  // Projects are defined statically in DEFAULT_PROJECTS above
-
   const allTags = Array.from(new Set(projects.flatMap(p => p.tags))).sort();
-  
-  const filteredProjects = activeTag 
+
+  const filteredProjects = activeTag
     ? projects.filter(p => p.tags.some(t => t.toLowerCase().includes(activeTag.toLowerCase())))
     : projects;
 
@@ -110,11 +108,9 @@ export default function BentoGrid() {
       <div className="absolute inset-0 tech-grid opacity-[0.03] pointer-events-none z-0" />
       <div className="absolute inset-0 tech-dot-grid opacity-[0.05] pointer-events-none z-0" />
 
-      
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-10 md:mb-16 flex flex-col gap-6">
           <div className="max-w-2xl">
-
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -128,8 +124,7 @@ export default function BentoGrid() {
           </div>
 
           <div className="flex flex-col gap-4">
-
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -138,21 +133,21 @@ export default function BentoGrid() {
               <button
                 onClick={() => setActiveTag(null)}
                 className={`relative px-4 py-3 min-h-[44px] rounded-sm font-mono text-xs uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
-                  activeTag === null 
-                    ? 'text-slate-950 bg-amber-400' 
+                  activeTag === null
+                    ? 'text-slate-950 bg-amber-400'
                     : 'text-white/40 border border-white/5 hover:border-amber-400/50 hover:text-white'
                 }`}
               >
                 <span className="relative z-10">All</span>
                 <motion.div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
               </button>
-              {['React', 'Next.js', 'TailwindCSS','Node.js'].map(tag => (
+              {['React', 'Next.js', 'TailwindCSS', 'Node.js'].map(tag => (
                 <button
                   key={tag}
                   onClick={() => setActiveTag(tag)}
                   className={`relative px-4 py-3 min-h-[44px] rounded-sm font-mono text-xs uppercase tracking-widest transition-all duration-300 overflow-hidden group ${
-                    activeTag === tag 
-                      ? 'text-slate-950 bg-amber-400' 
+                    activeTag === tag
+                      ? 'text-slate-950 bg-amber-400'
                       : 'text-white/40 border border-white/5 hover:border-amber-400/50 hover:text-white'
                   }`}
                 >
@@ -172,10 +167,8 @@ export default function BentoGrid() {
                 key={`${project.title}`}
                 onMouseMove={handleMouseMove}
                 onClick={() => setSelectedProject(project)}
-                style={{
-                  perspective: 1000,
-                }}
-                className={`group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer w-full h-[350px]`}
+                style={{ perspective: 1000 }}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-md flex flex-col transition-all duration-500 hover:border-amber-500/50 hover:bg-white/[0.04] cursor-pointer w-full h-[350px]"
               >
                 <motion.div
                   className="w-full h-full flex flex-col"
@@ -186,7 +179,6 @@ export default function BentoGrid() {
                   }}
                   transition={{ type: "spring", damping: 20, stiffness: 100 }}
                 >
-
                   <div className="h-10 bg-black/40 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-5">
                     <div className="flex gap-2">
                       <div className="w-3 h-3 rounded-full bg-slate-900 border border-white/5 shadow-inner" />
@@ -216,18 +208,16 @@ export default function BentoGrid() {
                         </div>
                       ))}
                     </div>
-                    
+
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
                     <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
                       <div className="flex items-center gap-6 mb-8 font-mono text-xs text-amber-500/40 uppercase tracking-widest transition-all duration-700 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
                         <div className="flex items-center gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-amber-500/20 group-hover:bg-amber-500 animate-pulse" />
-                          
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-[1px] bg-amber-500/20 group-hover:bg-amber-500/60" />
-                        
                         </div>
                       </div>
 
@@ -242,7 +232,7 @@ export default function BentoGrid() {
                       <h3 className="text-3xl md:text-4xl font-black text-white group-hover:text-amber-400 transition-all duration-500 mb-4 tracking-tighter leading-none">
                         {project.title}
                       </h3>
-                      
+
                       <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed font-mono opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-6 group-hover:translate-y-0 max-w-sm">
                         ENTRY_LOG: &quot;{project.description}&quot;
                       </p>
@@ -290,7 +280,7 @@ export default function BentoGrid() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 font-mono text-xs text-emerald-500/60">
-                   Preview
+                  Preview
                 </div>
               </div>
 
@@ -298,11 +288,11 @@ export default function BentoGrid() {
                 <div className="flex items-center gap-3 text-emerald-500/80 font-mono text-xs uppercase tracking-widest mb-6">
                   <span>Projects / {selectedProject.title}</span>
                 </div>
-                
+
                 <h3 className="text-3xl font-bold text-white mb-6">
                   {selectedProject.title}
                 </h3>
-                
+
                 <div className="flex flex-wrap gap-2 mb-8">
                   {selectedProject.tags.map(tag => (
                     <span key={tag} className="px-2 py-1 rounded-sm bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
@@ -310,7 +300,7 @@ export default function BentoGrid() {
                     </span>
                   ))}
                 </div>
-                
+
                 <div className="space-y-6 mb-12 font-mono text-xs leading-relaxed text-slate-400">
                   <p className="border-l border-amber-500 pl-4 py-1">
                     {selectedProject.longDescription}
@@ -319,7 +309,7 @@ export default function BentoGrid() {
                     &gt; {selectedProject.description}
                   </p>
                 </div>
- 
+
                 <div className="flex gap-4">
                   <a
                     href={selectedProject.github}

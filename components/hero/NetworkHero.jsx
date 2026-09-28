@@ -7,10 +7,8 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-// Medieval runes for scramble effect
 const RUNES = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟᛗᚢᚠᚱᛁᚨᚲᛖᛒᚦᛏᚹᛚᛜ';
 
-// 4 skill cards
 const CARDS = [
   {
     id: 'card-net',
@@ -18,7 +16,7 @@ const CARDS = [
     icon: '⬡',
     sub: 'Cisco • Packet Tracer • Labs',
     color: '#10b981',
-    finalX: -260, finalY: -170,
+    finalX: -180, finalY: -130,
   },
   {
     id: 'card-dev',
@@ -26,7 +24,7 @@ const CARDS = [
     icon: '◈',
     sub: 'React • Node.js • MongoDB',
     color: '#34d399',
-    finalX: 260, finalY: -170,
+    finalX: 180, finalY: -130,
   },
   {
     id: 'card-ccna',
@@ -34,7 +32,7 @@ const CARDS = [
     icon: '⬢',
     sub: 'Routing • Switching • VLANs',
     color: '#6ee7b7',
-    finalX: -260, finalY: 170,
+    finalX: -180, finalY: 130,
   },
   {
     id: 'card-mik',
@@ -42,7 +40,7 @@ const CARDS = [
     icon: '◉',
     sub: 'RouterOS • OSPF • NAT',
     color: '#a7f3d0',
-    finalX: 260, finalY: 170,
+    finalX: 180, finalY: 130,
   },
 ];
 
@@ -50,7 +48,6 @@ export default function NetworkHero() {
   const containerRef = useRef(null);
   const flyingImgRef = useRef(null);
 
-  // Medieval rune scramble
   const triggerScramble = () => {
     const spans = document.querySelectorAll('.intro-text span[data-char]');
     spans.forEach((span, index) => {
@@ -74,7 +71,6 @@ export default function NetworkHero() {
   };
 
   useGSAP(() => {
-    // Name entrance
     gsap.from('.intro-text span[data-char]', {
       y: 60, opacity: 0, duration: 1.2, stagger: 0.04, ease: 'back.out(1.5)', delay: 0.3,
     });
@@ -83,13 +79,12 @@ export default function NetworkHero() {
 
     const mm = gsap.matchMedia();
 
-    // ── DESKTOP ──
     mm.add('(min-width: 1024px)', () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=5000',
+          end: '+=1500',
           pin: true,
           scrub: 1.2,
           anticipatePin: 1,
@@ -105,12 +100,10 @@ export default function NetworkHero() {
         logoY = r.top + r.height / 2 - window.innerHeight / 2;
       }
 
-      // Name flies to logo
       tl.to('.intro-text', { x: logoX, y: logoY, scale: 0.08, opacity: 0, duration: 1.5, ease: 'power2.inOut' }, 'name-exit');
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'name-exit+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'name-exit');
 
-      // Image blooms — opacity + blur only, NO scale
       tl.fromTo('.hero-character',
         { opacity: 0, filter: 'blur(20px)' },
         { opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: 'power3.out' },
@@ -120,7 +113,6 @@ export default function NetworkHero() {
       tl.fromTo('.char-ring-2', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'back.out(2)' }, 'name-exit+=1.4');
       tl.fromTo('.char-ring-3', { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'back.out(2)' }, 'name-exit+=1.6');
 
-      // Cards burst from behind image
       let lastLabel = 'name-exit+=2.2';
       CARDS.forEach((card, i) => {
         const el = document.querySelector(`#${card.id}`);
@@ -131,9 +123,7 @@ export default function NetworkHero() {
         lastLabel = lbl;
         tl.to(el, { opacity: 1, x: card.finalX, y: card.finalY, scale: 1, duration: 1.1, ease: 'back.out(1.6)' }, lbl);
       });
-      // No filter/drop-shadow tween on hero-character (avoids transform state conflicts)
 
-      // EXIT stage
       tl.addLabel('exit', `${lastLabel}+=2`);
       tl.to('.char-ring-1, .char-ring-2, .char-ring-3', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 'exit');
       CARDS.forEach(c => tl.to(`#${c.id}`, { opacity: 0, duration: 0.5, ease: 'power2.out' }, 'exit'));
@@ -141,12 +131,11 @@ export default function NetworkHero() {
       return () => { };
     });
 
-    // ── TABLET ──
     mm.add('(min-width: 768px) and (max-width: 1023px)', () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top top', end: '+=4000', pin: true, scrub: 1, anticipatePin: 1,
+          start: 'top top', end: '+=1200', pin: true, scrub: 1, anticipatePin: 1,
         },
       });
       const navLogo = document.querySelector('#navbar-logo');
@@ -156,7 +145,6 @@ export default function NetworkHero() {
       tl.to('.intro-text', { x: logoX, y: logoY, scale: 0.09, opacity: 0, duration: 1.5, ease: 'power2.inOut' }, 'ne');
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'ne+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'ne');
-      // Image blooms — opacity + blur only, NO scale
       tl.fromTo('.hero-character',
         { opacity: 0, filter: 'blur(16px)' },
         { opacity: 1, filter: 'blur(0px)', duration: 1.3, ease: 'power3.out' },
@@ -180,12 +168,11 @@ export default function NetworkHero() {
       return () => { };
     });
 
-    // ── MOBILE ──
     mm.add('(max-width: 767px)', () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: 'top top', end: '+=3500', pin: true, scrub: 1,
+          start: 'top top', end: '+=1000', pin: true, scrub: 1,
         },
       });
       const navLogo = document.querySelector('#navbar-logo');
@@ -194,7 +181,6 @@ export default function NetworkHero() {
       tl.to('.intro-text', { x: logoX, y: logoY, scale: 0.1, opacity: 0, duration: 1.5, ease: 'power2.inOut' }, 'me');
       if (navLogo) tl.to(navLogo, { opacity: 1, duration: 0.5 }, 'me+=1.0');
       tl.to('.scroll-hint', { opacity: 0, duration: 0.4 }, 'me');
-      // Image blooms — opacity only, NO scale
       tl.fromTo('.hero-character',
         { opacity: 0 },
         { opacity: 1, duration: 1.2, ease: 'power3.out' },
@@ -215,34 +201,48 @@ export default function NetworkHero() {
       return () => { };
     });
 
-    // ── TRUE SHARED ELEMENT MORPH (Cross-section tracking) ──
-    // This dynamically hooks the .hero-character to the #about section's physical position
-    gsap.to('.hero-character', {
+    gsap.set('.hero-character-wrapper', { borderRadius: '999px', overflow: 'hidden' });
+
+    gsap.to('.hero-character-wrapper', {
       scrollTrigger: {
-        trigger: document.querySelector('#about'), // bypass component scoping
-        start: 'top 95%',  // Start moving exactly when the About section appears on-screen
-        end: 'top 30%',    // Finish moving when About target layout area is mostly rendered
+        trigger: document.querySelector('#about'),
+        start: 'top 90%',
+        end: 'top 20%',
         scrub: 1.2,
-        invalidateOnRefresh: true, // Recalculate on resize
+        invalidateOnRefresh: true,
       },
       x: () => {
         const target = document.querySelector('#about-photo-target');
         const wrapper = document.querySelector('.hero-character-wrapper');
         if (!target || !wrapper) return 0;
-        // The difference in absolute document coordinates
-        return target.getBoundingClientRect().left - wrapper.getBoundingClientRect().left;
+        const tRect = target.getBoundingClientRect();
+        const wRect = wrapper.getBoundingClientRect();
+        return (tRect.left + tRect.width / 2) - (wRect.left + wRect.width / 2);
       },
       y: () => {
         const target = document.querySelector('#about-photo-target');
         const wrapper = document.querySelector('.hero-character-wrapper');
         if (!target || !wrapper) return 0;
-        return target.getBoundingClientRect().top - wrapper.getBoundingClientRect().top;
+        const tRect = target.getBoundingClientRect();
+        const wRect = wrapper.getBoundingClientRect();
+        return (tRect.top + tRect.height / 2) - (wRect.top + wRect.height / 2);
       },
-      width: () => document.querySelector('#about-photo-target')?.offsetWidth || 192,
-      height: () => document.querySelector('#about-photo-target')?.offsetHeight || 240,
+      width: () => document.querySelector('#about-photo-target')?.offsetWidth || 320,
+      height: () => document.querySelector('#about-photo-target')?.offsetHeight || 400,
       borderRadius: '32px',
-      borderWidth: '0px',
-      ease: 'power3.inOut'
+      ease: 'power3.inOut',
+    });
+
+    gsap.to('.hero-character', {
+      scrollTrigger: {
+        trigger: document.querySelector('#about'),
+        start: 'top 90%',
+        end: 'top 20%',
+        scrub: 1.2,
+        invalidateOnRefresh: true,
+      },
+      borderRadius: '32px',
+      ease: 'power3.inOut',
     });
 
   }, { scope: containerRef });
@@ -250,9 +250,8 @@ export default function NetworkHero() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen z-50 bg-[#020202] selection:bg-emerald-400 selection:text-black"
+      className="relative w-full h-screen z-20 bg-[#020202] selection:bg-emerald-400 selection:text-black"
     >
-      {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[140px]" style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 70%)' }} />
         <div className="absolute -top-[15%] -left-[5%] w-[500px] h-[500px] rounded-full blur-[160px]" style={{ background: 'rgba(59,130,246,0.05)' }} />
@@ -273,7 +272,6 @@ export default function NetworkHero() {
         ))}
       </div>
 
-      {/* ── NAME ── */}
       <div className="intro-text absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
         <div className="flex flex-col items-center gap-3 md:gap-5 pointer-events-auto cursor-crosshair" onMouseEnter={triggerScramble}>
           <h1
@@ -296,7 +294,7 @@ export default function NetworkHero() {
           </h1>
           <div className="flex items-center gap-3 w-full px-2">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-            <span className="text-[9px] md:text-[11px] font-syne font-bold tracking-[0.4em] text-emerald-400/70 uppercase whitespace-nowrap">
+            <span className="text-xs md:text-sm font-syne font-bold tracking-[0.4em] text-emerald-400/70 uppercase whitespace-nowrap">
               Network Engineer · Web Developer
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
@@ -304,10 +302,8 @@ export default function NetworkHero() {
         </div>
       </div>
 
-      {/* ── CENTER: image + cards ── */}
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
 
-        {/* Cards */}
         {CARDS.map((card) => (
           <div
             key={card.id}
@@ -324,14 +320,13 @@ export default function NetworkHero() {
             <div className="absolute inset-0 rounded-xl lg:rounded-2xl" style={{ background: `linear-gradient(135deg, ${card.color}18, transparent 55%)`, borderRadius: 'inherit' }} />
             <div className="relative z-10 flex items-center gap-2">
               <span style={{ color: card.color, fontSize: '1rem', lineHeight: 1 }}>{card.icon}</span>
-              <h3 className="text-white font-bold text-[10px] lg:text-[12px] tracking-wider uppercase leading-tight">{card.title}</h3>
+              <h2 className="text-white font-bold text-xs lg:text-sm tracking-wider leading-tight">{card.title}</h2>
             </div>
-            <p className="relative z-10 text-emerald-300/55 text-[9px] font-mono tracking-wide leading-relaxed">{card.sub}</p>
+            <p className="relative z-10 text-emerald-300/55 text-xs font-mono tracking-wide leading-relaxed">{card.sub}</p>
             <div className="relative z-10 w-full h-px mt-0.5" style={{ background: `linear-gradient(90deg, ${card.color}50, transparent)` }} />
           </div>
         ))}
 
-        {/* Image + rings */}
         <div className="hero-character-wrapper relative flex items-center justify-center w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 z-20">
           <div className="char-ring-1 absolute w-[190px] h-[190px] md:w-[230px] md:h-[230px] lg:w-[270px] lg:h-[270px] rounded-full border border-dashed border-emerald-500/30 animate-[spin_18s_linear_infinite] opacity-0 pointer-events-none" />
           <div className="char-ring-2 absolute w-[230px] h-[230px] md:w-[280px] md:h-[280px] lg:w-[330px] lg:h-[330px] rounded-full border border-emerald-400/15 animate-[spin_30s_linear_infinite_reverse] opacity-0 pointer-events-none" />
@@ -339,11 +334,9 @@ export default function NetworkHero() {
           <img
             src="/image/anamul islam.png"
             alt="Anamul Islam"
-            className="hero-character absolute top-0 left-0 w-full h-full object-cover object-top"
+            className="hero-character absolute inset-0 w-full h-full object-cover object-top"
             style={{
-              borderRadius: '999px',
-              borderWidth: '2px',
-              borderColor: 'rgba(16,185,129,0.5)',
+              borderRadius: 'inherit',
               backgroundColor: '#0a0a0a',
               boxShadow: '0 0 0 5px rgba(16,185,129,0.07), 0 0 70px rgba(16,185,129,0.12)'
             }}
@@ -351,7 +344,6 @@ export default function NetworkHero() {
         </div>
       </div>
 
-      {/* Scroll hint */}
       <div className="scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-50">
         <span className="text-[9px] font-bold tracking-[0.25em] text-white/30 uppercase font-syne">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-emerald-500/40 to-transparent animate-pulse" />

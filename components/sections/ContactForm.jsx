@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useId } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import emailjs from '@emailjs/browser';
 import {
@@ -16,38 +16,19 @@ import {
   CheckCircle,
   AlertCircle,
 } from 'lucide-react';
+import { useId } from 'react';
 
 const SOCIAL_LINKS = [
-  {
-    icon: Github,
-    label: 'GitHub',
-    link: 'https://github.com/anamul24',
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/anamul-islam-sumon',
-  },
-  {
-    icon: Facebook,
-    label: 'Facebook',
-    link: 'https://www.facebook.com/share/17bRnrxef5/',
-  },
-  {
-    icon: Twitter,
-    label: 'X (Twitter)',
-    link: 'https://x.com/anamul_islam1',
-  },
-  {
-    icon: MessageCircle,
-    label: 'WhatsApp',
-    link: 'https://wa.me/8801764162669',
-  },
+  { icon: Github, label: 'GitHub', link: 'https://github.com/anamul24' },
+  { icon: Linkedin, label: 'LinkedIn', link: 'https://www.linkedin.com/in/anamul-islam-sumon' },
+  { icon: Facebook, label: 'Facebook', link: 'https://www.facebook.com/share/17bRnrxef5/' },
+  { icon: Twitter, label: 'X (Twitter)', link: 'https://x.com/anamul_islam1' },
+  { icon: MessageCircle, label: 'WhatsApp', link: 'https://wa.me/8801764162669' },
 ];
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState(null); // 'success' | 'error' | null
+  const [status, setStatus] = useState(null);
   const baseId = useId();
   const nameId = `${baseId}-name`;
   const emailId = `${baseId}-email`;
@@ -115,7 +96,6 @@ export default function ContactForm() {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-10 md:gap-20">
 
-          {/* Left column — contact info */}
           <div className="lg:w-1/2">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -154,7 +134,6 @@ export default function ContactForm() {
               }}
               className="space-y-5 md:space-y-8"
             >
-              {/* Email */}
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 className="flex items-center gap-5 group"
@@ -173,7 +152,6 @@ export default function ContactForm() {
                 </div>
               </motion.div>
 
-              {/* Location */}
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 className="flex items-center gap-5 group"
@@ -189,10 +167,8 @@ export default function ContactForm() {
                   </div>
                 </div>
               </motion.div>
-
             </motion.div>
 
-            {/* Social links */}
             <div className="flex gap-4 mt-10 flex-wrap" role="list" aria-label="Social media links">
               {SOCIAL_LINKS.map((item) => {
                 const Icon = item.icon;
@@ -213,7 +189,6 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Right column — contact form */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -224,7 +199,6 @@ export default function ContactForm() {
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Name */}
                   <div className="space-y-2">
                     <label htmlFor={nameId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
                       Full Name <span aria-hidden="true" className="text-emerald-500">*</span>
@@ -241,7 +215,6 @@ export default function ContactForm() {
                     />
                   </div>
 
-                  {/* Email */}
                   <div className="space-y-2">
                     <label htmlFor={emailId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
                       Email Address <span aria-hidden="true" className="text-emerald-500">*</span>
@@ -259,7 +232,6 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                {/* Message */}
                 <div className="space-y-2">
                   <label htmlFor={messageId} className="block text-xs font-bold text-slate-400 uppercase tracking-widest">
                     Message <span aria-hidden="true" className="text-emerald-500">*</span>
@@ -275,7 +247,6 @@ export default function ContactForm() {
                   />
                 </div>
 
-                {/* Status messages */}
                 <AnimatePresence mode="wait">
                   {status === 'success' && (
                     <motion.div
@@ -307,7 +278,6 @@ export default function ContactForm() {
                   )}
                 </AnimatePresence>
 
-                {/* Submit button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}

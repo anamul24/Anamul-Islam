@@ -12,7 +12,6 @@ export async function GET(request) {
     return NextResponse.json({ error: 'section parameter required' }, { status: 400 });
   }
 
-  // Sanitize section name to prevent path traversal
   const safeName = section.replace(/[^a-z0-9_-]/gi, '');
   const filePath = path.join(DATA_DIR, `${safeName}.json`);
 

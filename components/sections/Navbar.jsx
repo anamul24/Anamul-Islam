@@ -6,7 +6,7 @@ import { Menu, X, Download } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/anamul-islam-ab907a242';
-const RESUME_URL = '/resume.pdf'; // Place resume.pdf in /public — falls back to LinkedIn
+const RESUME_URL = '/resume.pdf';
 
 const navLinks = [
   { name: 'Home', href: '#' },
@@ -32,7 +32,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Secret keyboard shortcut: Ctrl + Shift + A → Admin panel
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
@@ -44,7 +43,6 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [router]);
 
-  // Secret logo tap: 5 quick taps → Admin panel (mobile)
   const handleLogoTap = (e) => {
     const newCount = tapCount + 1;
     setTapCount(newCount);
@@ -62,7 +60,6 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  // Close menu when clicking outside
   useEffect(() => {
     if (!isOpen) return;
     const handleClickOutside = (e) => {
@@ -94,13 +91,11 @@ export default function Navbar() {
     }, 50);
   };
 
-
-
   return (
     <nav
       ref={menuRef}
       aria-label="Main navigation"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? 'py-3 bg-black/60 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
           : 'py-5 bg-transparent'
@@ -108,7 +103,6 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
 
-        {/* Logo — secret: 5 taps = admin */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -120,16 +114,15 @@ export default function Navbar() {
             aria-label="Anamul Islam — scroll to top"
             className="block group"
           >
-            <img 
+            <img
               id="navbar-logo"
-              src="/image/anam.png" 
-              alt="Anamul Islam Logo" 
+              src="/image/anam.png"
+              alt="Anamul Islam Logo"
               className="w-10 h-10 object-cover rounded-xl border border-white/10 group-hover:border-emerald-500/50 group-hover:scale-105 transition-all duration-300"
             />
           </a>
         </motion.div>
 
-        {/* Desktop nav links */}
         <div className="hidden lg:flex items-center gap-6 bg-white/[0.03] backdrop-blur-xl px-7 py-2.5 rounded-full border border-white/10 shadow-inner">
           {navLinks.map((link) => (
             <a
@@ -143,7 +136,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop right — Download Resume */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -161,7 +153,6 @@ export default function Navbar() {
           </a>
         </motion.div>
 
-        {/* Hamburger */}
         <div className="flex items-center gap-4 lg:hidden">
           <button
             className="text-slate-300 p-2.5 rounded-lg hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -175,7 +166,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

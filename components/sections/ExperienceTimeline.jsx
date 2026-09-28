@@ -25,7 +25,6 @@ export default function ExperienceTimeline() {
       className="py-14 md:py-32 bg-transparent px-4 md:px-8 relative overflow-hidden"
       aria-label="Education and experience"
     >
-      {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.03]" aria-hidden="true">
         <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] border border-white/5 rounded-[200px] rotate-45" />
         <div className="absolute -bottom-20 -right-20 w-[400px] h-[400px] border border-white/5 rounded-full" />
@@ -67,7 +66,6 @@ export default function ExperienceTimeline() {
         </div>
 
         <div className="flex justify-start relative">
-          {/* Education section */}
           <div className="flex flex-col gap-6 md:gap-12 w-full max-w-3xl">
             <div className="flex items-center gap-4 mb-4 px-6 md:px-10">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
@@ -110,7 +108,6 @@ export default function ExperienceTimeline() {
               ))}
             </motion.div>
           </div>
-
         </div>
       </div>
     </section>
