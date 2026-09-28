@@ -2,7 +2,6 @@
 
 import { motion } from 'motion/react';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 
 const DEFAULT = {
   tagline: 'The Story So Far',
@@ -18,14 +17,7 @@ const DEFAULT = {
 };
 
 export default function About() {
-  const [data, setData] = useState(DEFAULT);
-
-  useEffect(() => {
-    fetch('/api/admin/data?section=about')
-      .then(r => r.json())
-      .then(d => { if (d) setData(d); })
-      .catch(() => {});
-  }, []);
+  const data = DEFAULT;
 
   return (
     <section id="about" className="relative py-16 md:py-32 bg-[#020202] overflow-hidden">
@@ -39,11 +31,11 @@ export default function About() {
           {/* Photo column */}
           <div className="lg:col-span-5 relative mb-6 lg:mb-0">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, x: -50 }}
-              whileInView={{ opacity: 1, scale: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900"
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              className="about-photo-target relative aspect-[4/5] max-w-sm mx-auto lg:ml-0 rounded-[32px] overflow-hidden border border-emerald-500/10 group shadow-2xl bg-slate-900"
             >
               <div className="absolute inset-0 tech-grid opacity-10" aria-hidden="true" />
               <Image
@@ -62,10 +54,10 @@ export default function About() {
           {/* Content column */}
           <div className="lg:col-span-7 flex flex-col items-start">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 24 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, delay: 0.1 }}
               className="flex items-center gap-4 text-emerald-500 font-bold uppercase tracking-[0.4em] text-xs mb-4 md:mb-8"
             >
               <div className="w-12 h-[1px] bg-emerald-500" aria-hidden="true" />
@@ -73,9 +65,9 @@ export default function About() {
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl md:text-5xl font-black tracking-tight text-white mb-6 md:mb-10"
             >
@@ -86,10 +78,10 @@ export default function About() {
             </motion.h2>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.8, delay: 0.35 }}
               className="space-y-4 text-slate-400 text-base md:text-lg leading-relaxed"
             >
               {(data.bio || '').split(/\n\n+/).map((para, i) => (
@@ -101,12 +93,12 @@ export default function About() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
                   opacity: 1,
-                  transition: { staggerChildren: 0.15, delayChildren: 0.5 },
+                  transition: { staggerChildren: 0.12, delayChildren: 0.55 },
                 },
               }}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-14 w-full"

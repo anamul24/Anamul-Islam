@@ -6,39 +6,35 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Github, Layers, X, ArrowRight, Code2, ExternalLink } from 'lucide-react';
 
 const DEFAULT_PROJECTS = [
-  
   {
     title: 'TILES GALLERY',
     description: 'Tiles Gallery is a responsive, modern image gallery built with a tile-based layout system, focusing on clean UI, smooth responsiveness, and visual presentation.',
-    longDescription: 'Tiles Gallery is a modern and responsive image gallery web application designed with a focus on visually appealing layouts and smooth user experience. The project showcases images in a dynamic tile-based grid system, allowing content to be displayed in an organized yet creative structure.Built using modern frontend technologies, the application emphasizes responsive design, ensuring optimal viewing across all devices including mobile, tablet, and desktop. The layout adapts seamlessly to different screen sizes while maintaining a clean and aesthetic presentation.The project highlights practical skills in UI/UX design, grid-based layout systems, and frontend performance optimization. It serves as a strong example of building visually engaging gallery interfaces suitable for portfolio or creative showcase purposes.',
+    longDescription: 'Tiles Gallery is a modern and responsive image gallery web application designed with a focus on visually appealing layouts and smooth user experience. The project showcases images in a dynamic tile-based grid system, allowing content to be displayed in an organized yet creative structure. Built using modern frontend technologies, the application emphasizes responsive design, ensuring optimal viewing across all devices including mobile, tablet, and desktop. The layout adapts seamlessly to different screen sizes while maintaining a clean and aesthetic presentation. The project highlights practical skills in UI/UX design, grid-based layout systems, and frontend performance optimization. It serves as a strong example of building visually engaging gallery interfaces suitable for portfolio or creative showcase purposes.',
     tags: ['React', 'Next.js'],
     link: 'https://tiles-gallery-brown-psi.vercel.app/',
     github: 'https://github.com/anamul24/Tiles-Gallery',
     size: 'large',
     image: '/image/tilesgallery.png',
-    
   },
   {
-    title: 'KeenKeeper',
-    description: 'A modern, responsive web application focused on clean UI/UX and smooth user experience.',
-    longDescription: 'Keen Keeper is a modern, responsive web application designed with a focus on clean UI/UX and smooth user experience. The project showcases a minimal yet functional interface that works seamlessly across different devices, including mobile, tablet, and desktop.Built as a frontend-focused project, it highlights practical web development skills such as layout structuring, responsive design, and performance optimization. The website is deployed on Netlify, ensuring fast loading speed and reliable accessibility.Overall, Keen Keeper serves as a demonstration of modern frontend development practices and design thinking, making it suitable for portfolio presentation and UI/UX showcase purposes.',
-    tags: ['React', 'Tailwind',],
-    link: 'https://keenkeeperp.netlify.app/',
-    github: 'https://github.com/anamul24/KeenKeeper',
+    title: 'TruthDesk',
+    description: 'TruthDesk is a modern news aggregator platform. Note: all news articles displayed are dummy/sample content used for demonstration purposes only — no real newspaper content is reproduced.',
+    longDescription: 'TruthDesk is a sleek, modern news aggregator and reading platform built with Next.js. It presents news in a clean, category-driven layout optimised for readability and fast navigation. The application features a fully responsive design that adapts beautifully across mobile, tablet, and desktop screens. Important note: all news articles and headlines displayed within TruthDesk are dummy/sample data used solely for UI demonstration purposes. No real content from any newspaper or news outlet is reproduced — the data is entirely fictional and created to showcase the interface design.',
+    tags: ['Next.js', 'React', 'TailwindCSS'],
+    link: 'https://truthdesk.vercel.app/',
+    github: 'https://github.com/anamul24/TruthDesk',
     size: 'small',
-    image: '/image/keenkeeper.png',
-    
+    image: '/image/truthdesk.png',
   },
   {
     title: 'DigiTools',
     description: 'DigiTools Platform is a responsive utility web app offering multiple digital tools in a clean, fast, and user-friendly interface.',
-    longDescription: 'DigiTools Platform is a modern, responsive web application that provides a collection of useful digital tools in a clean and user-friendly interface. The project is designed to simplify everyday tasks by offering multiple utility features in one centralized platform.Built with a focus on performance and usability, the platform ensures a smooth experience across all devices including mobile, tablet, and desktop. It features a minimal yet functional design that enhances accessibility and user interaction.',
-    tags: ['TailwindCSS','React',],
+    longDescription: 'DigiTools Platform is a modern, responsive web application that provides a collection of useful digital tools in a clean and user-friendly interface. The project is designed to simplify everyday tasks by offering multiple utility features in one centralized platform. Built with a focus on performance and usability, the platform ensures a smooth experience across all devices including mobile, tablet, and desktop. It features a minimal yet functional design that enhances accessibility and user interaction.',
+    tags: ['TailwindCSS', 'React'],
     link: 'https://digitoolsplatforma06.netlify.app',
     github: 'https://github.com/anamul24/Digitools',
     size: 'small',
     image: '/image/digitool.png',
-    
   },
 ];
 
@@ -69,12 +65,7 @@ export default function BentoGrid() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
 
-  useEffect(() => {
-    fetch('/api/admin/data?section=projects')
-      .then(r => r.json())
-      .then(d => { if (Array.isArray(d)) setProjects(d); })
-      .catch(() => {});
-  }, []);
+  // Projects are defined statically in DEFAULT_PROJECTS above
 
   const allTags = Array.from(new Set(projects.flatMap(p => p.tags))).sort();
   

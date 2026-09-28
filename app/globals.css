@@ -69,6 +69,10 @@
     font-family: var(--font-cinzel);
   }
 
+  .font-arctic {
+    font-family: var(--font-cinzel);
+  }
+
   .font-syne {
     font-family: var(--font-syne);
   }
